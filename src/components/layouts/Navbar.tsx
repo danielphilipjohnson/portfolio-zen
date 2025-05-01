@@ -37,8 +37,8 @@ const ZenNavbar = () => {
 						href="/"
 						className="font-serif text-xl tracking-wider transition-colors text-[color:var(--color-stone-800)]"
 					>
-						<span className="font-light">Your</span>
-						<span className="font-medium">Name</span>
+						<span className="font-light">Daniel</span>
+						<span className="font-medium">Johnson</span>
 					</Link>
 
 					<nav className="items-center hidden space-x-1 md:flex">
