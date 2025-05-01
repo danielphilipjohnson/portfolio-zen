@@ -1,0 +1,141 @@
+---
+title: "Fundamentals of Document Databases"
+publishDate: "21/12/2021"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Full Stack Developer"
+  avatar: "/images/profile.webp"
+category: "Goals"
+readingTime: "5 min read"
+tags: ["Goals"]
+imageUrl: "/images/blogs/covers/document-db.png"
+excerpt: "In this post, we explore the fundamentals of document databases, their document-oriented structure, value types, and key concepts. Learn how document databases like MongoDB organize and manage data efficiently."
+tableOfContents:
+  - { id: "introduction", title: "Introduction", level: 1 }
+  - { id: "document-database-the-house-of-data", title: "Document Database: The House of Data", level: 2 }
+  - { id: "document-oriented-structure-organizing-data", title: "Document-Oriented Structure: Organizing Data", level: 2 }
+  - { id: "primary-fields-and-standard-fields-defining-document-structure", title: "Primary Fields and Standard Fields: Defining Document Structure", level: 2 }
+  - { id: "value-types-diverse-data-representation", title: "Value Types: Diverse Data Representation", level: 2 }
+  - { id: "key-terminology-understanding-the-basics", title: "Key Terminology: Understanding the Basics", level: 2 }
+
+---
+
+import CodeBlock from '@/components/CodeBlock'
+
+**Scary word alert**
+
+NoSQL = "Not only SQL," represents a category of database systems that deviate from traditional relational databases
+
+# Introduction
+
+In this blog, we will delve into the fundamentals of document databases, a type of NoSQL database. By comparing document databases to a house with various rooms, we'll explore their document-oriented structure, primary and standard fields, and the key terminology associated with them.
+
+## Document Database: The House of Data
+
+![House that has data stored in rooms](/images/blogs/content/doc-db/doc-db-1.jpeg)
+
+Imagine a document database as a house, acting as a container that accommodates different rooms, represented by different document collections. We can define separate room documents for essential areas like "Bedrooms," "Bathrooms," "Living Room," and "Kitchen.”
+
+## Document-Oriented Structure: Organizing Data
+
+A document-oriented structure serves as the data model in document databases, allowing the organization and storage of data in the form of self-contained documents. Each document represents a unique entity or object, encompassing all the relevant data associated with it. Consider a room as an example, with fields like roomName, size, flooring, and furniture, encapsulated within a document. To illustrate this concept, let's consider a room as an example:
+
+<CodeBlock language="json">
+{`
+room {
+   _id: ObjectId("1234567890abcdef12345678")
+   roomName: “bedroom”,
+   size: “12 feet”,
+   flooring: "wood",
+   furniture:["wardrobe", "bed"]
+}`}
+</CodeBlock>
+
+In this example, we have a room document that possesses a unique identifier (\_id) assigned by the database. It includes descriptive attributes such as the room's name ("bedroom"), size ("12 feet"), flooring type ("wood"), and an array of furniture items, including a wardrobe and a bed. This self-contained structure allows for efficient storage and retrieval of room-specific data within the document database.
+
+## Primary Fields and Standard Fields: Defining Document Structure
+
+In our pursuit of an efficient document structure, let's delve into the essential fields that compose a room document.
+
+Firstly, we have the primary key, a vital component that plays a pivotal role in document identification and retrieval. This unique identifier holds great significance, especially when accessing documents through APIs such as **api/room/1234567890abcdef12345678**. Additionally, the primary key enforces uniqueness, ensuring that no duplicate documents are created within the collection. Moreover, it enables the creation of indexes, facilitating swift and direct retrieval of specific documents based on their distinctive identifiers. Fortunately, MongoDB automates the generation of primary keys, relieving you of the burden of creating them manually.
+
+However, you also have the flexibility to define your own primary key if you possess a field guaranteed to be unique. For instance, in the case of books, the International Standard Book Number (ISBN) serves as an excellent candidate. Consider the following example:
+
+<CodeBlock language="json">
+{`
+
+book {
+   _id: "978-0-123456-78-9",
+   author: "author",
+   title: "the title"
+}
+`}
+</CodeBlock>
+
+
+Alongside the primary key, we incorporate several standard fields **which** are made up of **attributes** and **values** to comprehensively define our room document structure. These fields include:
+
+* **roomName**: Designates the name of the room, allowing easy identification.
+    
+* **size**: Specifies the size of the room, providing relevant information about its dimensions.
+    
+* **flooring**: Describes the type of flooring used in the room, adding to its aesthetic and functional attributes.
+    
+* **furniture**: Represents an array that captures the furniture items present in the room, facilitating an inventory-like perspective.
+    
+
+By thoughtfully incorporating these primary and standard fields into our document structure, we establish a foundation for efficient storage, retrieval, and organization of room-specific data within our MongoDB document database.
+
+## Value Types: Diverse Data Representation
+
+As you explore the fields in our collection, you might have noticed the presence of strings and arrays. However, it's important to understand that document databases like MongoDB offer a wide range of value types to cater to diverse data requirements. Typically, these databases support popular data formats such as JSON or BSON.
+
+In MongoDB, you have the flexibility to utilize various value types for your fields. Let's explore some of the commonly used value types:
+
+* **String**: Represents a sequence of characters, allowing you to store textual information.
+    
+* **Number**: This can be either an integer or a floating-point number, enabling you to store numerical data.
+    
+* **Boolean**: Represents true or false values, providing a binary data type for logical operations.
+    
+* **Date**: Stores date and time values, facilitating the storage of temporal information.
+    
+* **Array**: Allows you to store an ordered list of values, providing a convenient way to group related data elements together.
+    
+* **Object**: Represents a collection of key-value pairs, enabling you to store complex and structured data.
+    
+* **Null**: This represents the absence of a value, allowing you to indicate the lack of data in a field.
+    
+* **ObjectId**: A special data type commonly used as a unique identifier for documents, providing an automatically generated identifier within MongoDB.
+    
+* **Timestamp**: A BSON data type that represents a 64-bit timestamp, facilitating the tracking of time-related information.
+    
+* **Binary Data**: Enables the storage of binary information, such as images or files, within the database.
+    
+
+By leveraging these diverse value types, document databases empower you to effectively store and manipulate data with flexibility and precision. Whether you need to capture textual, numerical, temporal, or structural information, MongoDB offers a comprehensive set of value types to accommodate your data needs.
+
+![Document data layers](/images/blogs/content/doc-db/doc-db-layers.png)
+
+Now we should have a much clearer understanding of all the pieces that make up a document DB.
+
+## Key Terminology: Understanding the Basics
+
+To wrap up, let's review key terminology:
+
+* **Document database**: A NoSQL database that stores and manages data in self-contained documents.
+    
+* **Document collection**: A grouping of related documents, acting as a logical unit for organization and management.
+    
+* **Document-oriented structure:** The data model used in document databases, organizing data into self-contained documents.
+    
+* **Primary field**: The unique identifier or primary key for a document within a collection, facilitating identification and retrieval.
+    
+* **Standard field**: Predefined fields within a document structure that capture specific attributes or properties.
+    
+* **Attribute**: A characteristic or property of an entity, defining the fields or properties within a document.
+    
+* **Value**: The actual data stored within an attribute or field of a document.
+    
+
+By understanding these key concepts, you'll gain a solid foundation in the fundamentals of document databases and be better equipped to work with them effectively.
