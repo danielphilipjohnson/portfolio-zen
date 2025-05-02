@@ -1,6 +1,6 @@
 import Text from "@/components/ui/Text"
-import { ExperienceItem } from "./types"
 import { TimelineDot } from "./TimelineElements"
+import { ExperienceItem } from "@/types/experience"
 
 interface ExperienceHeaderProps {
   experience: ExperienceItem
