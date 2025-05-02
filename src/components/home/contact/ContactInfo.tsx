@@ -39,8 +39,8 @@ const ContactInfo = () => {
                 variant="body-sm"
                 className="text-[color:var(--color-moss-600)]"
               >
-                <a href="mailto:hello@yourname.com" className="hover:underline">
-                  hello@yourname.com
+                <a href="mailto:daniel.phil.johnson@gmail.com" className="hover:underline">
+                  daniel.phil.johnson@gmail.com
                 </a>
               </Text>
             </div>
@@ -64,7 +64,7 @@ const ContactInfo = () => {
                 variant="body-sm"
                 className="text-[color:var(--color-moss-600)]"
               >
-                San Francisco, California
+                Truro Cornwall
               </Text>
             </div>
           </div>
