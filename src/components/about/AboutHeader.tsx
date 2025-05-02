@@ -1,7 +1,6 @@
 import Grid from '@/components/ui/Grid';
 import GridItem from '@/components/ui/GridItem';
 import Blockquote from '@/components/ui/Blockquote';
-import { Button } from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { ABOUT_INFO, SKILL_CATEGORIES } from '@/data/about-intro';
 import Text from '../ui/Text';
@@ -55,7 +54,7 @@ const About = () => {
 								
 							</div>
 
-							<div className="mt-4 md:mt-0">
+							{/*<div className="mt-4 md:mt-0">
 								<Button
 									variant="outline"
 									size="md"
@@ -72,7 +71,7 @@ const About = () => {
 										<span>Resume PDF</span>
 									</a>
 								</Button>
-							</div>
+							</div>*/}
 						</div>
 					</div>
 
