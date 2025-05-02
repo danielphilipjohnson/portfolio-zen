@@ -2,7 +2,7 @@ import Hero from "@/components/home/Hero";
 import About from "@/components/home/About";
 import Education from "@/components/home/education/Education";
 import OnlineCourses from "@/components/home/online-courses/OnlineCourses";
-import ContactSection from "@/components/Contact";
+import ContactCard from "@/components/ContactCard";
 import Experience from "@/components/experience/Experience";
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
 			<Experience />
 			<Education />
 			<OnlineCourses />
-			<ContactSection />
+			<ContactCard />
 		</main>
 	);
 }
