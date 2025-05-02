@@ -9,7 +9,7 @@ import InfoPanel from '@/components/ui/InfoPanel';
 import Grid from '@/components/ui/Grid';
 import GridItem from '@/components/ui/GridItem';
 import { BlogPost } from '@/types/blog-post';
-import { BlogPage } from '../layouts/BlogPageLayout';
+import { BlogPage } from '@/components/layouts/BlogPageLayout';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
@@ -20,11 +20,11 @@ export async function generateStaticParams() {
 	}))
 }
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-	const filePath = path.join(postsDirectory, `${params.slug}.mdx`)
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string[] }> }) {
+	const { slug } = await params;
+	const filePath = path.join(postsDirectory, `${slug}.mdx`)
 	const source = fs.readFileSync(filePath, 'utf8')
 	const { content, data } = matter(source)
-	console.log("data", data)
 	const postData = {
 		...data,
 		imageUrl: data.imageUrl,
