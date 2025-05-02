@@ -1,5 +1,5 @@
 import Text from "@/components/ui/Text";
-import { ExperienceItem } from "./types";
+import { ExperienceItem } from "@/types/experience";
 
 const ExperienceCard = ({ experience }: { experience: ExperienceItem }) => (
   <div className="p-6 bg-white border border-stone-200 shadow-soft">

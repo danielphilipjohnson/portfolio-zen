@@ -1,10 +1,10 @@
 import Text from "@/components/ui/Text"
 import { defaultExperiences } from "@/data/experiences";
 import { cn } from "@/lib/utils";
-import { ExperienceSectionProps } from "./types";
 import ExperienceCard from "./ExperienceCard";
 import ExperienceHeader from "./ExperienceHeader";
 import { TimelineDot, TimelineLine } from "./TimelineElements";
+import { ExperienceSectionProps } from "@/types/experience";
 
 const Experience = ({
 	title = "Professional Growth Path",

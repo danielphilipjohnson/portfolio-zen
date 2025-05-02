@@ -7,6 +7,7 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: 'export',
 };
 
 export default withMDX(nextConfig);
