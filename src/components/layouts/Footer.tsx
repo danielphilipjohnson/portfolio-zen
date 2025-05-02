@@ -8,8 +8,7 @@ const ZenFooter = () => {
 			{ label: 'Home', href: '/home' },
 			{ label: 'About', href: '/about' },
 			{ label: 'Work', href: '/work' },
-			{ label: 'Skills', href: '/skills' },
-			{ label: 'Contact', href: '/contact' },
+			//{ label: 'Contact', href: '/contact' },
 		],
 		resources: [
 			{ label: 'Blog', href: '/blog' },
@@ -63,8 +62,7 @@ const ZenFooter = () => {
 						</div>
 
 						<p className="max-w-xs mb-6 text-sm leading-relaxed text-[var(--color-stone-600)]">
-							Crafting meaningful digital experiences through thoughtful design and clean code. Always learning, always growing.
-						</p>
+I craft meaningful web experiences through clean, scalable code and user-first design—driven by curiosity, care, and a passion for progress.						</p>
 						{/* <Subscribe />*/}
 					</div>
 
