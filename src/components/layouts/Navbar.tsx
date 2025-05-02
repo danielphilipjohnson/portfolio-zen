@@ -58,12 +58,12 @@ const ZenNavbar = () => {
 								)}
 							</Link>
 						))}
-						<Link
+						{/*<Link
 							href="/contact"
 							className="px-4 py-2 ml-4 text-sm transition-colors border bg-[color:var(--color-moss-600)] border-[color:var(--color-moss-600)] text-white hover:bg-[color:var(--color-moss-700)] hover:border-[color:var(--color-moss-700)]"
 						>
 							Get in Touch
-						</Link>
+						</Link>*/}
 					</nav>
 
 					<button
@@ -110,12 +110,12 @@ const ZenNavbar = () => {
 							)}
 						</Link>
 					))}
-					<Link
+					{/*<Link
 						href="#contact"
 						className="px-6 py-2 mt-6 transition-colors border bg-[color:var(--color-clay-600)] border-[color:var(--color-clay-600)] text-white hover:bg-[color:var(--color-clay-700)] hover:border-[color:var(--color-clay-700)]"
 					>
 						Get in Touch
-					</Link>
+					</Link>*/}
 				</nav>
 			</div>
 		</header>
