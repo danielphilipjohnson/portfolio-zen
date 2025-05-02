@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Text } from './Text';
 import { ColorPath } from '@/tokens/colors';
 import { cn } from '@/lib/utils';
