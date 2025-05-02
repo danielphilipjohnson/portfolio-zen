@@ -4,7 +4,7 @@ import Container from '@/components/ui/Container';
 
 const Hero = () => {
 	return (
-		<section className="relative py-16 overflow-hidden bg-[color:var(--color-stone-50)] md:py-24">
+		<section className="relative py-32 overflow-hidden bg-[color:var(--color-stone-50)] md:py-24">
 			<div className="absolute inset-0 opacity-5">
 				<div className="absolute top-0 right-0 w-1/2 rounded-full h-1/2 bg-[color:var(--color-moss-100)] -translate-y-1/4 translate-x-1/4 blur-3xl"></div>
 				<div className="absolute bottom-0 left-0 w-1/2 rounded-full h-1/2 bg-[color:var(--color-water-100)] translate-y-1/4 -translate-x-1/4 blur-3xl"></div>
