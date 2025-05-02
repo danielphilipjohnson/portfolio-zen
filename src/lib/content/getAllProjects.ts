@@ -26,7 +26,7 @@ export async function getAllProjects() {
 					excerpt: data.excerpt,
 					description: data.description || null,
 					technologies: data.technologies || [],
-					categories: data.categories || [], // <- no extra mapping now
+					categories: data.categories || [],
 					featured: data.featured || false,
 					url: data.url || null,
 					githubUrl: data.githubUrl || null,
