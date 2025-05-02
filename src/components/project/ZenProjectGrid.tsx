@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { cn } from '@/lib/utils';
 import Text from '../ui/Text';
 import { Button } from '../ui/Button';

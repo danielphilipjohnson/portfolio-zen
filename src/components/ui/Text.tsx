@@ -1,4 +1,4 @@
-import React, { JSX, ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 

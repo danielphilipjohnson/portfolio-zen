@@ -1,7 +1,7 @@
 "use client"
 import BlogArticles from '@/components/blog/BlogArticles';
 import BlogHero from '@/components/blog/BlogHero';
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 
 interface BlogCategory {
 	name: string;

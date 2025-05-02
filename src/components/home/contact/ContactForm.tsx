@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Text from "@/components/ui/Text"
 import { cn } from "@/lib/utils"
 
