@@ -2,7 +2,6 @@ import Text from "@/components/ui/Text"
 import { Button } from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 
-
 const Hero = () => {
 	return (
 		<section className="relative py-16 overflow-hidden bg-[color:var(--color-stone-50)] md:py-24">
