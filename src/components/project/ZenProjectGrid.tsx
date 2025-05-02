@@ -5,9 +5,6 @@ import Text from '../ui/Text';
 import { Button } from '../ui/Button';
 
 
-// ! TODO use text field
-
-// Types for TypeScript support
 interface ProjectCategory {
 	name: string | { name: string; slug: string };
 	slug: string;
