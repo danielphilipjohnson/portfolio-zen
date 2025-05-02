@@ -13,13 +13,13 @@ const ContactInfo = () => {
         "h-full p-8 transition-all",
         "bg-[color:var(--color-moss-50)] border-l-2 border-[color:var(--color-moss-600)]"
       )}>
-        <Text
+        {/*<Text
           variant="h5"
           as="h3"
           className="mb-6 text-[color:var(--color-moss-700)]"
         >
           Get in Touch
-        </Text>
+        </Text>*/}
 
         <div className="mb-10 space-y-5">
           <div className="flex items-start">
