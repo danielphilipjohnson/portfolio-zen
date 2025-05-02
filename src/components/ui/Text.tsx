@@ -25,18 +25,20 @@ export type TextElement = keyof Pick<
 const textVariants = cva('text-slate-800 font-sans', {
 	variants: {
 		variant: {
+			hero: "text-4xl font-light tracking-tight md:text-5xl lg:text-6xl",
+			subtitle: "text-xl md:text-2xl font-extralight",
 			// Heading styles - embracing zen simplicity with clean, minimal styling
-			h1: 'text-4xl md:text-5xl font-light tracking-tight leading-tight',
-			h2: 'text-3xl md:text-4xl font-extralight tracking-tight leading-tight',
-			h3: 'text-2xl md:text-3xl font-light tracking-tight leading-snug',
+			h1: 'text-4xl md:text-5xl tracking-tight leading-tight',
+			h2: 'text-3xl md:text-4xl tracking-tight leading-tight',
+			h3: 'text-2xl md:text-3xl tracking-tight leading-snug',
 			h4: 'text-xl md:text-2xl leading-snug',
 			h5: 'text-lg md:text-xl font-normal leading-normal',
 			h6: 'text-base md:text-lg font-normal leading-normal',
 
 			// Body text variants - focus on readability with slightly looser tracking
 			'body-medium': 'text-base font-medium leading-relaxed tracking-wide',
-			body: 'text-base font-normal leading-relaxed tracking-wide',
-			'body-sm': 'text-sm font-normal',
+			body: 'text-base leading-relaxed tracking-wide',
+			'body-sm': 'text-sm',
 
 			// Special zen-inspired text styles
 			quote: 'text-md italic font-light leading-relaxed tracking-wide text-slate-700 py-1',
