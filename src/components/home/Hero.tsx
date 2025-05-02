@@ -1,6 +1,6 @@
 import Text from "@/components/ui/Text"
-import { Button } from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
+import { LinkButton } from '@/components/ui/LinkButton';
 
 const Hero = () => {
 	return (
@@ -21,7 +21,7 @@ const Hero = () => {
 				></div>
 			</div>
 
-			<Container>
+			<Container className="relative z-10">
 				<div className="items-center justify-between md:flex">
 					<div className="mb-8 md:w-3/5 md:mb-0">
 						<div className="mb-4 opacity-20">
@@ -66,9 +66,13 @@ const Hero = () => {
 
 
 						<div className="mt-8">
-							<Button variant="primary" size={'lg'}>
-								View Collection
-							</Button>
+							<LinkButton
+								href="/projects"
+								variant="primary"
+								size="lg"
+							>
+								View Collections
+							</LinkButton>
 						</div>
 					</div>
 
