@@ -1,1 +1,57 @@
-export { default } from "@/components/pages/BlogPage";
+import { getPageSEO } from "@/utils/seo";
+import { Metadata } from "next";
+import { getAllBlogs } from '@/lib/content/getAllBlogs';
+import BlogPageClient from '@/components/blog/BlogPageClient';
+import { format, isValid, parse } from 'date-fns';
+import { getBlogListingPageJsonLd } from '@/utils/jsonLd';
+import StructuredData from "@/components/StructuredData";
+
+export async function generateMetadata(): Promise<Metadata> {
+	const seoData = getPageSEO('/blog');
+
+	if (!seoData || !seoData.title) {
+		console.error("Error: SEO data is missing or has no title for path '/'");
+		return {
+			title: 'Error: Title Not Loaded - Check Config',
+			description: 'Error loading description.',
+		};
+	}
+
+	return {
+		title: seoData.title,
+		description: seoData.description,
+		keywords: seoData.keywords,
+		openGraph: seoData.openGraph ? {
+			title: seoData.openGraph.title || seoData.title, 
+			description: seoData.openGraph.description || seoData.description,
+			images: seoData.openGraph.images,
+			type: seoData.openGraph.type as 'website' | 'profile',
+			url: seoData.openGraph.url,
+		} : undefined,
+	};
+}
+
+const BlogPage = async () => {
+	const blogPosts = await getAllBlogs();
+
+	const postSummaries = blogPosts.map(post => {
+		const date = parse(post.publishDate, 'dd/MM/yyyy', new Date());
+		return {
+			slug: post.slug,
+			title: post.title,
+			publishDate: isValid(date) ? format(date, 'yyyy-MM-dd') : 'Invalid date',
+			imageUrl: post.imageUrl,
+			excerpt: post.excerpt,
+		};
+	});
+	const blogListingJsonLdData = getBlogListingPageJsonLd(postSummaries);
+
+	return (
+		<>
+			<StructuredData data={blogListingJsonLdData} id="blog-listing-jsonld" />
+			<BlogPageClient initialBlogPosts={blogPosts} />
+		</>
+	);
+};
+
+export default BlogPage;
