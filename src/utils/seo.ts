@@ -1,6 +1,27 @@
-// utils/seo.ts
-export function getPageSEO(pathname: string) {
-	const pages: Record<string, any> = {
+export type SeoPagePath =
+	| '/'
+	| '/about'
+	| '/projects'
+	| '/blog'
+	| '/contact';
+
+export interface SEOData {
+	title: string;
+	description: string;
+	keywords: string[];
+	openGraph: {
+		title: string;
+		description: string;
+		images: { url: string }[];
+		type: 'website' | 'profile' | 'article';
+		url?: string;
+	};
+}
+
+
+
+export function getPageSEO(pathname: string): SEOData {
+	const pages: Record<SeoPagePath, SEOData> = {
 		'/': {
 			title: 'Daniel Philip Johnson | Full-stack Developer',
 			description: 'Full-stack developer specializing in React, Next.js, and modern web technologies, working remotely from Cornwall.',
@@ -10,6 +31,7 @@ export function getPageSEO(pathname: string) {
 				description: 'Full-stack developer specializing in React, Next.js, and modern web technologies, working remotely from Cornwall.',
 				images: [{ url: '/images/og/home-og.jpg' }],
 				type: 'website',
+				url: 'https://www.danielphilipjohnson.com',
 			},
 		},
 		'/about': {
@@ -21,6 +43,7 @@ export function getPageSEO(pathname: string) {
 				description: 'Learn more about Daniel Philip Johnson, a full-stack developer with expertise in frontend technologies and a passion for creating elegant user experiences.',
 				images: [{ url: '/images/og/about-og.png' }],
 				type: 'profile',
+				url: 'https://www.danielphilipjohnson.com/about',
 			},
 		},
 		'/projects': {
@@ -32,6 +55,7 @@ export function getPageSEO(pathname: string) {
 				description: 'Explore my portfolio of web development projects using React, Next.js, Node.js, and other modern technologies.',
 				images: [{ url: '/images/og/projects-og.jpg' }],
 				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/projects',
 			},
 		},
 		'/blog': {
@@ -43,6 +67,7 @@ export function getPageSEO(pathname: string) {
 				description: 'Thoughts, tutorials and insights on frontend development, React, JavaScript, and modern web technologies.',
 				images: [{ url: '/images/og/blog-og.jpg' }],
 				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/blog',
 			},
 		},
 		'/contact': {
@@ -54,8 +79,9 @@ export function getPageSEO(pathname: string) {
 				description: 'Get in touch with Daniel Philip Johnson for project inquiries, collaborations, or questions about web development.',
 				images: [{ url: '/images/og/contact-og.jpg' }],
 				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/contact',
 			},
 		},
 	};
-	return pages[pathname] || {};
+	return pages[pathname as SeoPagePath];
 }

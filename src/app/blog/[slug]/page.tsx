@@ -10,5 +10,4 @@ export async function generateStaticParams() {
 	}))
 }
 
-export { generateMetadata } from '@/components/pages/BlogSinglePage';
 export { default } from "@/components/pages/BlogSinglePage";
