@@ -9,4 +9,6 @@ export async function generateStaticParams() {
 		slug: file.replace(/\.mdx$/, ''),
 	}))
 }
+
+export { generateMetadata } from '@/components/pages/BlogSinglePage';
 export { default } from "@/components/pages/BlogSinglePage";
