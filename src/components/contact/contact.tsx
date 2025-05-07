@@ -119,7 +119,7 @@ const ContactPage = () => {
 							Need help on you project?
 						</h1>
 
-						<p className="mb-12 text-lg text-[color:var(--color-stone-600)]">
+						<p className="mb-12 text-lg text-[color:var(--color-stone-800)]">
 							I am here to help and answer any question you might have about your
 							project. I look forward to hearing from you 🙂
 						</p>
@@ -134,7 +134,7 @@ const ContactPage = () => {
 										Message Sent Successfully
 									</h3>
 								</div>
-								<p className="text-[color:var(--color-stone-600)]">{submitStatus.message}</p>
+								<p className="text-[color:var(--color-stone-800)]">{submitStatus.message}</p>
 							</div>
 						) : (
 							<form id="project-contact" name="contact-form" method="post" data-netlify="true" onSubmit={handleSubmit}>

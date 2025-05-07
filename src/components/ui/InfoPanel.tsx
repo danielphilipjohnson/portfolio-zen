@@ -46,7 +46,7 @@ const InfoPanel = ({
 			{typeof children === 'string' ? (
 				<Text
 					variant="body-sm"
-					className="leading-relaxed text-[var(--color-stone-600)]"
+					className="leading-relaxed text-[var(--color-stone-800)]"
 				>
 					{children}
 				</Text>

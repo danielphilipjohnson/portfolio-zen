@@ -31,7 +31,7 @@ const PhilosophyPoints = ({ title, points }: PhilosophyPointsProps) => {
               </Text>
               <Text
                 variant="body-sm"
-                className="text-stone-600"
+                className="text-stone-800"
               >
                 {point.description}
               </Text>

@@ -31,7 +31,7 @@ const ContactInfo = () => {
             <div>
               <Text
                 variant="label"
-                className="mb-1 text-[color:var(--color-stone-600)]"
+                className="mb-1 text-[color:var(--color-stone-800)]"
               >
                 Email
               </Text>
@@ -56,7 +56,7 @@ const ContactInfo = () => {
             <div>
               <Text
                 variant="label"
-                className="mb-1 text-[color:var(--color-stone-600)]"
+                className="mb-1 text-[color:var(--color-stone-800)]"
               >
                 Location
               </Text>
@@ -73,7 +73,7 @@ const ContactInfo = () => {
         <div>
           <Text
             variant="label"
-            className="mb-4 block text-[color:var(--color-stone-600)]"
+            className="mb-4 block text-[color:var(--color-stone-800)]"
           >
             Find me on
           </Text>
@@ -102,7 +102,7 @@ const ContactInfo = () => {
                     "flex items-center justify-center w-10 h-10 transition-colors rounded-full",
                     hoveredIcon === social.id
                       ? "bg-[color:var(--color-moss-600)] text-white"
-                      : "bg-[color:var(--color-stone-200)] text-[color:var(--color-stone-600)]"
+                      : "bg-[color:var(--color-stone-200)] text-[color:var(--color-stone-800)]"
                   )}
                 >
                   {social.icon}

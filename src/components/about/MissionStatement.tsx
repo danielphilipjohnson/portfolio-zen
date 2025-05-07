@@ -40,7 +40,7 @@ const MissionStatement = () => {
 
 					<Text
 						variant="body"
-						className="pt-6 text-[var(--color-stone-600)]"
+						className="pt-6 text-[var(--color-stone-800)]"
 					>
 						I’m a full-stack and frontend engineer who designs and builds scalable, modern web applications using technologies like React, Next.js, Node.js, and Tailwind. I’m passionate about architecture, performance, and developer experience—whether that’s leading frontend rebuilds, integrating AI-driven features, or implementing security-first DevOps workflows. I care deeply about writing maintainable code, improving team velocity, and building user experiences that are fast, intuitive, and reliable.
 					</Text>
@@ -51,7 +51,7 @@ const MissionStatement = () => {
 						></div>
 						<Text
 							variant="body-sm"
-							className="text-[var(--color-stone-600)]"
+							className="text-[var(--color-stone-800)]"
 						>
 							Each technology in my stack has been intentionally chosen, like branches in a
 							bonsai tree—pruned and shaped to create balanced, elegant solutions that serve

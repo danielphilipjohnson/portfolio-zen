@@ -9,14 +9,14 @@ const ExperienceCard = ({ experience }: { experience: ExperienceItem }) => (
 
     {experience.technologies && experience.technologies.length > 0 && (
       <div className="mb-4">
-        <Text variant="label" className="mb-2 text-stone-600">
+        <Text variant="label" className="mb-2 text-stone-800">
           Technologies
         </Text>
         <div className="flex flex-wrap gap-2">
           {experience.technologies.map(tech => (
             <span
               key={tech}
-              className="inline-block px-3 py-1 text-xs border rounded-sm bg-stone-100 text-stone-600 border-stone-200"
+              className="inline-block px-3 py-1 text-xs border rounded-sm bg-stone-100 text-stone-800 border-stone-200"
             >
               {tech}
             </span>
@@ -27,7 +27,7 @@ const ExperienceCard = ({ experience }: { experience: ExperienceItem }) => (
 
     {experience.highlights && experience.highlights.length > 0 && (
       <div>
-        <Text variant="label" className="mb-2 text-stone-600 dark:text-stone-400">
+        <Text variant="label" className="mb-2 text-stone-800 dark:text-stone-800">
           Key Contributions
         </Text>
         <ul className="pl-5 space-y-1 text-sm list-disc text-stone-700">

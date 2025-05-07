@@ -76,13 +76,13 @@ const OnlineCoursesClient = ({ courses, categories }: Readonly<OnlineCoursesClie
 
 									<Text
 										variant="label"
-										className="text-stone-600 "
+										className="text-stone-800 "
 									>
 										{course.provider}
 									</Text>
 								</div>
 
-								<div className="px-2 py-1 font-mono text-xs bg-stone-100 text-stone-500 ">
+								<div className="px-2 py-1 font-mono text-xs bg-stone-100 text-stone-800">
 									{course.date}
 								</div>
 							</div>
@@ -90,7 +90,7 @@ const OnlineCoursesClient = ({ courses, categories }: Readonly<OnlineCoursesClie
 							<div className="p-5">
 								<Text
 									variant="h5"
-									className="mb-3 text-moss-700 "
+									className="mb-3 text-moss-700"
 								>
 									{course.title}
 								</Text>
@@ -98,7 +98,7 @@ const OnlineCoursesClient = ({ courses, categories }: Readonly<OnlineCoursesClie
 								{course.description && (
 									<Text
 										variant="body-sm"
-										className="mb-4 text-stone-600 line-clamp-3"
+										className="mb-4 text-stone-800 line-clamp-3"
 									>
 										{course.description}
 									</Text>
@@ -109,7 +109,7 @@ const OnlineCoursesClient = ({ courses, categories }: Readonly<OnlineCoursesClie
 										{course.skills.map(skill => (
 											<span
 												key={skill}
-												className="inline-block px-2 py-1 text-xs rounded-sm bg-stone-100 text-stone-600 "
+												className="inline-block px-2 py-1 text-xs rounded-sm bg-stone-100 text-stone-800 "
 											>
 												{skill}
 											</span>
@@ -166,13 +166,13 @@ const OnlineCoursesClient = ({ courses, categories }: Readonly<OnlineCoursesClie
 			<div className="max-w-2xl mx-auto mt-12 text-center">
 				<Text
 					variant="quote"
-					className="text-stone-600 border-stone-300 "
+					className="text-stone-800 border-stone-300 "
 				>
 					&quot;In the beginner&apos;s mind there are many possibilities, in the expert&apos;s mind there are few.&quot;
 				</Text>
 				<Text
 					variant="caption"
-					className="mt-2 text-stone-500"
+					className="mt-2 text-stone-700"
 				>
 					— Shunryu Suzuki, Zen Mind, Beginner&apos;s Mind
 				</Text>

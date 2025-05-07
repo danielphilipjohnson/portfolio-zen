@@ -4,7 +4,7 @@ import Text from "../ui/Text";
 
 export const SkillCategory = ({ title, skills, bgColor, textColor }: SkillCategoryProps) => (
 	<div>
-		<Text as='h4' variant='body-sm' className="mb-3 uppercase text-[var(--color-stone-600)]">
+		<Text as='h4' variant='body-sm' className="mb-3 uppercase text-[var(--color-stone-800)]">
 			{title}
 		</Text>
 

@@ -15,10 +15,10 @@ const Experience = ({
 			<div className="container max-w-5xl px-6 mx-auto">
 				<div className="relative mb-16">
 					<div className="absolute top-0 left-0 w-16 h-px bg-moss-300" />
-					<Text variant="h2" weight="light" className="mt-6 mb-3 text-stone-800">
+					<Text as="h2" variant="h2" weight="light" className="mt-6 mb-3 text-stone-800">
 						{title}
 					</Text>
-					<Text variant="body" className="max-w-xl text-stone-600">
+					<Text variant="body" className="max-w-xl text-stone-800">
 						{subtitle}
 					</Text>
 				</div>

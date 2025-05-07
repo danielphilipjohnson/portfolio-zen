@@ -29,7 +29,7 @@ const Input = ({
     <div className="mb-6">
       <label
         htmlFor={id}
-        className="block mb-2 text-sm tracking-wider uppercase text-stone-600"
+        className="block mb-2 text-sm tracking-wider uppercase text-stone-800"
       >
         {label}
         {required && <span className="text-clay-600">*</span>}

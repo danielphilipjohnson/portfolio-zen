@@ -56,7 +56,7 @@ const ContactForm = () => {
 
             <Text
               variant="body"
-              className="text-[color:var(--color-stone-600)]"
+              className="text-[color:var(--color-stone-800)]"
             >
               Thank you for reaching out. I&apos;ll get back to you soon.
             </Text>
@@ -67,7 +67,7 @@ const ContactForm = () => {
               <div>
                 <label
                   htmlFor="name"
-                  className="block mb-2 text-sm text-[color:var(--color-stone-600)]"
+                  className="block mb-2 text-sm text-[color:var(--color-stone-800)]"
                 >
                   Your Name
                 </label>
@@ -83,7 +83,7 @@ const ContactForm = () => {
               <div>
                 <label
                   htmlFor="email"
-                  className="block mb-2 text-sm text-[color:var(--color-stone-600)]"
+                  className="block mb-2 text-sm text-[color:var(--color-stone-800)]"
                 >
                   Your Email
                 </label>
@@ -100,7 +100,7 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="subject"
-                className="block mb-2 text-sm text-[color:var(--color-stone-600)]"
+                className="block mb-2 text-sm text-[color:var(--color-stone-800)]"
               >
                 Subject
               </label>
@@ -116,7 +116,7 @@ const ContactForm = () => {
             <div>
               <label
                 htmlFor="message"
-                className="block mb-2 text-sm text-[color:var(--color-stone-600)]"
+                className="block mb-2 text-sm text-[color:var(--color-stone-800)]"
               >
                 Your Message
               </label>

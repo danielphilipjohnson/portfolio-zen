@@ -14,7 +14,7 @@ const TagList = ({ heading, tags, colorToken }: TagListProps) => {
         as="h3" 
         variant="h6" 
         weight="medium" 
-        className="text-[var(--color-stone-600)] mb-3"
+        className="text-[var(--color-stone-800)] mb-3"
       >
         {heading}
       </Text>
@@ -26,7 +26,7 @@ const TagList = ({ heading, tags, colorToken }: TagListProps) => {
             className={cn(
               'px-3 py-1 text-sm',
               `bg-[var(--color-${colorToken}-100)]`,
-              `text-[var(--color-${colorToken}-600)]`
+              `text-[var(--color-${colorToken}-700)]`
             )}
           >
             {tag}

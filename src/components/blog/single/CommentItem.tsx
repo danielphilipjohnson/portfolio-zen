@@ -32,7 +32,7 @@ export const CommentItem = ({ comment }: CommentItemProps) => {
       </div>
       <Text
         variant="body"
-        className="mb-4 text-[var(--color-stone-600)]"
+        className="mb-4 text-[var(--color-stone-800)]"
       >
         {comment.content}
       </Text>

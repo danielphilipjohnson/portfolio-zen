@@ -73,7 +73,7 @@ const SocialIcon = ({ platform, username, url, className }: Readonly<SocialIconP
       aria-label={`${platform} profile for ${username}`}
       className={cn(
         'w-10 h-10 rounded-full flex items-center justify-center transition-colors',
-        'bg-stone-100 hover:bg-moss-600 text-stone-600 hover:text-white',
+        'bg-stone-100 hover:bg-moss-600 text-stone-800 hover:text-white',
         className
       )}
     >

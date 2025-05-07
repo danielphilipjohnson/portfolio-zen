@@ -32,7 +32,7 @@ export const ChatSection = () => {
 			<div className={SECTION_STYLES.chatBox}>
 				<div className="flex items-start mb-4">
 					<div className="w-2 h-2 mt-2 mr-3 rounded-full bg-[var(--color-water-500)]" />
-					<Text className="text-[var(--color-stone-600)]">
+					<Text className="text-[var(--color-stone-800)]">
 						@ me on <a
 							href="https://twitter.com/danielp_johnson"
 							className="transition-colors text-[var(--color-water-600)]"
@@ -58,7 +58,7 @@ export const ChatSection = () => {
 						<Text as="h4" variant="h5" className="text-[var(--color-stone-700)] mb-2">
 							{item.topic}
 						</Text>
-						<Text variant="body-sm" className="text-[var(--color-stone-600)]">
+						<Text variant="body-sm" className="text-[var(--color-stone-800)]">
 							{item.description}
 						</Text>
 					</div>

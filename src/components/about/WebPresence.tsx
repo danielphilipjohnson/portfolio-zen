@@ -26,7 +26,7 @@ export const WebPresence = () => {
 				{webItems.map((item, index) => (
 					<li key={index} className="flex items-start">
 						<div className="w-2 h-2 mt-2 mr-3 rounded-full bg-[var(--color-clay-400)]" />
-						<Text className="text-[var(--color-stone-600)]">{item}</Text>
+						<Text className="text-[var(--color-stone-800)]">{item}</Text>
 					</li>
 				))}
 			</ul>

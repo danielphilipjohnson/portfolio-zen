@@ -20,7 +20,7 @@ const ZenValuesMission = () => {
 								<h3 className="mb-3 text-lg font-medium text-stone-700">
 									Values
 								</h3>
-								<Text variant="body" className="mb-4 text-stone-600">
+								<Text variant="body" className="mb-4 text-stone-800">
 									I always try to leave the world a better place than yesterday. I try
 									to give advice related to programming and personal. I always try 99%
 									of the time to help the best I can. If I don&apos;t know the answer, I
@@ -44,7 +44,7 @@ const ZenValuesMission = () => {
 								<h3 className="mb-3 text-lg font-medium text-stone-700">
 									Accessibility Mission
 								</h3>
-								<Text variant="body" className="text-stone-600">
+								<Text variant="body" className="text-stone-800">
 									Currently, I&apos;m finishing off my language studies with the Spanish
 									language. I know that speaking and reading in the English language
 									is a blessing. Many people do not have access to good programming
@@ -81,13 +81,13 @@ const ZenValuesMission = () => {
 								/>
 							</div>
 
-							<Text variant="caption" className="py-2 text-center text-stone-500">
+							<Text variant="caption" className="py-2 text-center text-stone-700">
 								My first day as a FullStack engineer
 							</Text>
 						</figure>
 
 						<div className="p-4 mt-6 border-l-2 bg-moss-50 border-moss-500">
-							<Text variant="quote" className="text-stone-600">
+							<Text variant="quote" className="text-stone-800">
 								Every contribution, like every careful cut in bonsai cultivation, shapes a better future for those seeking knowledge.
 							</Text>
 						</div>

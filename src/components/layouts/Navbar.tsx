@@ -39,7 +39,7 @@ const ZenNavbar = () => {
 								href={link.href}
 								className={cn(
 									"relative px-2 md:px-4 py-2 text-sm transition-all text-[color:var(--color-stone-800)] hover:text-[color:var(--color-moss-500)]",
-									pathname === link.href && "text-[color:var(--color-moss-500)]"
+									pathname === link.href && "text-[color:var(--color-moss-700)]"
 								)}
 							>
 								{link.label}
@@ -60,7 +60,7 @@ const ZenNavbar = () => {
 
 					{/*<button
 						className={cn(
-							"relative z-[60] transition-colors md:hidden focus:outline-none text-[color:var(--color-stone-600)]"
+							"relative z-[60] transition-colors md:hidden focus:outline-none text-[color:var(--color-stone-800)]"
 						)}
 						onClick={toggleMenu}
 						aria-label="Toggle menu"
@@ -89,7 +89,7 @@ const ZenNavbar = () => {
 							href={link.href}
 							className={cn(
 								"relative text-lg transition-colors hover:text-[color:var(--color-clay-600)]",
-								pathname === link.href ? "text-[color:var(--color-clay-600)]" : "text-[color:var(--color-stone-600)]"
+								pathname === link.href ? "text-[color:var(--color-clay-600)]" : "text-[color:var(--color-stone-800)]"
 							)}
 						>
 							{link.label}
