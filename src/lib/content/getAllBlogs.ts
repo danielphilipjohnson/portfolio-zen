@@ -25,6 +25,7 @@ export async function getAllBlogs() {
 					imageUrl: data.imageUrl,
 					imageAlt: data.imageAlt,
 					excerpt: data.excerpt,
+					tags: data.tags,
 					categories: (data.categories || []).map((category: string) => ({
 						name: category,
 						slug: category.toLowerCase().replace(/\s+/g, '-'),
