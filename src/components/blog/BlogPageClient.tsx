@@ -3,18 +3,14 @@ import BlogArticles from '@/components/blog/BlogArticles';
 import BlogHero from '@/components/blog/BlogHero';
 import { useState, useMemo } from 'react';
 
-interface BlogCategory {
-	name: string;
-	slug: string;
-}
-
 interface BlogPost {
 	id: string;
 	title: string;
 	slug: string;
 	imageUrl: string;
 	imageAlt: string;
-	categories?: BlogCategory[];
+	category: string;
+	tags?: string[];
 	excerpt?: string;
 	publishDate?: string;
 	readTime?: string;
@@ -26,11 +22,10 @@ interface BlogPageClientProps {
 
 const BlogPageClient = ({ initialBlogPosts }: BlogPageClientProps) => {
 	const [activeCategory, setActiveCategory] = useState("all");
-
 	const filteredBlogPosts = useMemo(() => {
 		if (activeCategory === "all") return initialBlogPosts;
 		return initialBlogPosts.filter(post => 
-			post.categories?.some((category: BlogCategory) => category.slug === activeCategory)
+			post.tags?.some(tag => tag.toLowerCase() === activeCategory.toLowerCase())
 		);
 	}, [activeCategory, initialBlogPosts]);
 
@@ -49,10 +44,7 @@ const BlogPageClient = ({ initialBlogPosts }: BlogPageClientProps) => {
 					{ name: "All", slug: "all", isDefault: true },
 					{ name: "Technology", slug: "technology" },
 					{ name: "Reflection", slug: "reflection" },
-					{ name: "Design Systems", slug: "design-systems" },
-					{ name: "Accessibility", slug: "accessibility" },
 					{ name: "Frontend", slug: "frontend" },
-					{ name: "Other", slug: "other" }
 				]}
 				activeCategory={activeCategory}
 				onCategoryChange={handleCategoryChange}

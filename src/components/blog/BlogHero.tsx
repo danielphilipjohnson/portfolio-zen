@@ -39,14 +39,17 @@ const BlogHero = ({
 					<div className="absolute inset-0 bg-[var(--color-stone-900)] opacity-70" />
 				</div>
 
-				<div className="container relative z-10 px-6 py-16 mx-auto mt-16 md:pt-24 md:pb-48">
+				<div className="container relative z-10 px-6 py-32 mx-auto mt-16 md:pt-48 md:pb-48">
 					<div className="absolute top-0 left-0 w-1/3 h-1 bg-[var(--color-moss-500)]" />
 
-					<Text variant="h1" as="h1" className="mb-6 text-[var(--color-stone-50)]">
-						{title}
-					</Text>
+					<div className="relative mb-6">
+						<div className="absolute top-0 bottom-0 w-1 -left-4 bg-[var(--color-moss-500)]" />
+						<Text as="h1" variant="hero" className="text-[var(--color-stone-50)]">
+							{title}
+						</Text>
+					</div>
 
-					<Text variant="h2" as="p" weight='light' className="mb-6 text-[var(--color-stone-200)]">
+					<Text as="h2" variant="subtitle" className="max-w-2xl text-[var(--color-stone-50)]">
 						Cultivating thoughtful insights on design and development
 					</Text>
 				</div>

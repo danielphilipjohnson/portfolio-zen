@@ -31,7 +31,7 @@ const ZenProjectHero = ({
 				/>
 			</div>
 
-			<div className="container relative z-10 px-6 pt-16 pb-16 mx-auto mt-16 md:pt-24 md:pb-48">
+			<div className="container relative z-10 px-6 pt-32 pb-16 mx-auto mt-16 md:pt-48 md:pb-48">
 			
 				<div className="absolute right-6 top-24 md:right-12 md:top-32 opacity-10">
 					<div className="font-thin text-[var(--color-stone-50)] text-7xl md:text-9xl">

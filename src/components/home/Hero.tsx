@@ -1,10 +1,10 @@
 import Text from "@/components/ui/Text"
-import { Button } from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
+import { LinkButton } from '@/components/ui/LinkButton';
 
 const Hero = () => {
 	return (
-		<section className="relative py-16 overflow-hidden bg-[color:var(--color-stone-50)] md:py-24">
+		<section className="relative py-32 overflow-hidden bg-[color:var(--color-stone-50)] md:py-24">
 			<div className="absolute inset-0 opacity-5">
 				<div className="absolute top-0 right-0 w-1/2 rounded-full h-1/2 bg-[color:var(--color-moss-100)] -translate-y-1/4 translate-x-1/4 blur-3xl"></div>
 				<div className="absolute bottom-0 left-0 w-1/2 rounded-full h-1/2 bg-[color:var(--color-water-100)] translate-y-1/4 -translate-x-1/4 blur-3xl"></div>
@@ -21,7 +21,7 @@ const Hero = () => {
 				></div>
 			</div>
 
-			<Container>
+			<Container className="relative z-10">
 				<div className="items-center justify-between md:flex">
 					<div className="mb-8 md:w-3/5 md:mb-0">
 						<div className="mb-4 opacity-20">
@@ -66,9 +66,13 @@ const Hero = () => {
 
 
 						<div className="mt-8">
-							<Button variant="primary" size={'lg'}>
-								View Collection
-							</Button>
+							<LinkButton
+								href="/projects"
+								variant="primary"
+								size="lg"
+							>
+								View Collections
+							</LinkButton>
 						</div>
 					</div>
 

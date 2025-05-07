@@ -1,30 +1,45 @@
 import Grid from '@/components/ui/Grid';
 import GridItem from '@/components/ui/GridItem';
 import Blockquote from '@/components/ui/Blockquote';
-import { Button } from '@/components/ui/Button';
 import Container from '@/components/ui/Container';
 import { ABOUT_INFO, SKILL_CATEGORIES } from '@/data/about-intro';
 import Text from '../ui/Text';
 import AboutInfoItem from './AboutInfoItem';
 import { SkillCategory } from './SkillCategory';
+import { Button } from '../ui/Button';
 
 const About = () => {
 	return (
 		<div className=" bg-[var(--color-stone-50)]">
+
 			<section className="relative">
-				<div className="relative h-72 md:h-96">
-					<img
-						src="/images/about-hero.png"
-						alt="Banner"
-						className="absolute inset-0 object-cover w-full h-full"
-					/>
-					<div
-						className="absolute inset-0 bg-gradient-to-b from-[var(--color-stone-950)]/40 to-[var(--color-stone-950)]/70"
-					></div>
+				<div className="relative overflow-hidden">
+					<div className="absolute inset-0 z-0">
+						<img
+							src="/images/about-hero.png"
+							alt="Blog Hero"
+							className="object-cover w-full h-full"
+						/>
+						<div className="absolute inset-0 bg-[var(--color-stone-900)] opacity-70" />
+					</div>
 
-					<div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--color-moss-500)] to-transparent opacity-30"></div>
+					<div className="container relative z-10 px-6 py-32 mx-auto mt-16 md:pt-48 md:pb-48">
+						<div className="absolute top-0 left-0 w-1/3 h-1 bg-[var(--color-moss-500)]" />
+
+						<div className="relative mb-6">
+							<div className="absolute top-0 bottom-0 w-1 -left-4 bg-[var(--color-moss-500)]" />
+							<Text as="h1" variant="hero" className="text-[var(--color-stone-50)]">
+								About
+							</Text>
+						</div>
+						<Text as="h2" variant="subtitle" className="max-w-2xl text-[var(--color-stone-50)]">
+							A journey of deliberate growth and thoughtful development, both personal and professional.
+						</Text>
+					</div>
+
+					<div className="absolute inset-0 bg-gradient-to-b from-[var(--color-stone-950)]/40 to-[var(--color-stone-950)]/30"></div>		
 				</div>
-
+				
 				<Container className="relative">
 					<div className="absolute overflow-hidden border-4 rounded-full -top-16 left-8 border-[var(--color-moss-50)]">
 						<img
@@ -33,7 +48,7 @@ const About = () => {
 							className="object-cover w-32 h-32"
 						/>
 					</div>
-				</Container>
+				</Container>	
 			</section>
 
 			<section className="pt-20 pb-16 bg-[var(--color-stone-50)]">
@@ -62,7 +77,7 @@ const About = () => {
 									asChild
 								>
 									<a
-										href="/static/Daniel_Philip_Johnson_Front_End_Engineer-afc8e0c1b966394ae65c1dbd9697fd63.pdf"
+										href="/resume/Daniel-Philip-Johnson-Resume.pdf"
 										download
 										className="inline-flex items-center"
 									>
