@@ -64,7 +64,7 @@ const About = () => {
 									Full-stack developer
 								</Text>
 
-								<Text as='p' variant='body-sm' className="mb-2 text-[var(--color-stone-600)]">
+								<Text as='p' variant='body-sm' className="mb-2 text-[var(--color-stone-800)]">
 									👨‍💻 I work remote 🏠 in Cornwall
 								</Text>
 								
@@ -101,7 +101,7 @@ const About = () => {
 									Personal Philosophy
 								</Text>
 						
-								<Text as='p' variant='body' className="text-[var(--color-stone-600)]">
+								<Text as='p' variant='body' className="text-[var(--color-stone-800)]">
 									My personal goal is to help others get their first programming job and work my way towards becoming a senior.
 									Like the art of bonsai cultivation, I believe in patience, precision, and mindful growth in both my personal
 									journey and in nurturing others along their paths.
@@ -130,7 +130,7 @@ const About = () => {
 								<div
 									className="p-6 border border-[var(--color-stone-200)] bg-white"
 								>
-									<Text as='p' variant='body-sm' className="text-[var(--color-stone-600)]">
+									<Text as='p' variant='body-sm' className="text-[var(--color-stone-800)]">
 										<span className="font-semibold">⚡ Fun fact:</span> I started programming with Basic on Commodore 64 (CBM 64) but never owned a PC until Windows Vista in 2008 😑. My desktop 🖥️ was Packard Bell iMedia x2414 with an enormous amount of RAM totalling 2GB. It did not take too long for me to consider my options and use Ubuntu 9.04 (Jaunty Jackalope). From there, I have used Linux ever since and yes, I use KDE for my GUI &quot;you know what they say old habits die hard.&quot;
 									</Text>
 								</div>

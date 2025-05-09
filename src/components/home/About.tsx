@@ -28,6 +28,7 @@ const About = () => {
 						<div className="relative mb-8">
 							<div className="absolute w-8 h-px -left-4 top-1/2 bg-clay-400"></div>
 							<Text
+							as="h2"
 								variant="h2"
 								weight="light"
 								className="text-stone-800"
@@ -37,8 +38,8 @@ const About = () => {
 						</div>
 
 						<Text
-							variant="h4"
-							weight="light"
+							variant="h5"
+							weight="medium"
 							className="mb-6 text-moss-700"
 						>
 							{summary}

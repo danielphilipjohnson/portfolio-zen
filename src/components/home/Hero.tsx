@@ -59,7 +59,7 @@ const Hero = () => {
 						<Text
 							variant="body"
 							weight="light"
-							className="max-w-lg text-[color:var(--color-stone-600)]"
+							className="max-w-lg text-[color:var(--color-stone-800)]"
 						>
 							With 5+ years in fintech and e-commerce, I bridge design systems, developer experience, and backend fluency — turning complex product flows into performant, accessible, and maintainable interfaces.
 						</Text>

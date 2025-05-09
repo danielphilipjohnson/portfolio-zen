@@ -27,6 +27,6 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 		title: 'Tools & Environment',
 		skills: ['Linux', 'Git', 'Docker', 'VS Code', 'Figma', 'Terminal'],
 		bgColor: 'bg-[var(--color-clay-100)]',
-		textColor: 'text-[var(--color-clay-600)]',
+		textColor: 'text-[var(--color-clay-800)]',
 	},
 ];

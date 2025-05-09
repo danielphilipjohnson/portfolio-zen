@@ -57,13 +57,13 @@ const BlogArticles = ({
 							{(article.publishDate || article.readTime) && (
 								<div className="flex items-center mb-3">
 									{article.publishDate && (
-										<span className="mr-3 text-xs text-[var(--color-stone-600)]">
+										<span className="mr-3 text-xs text-[var(--color-stone-800)]">
 											{article.publishDate}
 										</span>
 									)}
 
 									{article.readTime && (
-										<span className="text-xs text-[var(--color-stone-600)]">
+										<span className="text-xs text-[var(--color-stone-800)]">
 											{article.readTime}
 										</span>
 									)}
@@ -78,7 +78,7 @@ const BlogArticles = ({
 								
 							
 							{showExcerpt && article.excerpt && (
-								<p className="mb-4 text-sm line-clamp-3 text-[var(--color-stone-600)]">
+								<p className="mb-4 text-sm line-clamp-3 text-[var(--color-stone-800)]">
 									{article.excerpt}
 								</p>
 							)}

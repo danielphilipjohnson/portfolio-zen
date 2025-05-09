@@ -36,7 +36,13 @@ const BlogHero = ({
 						alt="Blog Hero"
 						className="object-cover w-full h-full"
 					/>
-					<div className="absolute inset-0 bg-[var(--color-stone-900)] opacity-70" />
+					<div
+						className="absolute inset-0 bg-[var(--color-stone-950)]"
+						style={{
+							opacity: 0.8
+						}}
+					/>
+
 				</div>
 
 				<div className="container relative z-10 px-6 py-32 mx-auto mt-16 md:pt-48 md:pb-48">
@@ -64,13 +70,13 @@ const BlogHero = ({
 							{notification}
 						</Text>
 						
-						<Text className='text-[var(--color-stone-600)]' variant={'body-sm'}>
+						<Text className='text-[var(--color-stone-800)]' variant={'body-sm'}>
 							{description}
 						</Text>
 					</div>
 
 					<div className="mb-8">
-						<Text variant="body-sm" weight="medium" as="h2" className="mb-4 text-[var(--color-stone-600)] tracking-wide">
+						<Text variant="body-sm" weight="medium" as="h2" className="mb-4 text-[var(--color-stone-800)] tracking-wide">
 							FILTER BY CATEGORY
 						</Text>
 

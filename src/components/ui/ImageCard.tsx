@@ -24,7 +24,7 @@ export const ImageCard = ({ src, alt, caption }: ImageCardProps) => (
 			/>
 		</div>
 
-		<figcaption className="py-2 text-xs text-center text-[var(--color-stone-500)]">
+		<figcaption className="py-2 text-xs text-center text-[var(--color-stone-700)]">
 			{caption}
 		</figcaption>
 	</figure>

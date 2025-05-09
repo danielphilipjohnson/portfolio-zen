@@ -66,7 +66,7 @@ const ZenProjectGrid = ({
 							Cultivated Projects
 						</Text>
 					</div>
-					<Text as="p" variant="h6" className="text-[var(--color-stone-600)]">
+					<Text as="p" variant="h6" className="text-[var(--color-stone-800)]">
 						Each project represents a carefully tended digital ecosystem, pruned and shaped with intention.
 						Like bonsai trees, they embody balance, purpose, and meticulous attention to detail.
 					</Text>
@@ -170,14 +170,14 @@ const ZenProjectGrid = ({
 								
 									
 									{project.description && (
-										<Text as="p" variant="body-sm" className="mb-4 line-clamp-3 text-[var(--color-stone-600)]">
+										<Text as="p" variant="body-sm" className="mb-4 line-clamp-3 text-[var(--color-stone-800)]">
 											{project.description}
 										</Text>
 									)}
 
 									{project.technologies && project.technologies.length > 0 && (
 										<div className="mb-4">
-											<Text as="h4" variant="body-sm" weight="medium" className="uppercase text-[var(--color-stone-600)]">
+											<Text as="h4" variant="body-sm" weight="medium" className="uppercase text-[var(--color-stone-800)]">
 												Technologies
 											</Text>
 											
@@ -225,7 +225,7 @@ const ZenProjectGrid = ({
 												href={project.githubUrl}
 												target="_blank"
 												rel="noopener noreferrer"
-												className="flex items-center text-sm transition-colors text-[var(--color-stone-600)]"
+												className="flex items-center text-sm transition-colors text-[var(--color-stone-800)]"
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +247,7 @@ const ZenProjectGrid = ({
 
 				{filteredProjects.length === 0 && (
 					<div
-						className="py-16 text-center text-[var(--color-stone-600)]"
+						className="py-16 text-center text-[var(--color-stone-800)]"
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"

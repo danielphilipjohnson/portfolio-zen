@@ -8,6 +8,7 @@ interface EducationHeaderProps {
 const SectionHeader = ({ title, subtitle }: Readonly<EducationHeaderProps>)  => (
   <div className="mb-16 text-center">
     <Text
+    as="h2"
       variant="h2"
       weight="light"
       className="mb-3 text-stone-800"
@@ -16,7 +17,7 @@ const SectionHeader = ({ title, subtitle }: Readonly<EducationHeaderProps>)  => 
     </Text>
     <Text
       variant="body"
-      className=" text-stone-600"
+      className=" text-stone-800"
     >
       {subtitle}
     </Text>

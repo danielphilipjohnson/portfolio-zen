@@ -60,7 +60,7 @@ const FocusAndTechnologies = () => {
 
 					<div className="flex mt-8">
 						<div className="w-1 mr-4 self-stretch rounded-full bg-[var(--color-moss-300)]" />
-						<Text as='p' variant="body-sm" className="text-[var(--color-stone-600)] italic">
+						<Text as='p' variant="body-sm" className="text-[var(--color-stone-800)] italic">
 							Each technology serves a specific purpose in my development ecosystem, carefully chosen and cultivated like branches in a bonsai tree—balanced, intentional, and harmonious.
 						</Text>
 					</div>

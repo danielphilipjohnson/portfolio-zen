@@ -27,14 +27,14 @@ const EducationItem  = ({ item }: Readonly<EducationItemProps>) => {
             </div>
           </div>
 
-          <Text variant="h4" weight="light" className="mb-1 text-moss-700">
+          <Text as="h3" variant="h4" weight="light" className="mb-1 text-moss-700">
             {item.degree}
           </Text>
-          <Text variant="h5" weight="normal" className="text-stone-700">
+          <Text as="h4" variant="h5" weight="normal" className="text-stone-700">
             {item.institution}
           </Text>
           {item.location && (
-            <Text variant="caption" className="mb-2 text-stone-500">
+            <Text variant="caption" className="mb-2 text-stone-800">
               {item.location}
             </Text>
           )}
@@ -62,7 +62,7 @@ const EducationItem  = ({ item }: Readonly<EducationItemProps>) => {
                     {item.courses.map((course, idx) => (
                       <li key={course[idx]} className="flex items-baseline">
                         <div className="w-1.5 h-1.5 bg-clay-400 rounded-full mr-2 mt-1.5 flex-shrink-0" aria-hidden="true" />
-                        <Text variant="body-sm" className="text-stone-600">
+                        <Text variant="body-sm" className="text-stone-800">
                           {course}
                         </Text>
                       </li>
@@ -80,7 +80,7 @@ const EducationItem  = ({ item }: Readonly<EducationItemProps>) => {
                     {item.achievements.map((achievement, idx) => (
                       <li key={idx} className="flex items-baseline">
                         <div className="w-1.5 h-1.5 bg-moss-500 rounded-full mr-2 mt-1.5 flex-shrink-0" aria-hidden="true" />
-                        <Text variant="body-sm" className="text-stone-600">
+                        <Text variant="body-sm" className="text-stone-800">
                           {achievement}
                         </Text>
                       </li>

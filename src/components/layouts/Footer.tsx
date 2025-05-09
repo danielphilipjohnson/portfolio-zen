@@ -1,4 +1,5 @@
 import BackToTop from "@/components/ui/BackToTop"
+import Link from "next/link";
 
 const ZenFooter = () => {
 	const currentYear = new Date().getFullYear();
@@ -52,17 +53,18 @@ const ZenFooter = () => {
 				<div className="grid grid-cols-1 gap-10 md:grid-cols-12">
 					<div className="md:col-span-4">
 						<div className="mb-6">
-							<a
-								href="#home"
+							<Link
+								href="/"
 								className="inline-block font-serif text-2xl tracking-wider transition-colors text-[var(--color-moss-700)]"
 							>
 								<span className="font-light">Daniel Philip </span>
 								<span className="font-medium">Johnson</span>
-							</a>
+							</Link>
 						</div>
 
-						<p className="max-w-xs mb-6 text-sm leading-relaxed text-[var(--color-stone-600)]">
-I craft meaningful web experiences through clean, scalable code and user-first design—driven by curiosity, care, and a passion for progress.						</p>
+						<p className="max-w-xs mb-6 text-sm leading-relaxed text-[var(--color-stone-800)]">
+							I craft meaningful web experiences through clean, scalable code and user-first design—driven by curiosity, care, and a passion for progress.
+						</p>
 						{/* <Subscribe />*/}
 					</div>
 
@@ -76,7 +78,7 @@ I craft meaningful web experiences through clean, scalable code and user-first d
 								<li key={index}>
 									<a
 										href={link.href}
-										className="inline-block text-sm transition-colors hover:underline text-[var(--color-stone-600)]"
+										className="inline-block text-sm transition-colors hover:underline text-[var(--color-stone-800)]"
 									>
 										{link.label}
 									</a>
@@ -95,7 +97,7 @@ I craft meaningful web experiences through clean, scalable code and user-first d
 								<li key={index}>
 									<a
 										href={link.href}
-										className="inline-block text-sm transition-colors hover:underline text-[var(--color-stone-600)]"
+										className="inline-block text-sm transition-colors hover:underline text-[var(--color-stone-800)]"
 									>
 										{link.label}
 									</a>
@@ -111,20 +113,21 @@ I craft meaningful web experiences through clean, scalable code and user-first d
 
 						<div className="flex mb-4 space-x-4">
 							{footerLinks.social.map((link, index) => (
-								<a
+								<Link
 									key={index}
 									href={link.href}
 									target="_blank"
 									rel="noopener noreferrer"
 									className="transition-colors text-[var(--color-stone-500)] hover:text-[var(--color-moss-600)]"
+									title={link.label}
 								>
 									{link.icon}
-								</a>
+								</Link>
 							))}
 						</div>
 
 						<div className="space-y-2">
-							<p className="text-sm text-[var(--color-stone-600)]">
+							<p className="text-sm text-[var(--color-stone-800)]">
 								<span className="block font-medium text-[var(--color-stone-800)]">Email:</span>
 								<a
 									href="mailto:hello@daniel.phil.johnson@google.com"
@@ -134,7 +137,7 @@ I craft meaningful web experiences through clean, scalable code and user-first d
 								</a>
 							</p>
 
-							<p className="text-sm text-[var(--color-stone-600)]">
+							<p className="text-sm text-[var(--color-stone-800)]">
 								<span className="block font-medium text-[var(--color-stone-800)]">Location:</span>
 								Truro, Cornwall
 							</p>
@@ -143,9 +146,9 @@ I craft meaningful web experiences through clean, scalable code and user-first d
 				</div>
 			</div>
 
-			<div className="py-4 border-t bg-white border-[var(--color-stone-200)]">
+			<div className="py-4 border-t bg-white border-[var(--color-stone-600)]">
 				<div className="container flex flex-col items-center justify-between px-6 mx-auto md:flex-row">
-					<div className="mb-4 text-xs md:mb-0 text-[var(--color-stone-500)]">
+					<div className="mb-4 text-xs md:mb-0 text-[var(--color-stone-700)]">
 						© {currentYear} Daniel Philip johnson. All rights reserved.
 					</div>
 

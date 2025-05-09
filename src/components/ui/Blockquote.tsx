@@ -32,10 +32,10 @@ const Blockquote = ({
         className
       )}
     >
-      <Text className="text-stone-500" variant="quote">
+      <Text className="text-stone-700" variant="quote">
         {content}
       </Text>
-      <Text className="text-right text-stone-500" variant="caption">
+      <Text className="text-right text-stone-700" variant="caption">
         {attribution}
       </Text>
     </blockquote>

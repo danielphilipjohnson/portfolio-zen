@@ -15,19 +15,19 @@ export const BlogHeader = ({ post }: Readonly<BlogHeaderProps>) => {
             <span className="inline-block px-3 py-1 text-xs bg-[var(--color-moss-100)] text-[var(--color-moss-700)]">
               {post.category}
             </span>
-            <span className="text-sm text-[var(--color-stone-500)]">
+            <span className="text-sm text-[var(--color-stone-700)]">
               {post.readingTime}
             </span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-[var(--color-stone-500)]">
+            <span className="text-sm text-[var(--color-stone-700)]">
               {post.publishDate}
             </span>
 
             <div className="relative">
               <button 
-                className="flex items-center space-x-1 text-sm text-[var(--color-stone-600)]"
+                className="flex items-center space-x-1 text-sm text-[var(--color-stone-800)]"
                 aria-label="Share article"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -67,7 +67,7 @@ export const BlogHeader = ({ post }: Readonly<BlogHeaderProps>) => {
             </Text>
             <Text
               variant="caption"
-              className="text-[var(--color-stone-900)]"
+              className="text-[var(--color-stone-800)]"
             >
               {post.author.role}
             </Text>
@@ -82,9 +82,9 @@ export const BlogHeader = ({ post }: Readonly<BlogHeaderProps>) => {
             alt="Hero"
             className="w-full h-auto object-cover max-h-[500px]"
           />
-          <figcaption className="text-sm mt-2 text-center italic text-[var(--color-stone-500)]">
+          {/*<figcaption className="text-sm mt-2 text-center italic text-[var(--color-stone-500)]">
             Image: Zen garden representing the harmony and balance in design
-          </figcaption>
+          </figcaption>*/}
         </figure>
       </Container>
     </header>

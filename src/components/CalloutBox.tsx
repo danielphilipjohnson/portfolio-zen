@@ -23,7 +23,7 @@ export function CalloutBox({
 	};
 
 	const textColor = {
-		default: 'text-[var(--color-stone-600)]',
+		default: 'text-[var(--color-stone-800)]',
 		info: 'text-[var(--color-water-700)]',
 		success: 'text-[var(--color-success-700)]',
 		warning: 'text-[var(--color-warning-700)]',

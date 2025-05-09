@@ -14,7 +14,7 @@ const Subscribe = () => {
 
   return (
     <div>
-      <p className="mb-3 text-sm font-medium text-[var(--color-stone-600)]">
+      <p className="mb-3 text-sm font-medium text-[var(--color-stone-800)]">
         Stay updated with my latest work
       </p>
 

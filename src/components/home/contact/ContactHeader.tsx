@@ -13,7 +13,7 @@ const ContactHeader = () => {
       </Text>
       <Text
         variant="body"
-        className="text-[color:var(--color-stone-600)]"
+        className="text-[color:var(--color-stone-800)]"
       >
         I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
       </Text>

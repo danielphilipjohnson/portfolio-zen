@@ -10,7 +10,7 @@ const linkButtonVariants = cva(
       variant: {
         // Primary button - Moss green theme for main actions
         primary:
-          "bg-[color:var(--color-moss-500)] text-[color:var(--color-stone-50)] shadow-sm hover:bg-[color:var(--color-moss-400)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-moss-200)] focus-visible:ring-offset-2 active:bg-[color:var(--color-moss-600)] disabled:bg-[color:var(--color-moss-200)] disabled:text-[color:var(--color-moss-400)] disabled:opacity-80",
+          "bg-[color:var(--color-moss-600)] text-[color:var(--color-stone-50)] shadow-sm hover:bg-[color:var(--color-moss-400)] focus-visible:ring-2 focus-visible:ring-[color:var(--color-moss-200)] focus-visible:ring-offset-2 active:bg-[color:var(--color-moss-600)] disabled:bg-[color:var(--color-moss-200)] disabled:text-[color:var(--color-moss-400)] disabled:opacity-80",
 
         // Secondary button - Water blue theme for alternative actions
         secondary:
