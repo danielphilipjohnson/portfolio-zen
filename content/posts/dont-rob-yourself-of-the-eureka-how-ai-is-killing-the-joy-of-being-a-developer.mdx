@@ -1,0 +1,205 @@
+---
+title: "Don’t Rob Yourself of the Eureka: How AI Is Killing the Joy of Being a Developer"
+publishDate: "08/05/2025"
+modifiedDate: "08/05/2025"
+
+author:
+  name: "Daniel Philip Johnson"
+  role: "Full Stack Developer"
+  avatar: "/images/profile.webp"
+category: "Goals"
+readingTime: "11 min read"
+tags: ["AI", "technology"]
+imageUrl: "/images/blog/dont-rob-yourself/dontrob.png"
+excerpt: "Discover how overreliance on AI is changing software development—from lost learning and creativity to rising burnout. A personal reflection on the hidden cost of artificial speed in tech."
+
+---
+
+
+
+
+Artificial intelligence was supposed to save us time. Eliminate the repetitive parts of our jobs. Automate the boring. Free us to focus on the interesting, the creative, the hard-but-worth-it stuff.
+
+Instead, in the current moment its being pushed to speed things up. Speeding everything up, yes. But also stripping out the satisfaction. The part where we grow. The part where we learn. The part where we feel anything at all.
+
+And for developers like me—who once found joy in the struggle of improving systems and solving problems—it’s starting to feel like something important is being quietly taken away.
+
+---
+
+## The Puzzle Wasn’t the Problem
+
+I was playing The Blue Prince—a clever little puzzle game where the world only makes sense if you’re willing to slow down and look. I got stuck. And before I could ask for help, someone next to me blurted out the answer.
+
+I didn’t ask. I didn’t want it. But just like that, the puzzle was solved.
+
+Except it wasn’t.
+
+The room opened, the solution worked, but the joy was gone. No pride. No triumph. Just progress. I hadn’t earned the answer—I’d been handed it. And it felt hollow—like skipping the climb and taking the helicopter to the summit.
+
+Later, I was stuck again, this time on a different puzzle. After several minutes, I instinctively reached for Google. But I paused, remembering that earlier moment. Was I about to rob myself again?
+
+So I stepped away. Made a cup of tea. Let the puzzle sit in the back of my brain. A few minutes later—bam—it clicked. And that felt good. That was the hit I’d missed: the satisfaction of something earned, not given.
+
+That experience made me realise something important: the pause, the friction, the mental churn—that’s the good bit. That’s the joy of the work. It's not just about finding the answer. It’s about becoming the kind of person who can.
+
+But culturally, we’ve stopped valuing that. Everything is a shortcut now. Get slim in 30 days. Learn Spanish in a weekend. Master JavaScript in 4 hours. It’s not just that we want results faster—it’s that we expect them without the process. And AI, for all its usefulness, feeds that hunger. You don’t have to wrestle with the problem anymore. You can just paste it in and move on.
+
+We’re becoming fluent in asking for answers—and losing the part of ourselves that used to seek understanding.
+
+---
+
+## The Trap of Instant Everything
+
+Today, it’s easier than ever to just ask. Stuck on a bug? Prompt it. Need to refactor something? Paste it. Want to understand a library? Summarize it. Need tests? Generate them.
+
+It’s amazing. “Look mom, I’m a 10x dev.” But it’s also addicting.
+
+AI feels like a productivity gateway drug. You start with the boring stuff—boilerplate, migrations, copy tweaks. Then deadlines tighten. PMs push harder. Suddenly, you're prompting AI to “just build the whole feature” so you can move faster. The culture shifts. The pace accelerates. And somewhere along the way, we stop understanding the code we’re shipping.
+
+“Why did we go with this approach for the email service?” “Uh… not sure. ChatGPT suggested it.”
+
+You laugh the first time. Then it happens again. And again.
+
+The quicker the AI makes us, the more it raises expectations. That becomes the new normal. AI didn’t just speed us up—it rewired how we measure “good work.”
+
+Now it's late in the sprint. The feature spec has changed. Another last-minute tweak has landed. Instead of pushing back, it's easier to say “screw it”—and throw it at an AI agent to implement. Because when speed becomes king, quality becomes optional.
+
+We're not documenting either. No time. No clarity. Just velocity. Even when AI writes the tests, they’re often testing the code it just wrote—without any real human understanding of what’s being tested or why.
+
+I saw a case recently where the AI had mocked console—because the code had a console.error call in it. No one questioned it. The tests passed. Mission accomplished. But the logging was gone, and so was the signal that something had broken.
+
+And my personal favourite? I explicitly prompted it to use Vitest—and it kept spitting out Jest code anyway. Over and over. Like some cursed autocomplete loop. When you’re rushing, that kind of subtle mismatch doesn’t feel minor. It’s infuriating. Because now you’re debugging AI hallucinations just to get back to square one.
+
+And when you bring that up? The response is always the same:
+
+“You just need to get better at prompting.”
+
+---
+
+## Losing Domain Ownership, One Prompt at a Time
+
+Being a developer has never been about writing lines of code. It’s about architecture. Decisions. Building things that last and that can withstand change. Understanding trade-offs and why things are the way they are. Designing systems that someone else can read six months from now without swearing your name under their breath.
+
+But AI pushes us toward a culture of *just ship it*. Throw some code at the problem. Move fast. Don’t think too hard. Don’t slow down. Don’t ask why.
+
+The result? No one owns anything anymore.
+
+> *“Hey X, you’re the one who built the onboarding flow, right?”*  
+> *“Kind of… AI helped.”*  
+> *“Do you know how this part works?”*  
+> *“Not really…”*
+
+No one’s the domain expert anymore. We’ve become beholden to AI—less like engineers, more like operators waiting for permission to move.
+
+And worse? It starts to feel normal.
+
+---
+
+## Hyperfocus, ADHD, and the AI Loop
+
+With ADHD, stepping away from a problem is often where clarity emerges. That background processing—where your brain keeps turning the gears even while you’re walking, making tea, or switching tabs—is sacred. Some of my best insights come not from staring harder at the screen, but from stepping away from it.
+
+But AI doesn’t let you step away.
+
+It traps you in a loop of infinite iteration. You rephrase, retry, reprompt. You go deeper instead of backing up. You stay glued to the screen, hoping the next tweak will be the one. You don’t even realize how much time has passed—or how little understanding you’ve actually gained.
+
+The worst case for me? A nasty P1 incident where I was completely on my own. No support. SLA already at risk. The kind of high-stakes moment where thinking space collapses into survival mode. Bombarded with calls.
+
+Before that, my instinct in tough problems was to whiteboard it. Get up, move around, sketch it out, talk it through. But in that P1? I hit the panic button. AI felt faster. More immediate. I started prompting it—desperately—trying to patch the issue and just stop the bleeding.
+
+The real failure wasn’t even technical. It was systemic. Leadership’s answer to increasing demand was to offload people, promise we’d “pull through,” and say the next month would be better. It wasn’t. It never is. What changed was the pressure—cranked up, constant—and suddenly AI wasn’t just a tool, it was a coping mechanism.
+
+And now I see it everywhere. Especially in agencies. Deadlines haven’t gotten more realistic—just more brutal. There’s always another “we need this by EOD” message, another half-scoped project, another impossible timeline where AI is expected to do the heavy lifting while you scramble to stitch things together. I can’t even begin to manage the churn anymore. It’s nonstop. We’re shipping faster, sure—but burning out even faster trying to keep up.
+
+Because this was never about helping us move faster.
+
+It was about squeezing more profit from the same hours.
+
+This isn’t what creative problem-solving is supposed to feel like.
+
+AI’s promise was to help us think. Not to make thinking optional.
+
+---
+
+## AI-Driven Burnout
+
+All this speed, this output, this urgency—it comes at a cost.
+
+Because the culture forming around AI isn’t thoughtful. It’s frantic. Everyone wants to be first to market. No one wants to be the next Kodak or Blockbuster. So companies panic. Meetings are held. Roadmaps get rewritten. Teams are told to "leverage AI aggressively."
+
+And in that frenzy, developers are being reduced to throughput.
+
+Will the constant pumping of code from AI lead to burnout? Absolutely. Because when code becomes endless and contextless, your job becomes grind. You’re no longer creating—you’re just shipping.
+
+And who knows—maybe we’re not far from a world where developers are stuck in planning poker with an AI tool, having story points handed to them by some machine that’s never written a line of maintainable code. Some t-shirt sizing tool that confidently assigns deadlines with zero understanding of tech debt, system constraints, or human reality. Maybe Jira is already working on it. Maybe it’ll even tell you you’re behind before you’ve had a chance to think.
+
+I’ve already experienced pushback on time estimates—because AI said it should be faster. It didn’t account for the fact that I was working in a legacy codebase stitched together by a decade of whack-a-mole fixes. The AI never saw the mess. Never debugged the chaos. It just spat out numbers like context didn’t exist.
+
+Worse still, I’ve had people use AI to justify downplaying legitimate issues. One claimed it “wasn’t a big deal” because ChatGPT said it wasn’t client-facing. That’s where we are now—outsourcing our risk assessments to a language model trained to sound confident, not correct. Not understanding threat models. Not thinking in trade-offs. Just vibes.
+
+---
+
+## Hope in the Plateau
+
+Here’s the thing: I don’t think this mania will last forever.
+
+AI will inevitably blow a few things up. Teams will chase trends. Things will break. There will be outages—with postmortems full of “AI did it” reflections. There’ll be bad PR when it grabs data from a production database and leaks it through some summarisation tool. There might even be lawsuits as privacy violations creep in. And eventually—eventually—the hype will level out.
+
+Companies will realise that AI is a tool, not a replacement. That using it to draft code is not the same as understanding systems. That “fast” doesn’t mean “good.”
+
+The faster you go, the quicker you burn through your tyres. Fast and good aren’t on the same side of the spectrum—they’re in tension. Move too fast and you miss the nuance. Rush the build and you inherit the bugs. It’s not just about velocity. It’s about direction. And knowing why you’re moving at all.
+
+You can ship fast and break things. Or you can slow down, understand the system, and build something that doesn’t collapse under its own weight a month later.
+
+And sooner or later, people will realise that maybe—just maybe—an API was cheaper than running an LLM that outputs the same generic boilerplate over and over. Especially when it has to be reviewed, rewritten, and recontextualised anyway.
+
+Even worse, it’s not consistent. Ask it for code in one language and it’s halfway decent. Ask it for something in a less common stack, a framework that's moved fast (or worse, a beta), and the hallucinations begin. I’ve asked for code in one testing library and watched it confidently spit out syntax for another. I’ve seen it invent APIs for frameworks that don’t exist. It fakes competence—and you only catch it if you already know what you’re doing.
+
+Most users don’t want to talk to chatbots. Most developers don’t want to talk to AI agents to troubleshoot a bug or find that one obscure config setting. The only place I see chatbot-to-chatbot communication making sense is companies building bots to talk to their own bots. (Which is probably already happening.)
+
+And let's be honest: AI isn’t going to invent React 37. It’s not going to say, “Hey, the way we’re building microservices isn’t working—we need to rethink the entire model.” It won’t spark the next big architectural leap.
+
+Because it can’t.
+
+It doesn’t see gaps. It doesn’t dream. It doesn’t notice repetition and think, “There has to be a better way.” It doesn’t challenge inefficiency or ask, “What if we did this differently?”
+
+It just harvests the thinking of people who do.
+
+Who knows. Maybe AI will settle into the stack like GraphQL did—once we stop trying to use it for absolutely everything, everywhere, all at once.
+
+And maybe—just maybe—we’ll remember what made us want to do this work in the first place.
+
+---
+
+## Keep the Soul in the Struggle
+
+Use AI. Use it to automate the mundane. Let it lint your code, scaffold your tests, summarise your PRs. That’s what it’s good at—mechanical, repetitive tasks that drain your focus without building your skills.
+
+But don’t let it rob you of the eureka.
+
+Don’t give away the struggle that teaches you something. Don’t sacrifice the context, the ownership, the deep understanding that makes you a real developer—not just someone who happens to write lines of code. Let AI help you, sure. But don’t let it hollow you out.
+
+Because the code you understand is always better than the code you don’t—even if the latter came faster.
+
+> With AI, you gain productivity.  
+> But if you're not careful, you lose the learning.  
+> And without learning, the craft becomes empty.
+
+There’s a real use case for AI in rapid prototyping. When you're testing an idea, building a proof-of-concept, or spinning up an MVP to explore a market—AI can help you move fast and break things on purpose. Low stakes, fast feedback, cheap iteration. That’s the kind of playground where AI earns its keep.
+
+But that's not the same as building something that lasts.
+
+And the more we automate, the more blind spots we introduce. We’re already seeing the cracks—prompt injection vulnerabilities, exposed APIs, leaked credentials, unsecured endpoints. AI won’t proactively catch those unless you ask the exact right thing—and even then, the answer might be confidently wrong. The result? A looming boom in cybersecurity. Not because we’re forward-thinking, but because companies will get burned, and the response will be reactive. There will be more breaches, more audits, and more “how did this happen?” meetings that start with: *“Well… the AI said it was fine.”*
+
+And here’s the part that keeps me up: AI always wants to please. It doesn’t challenge unrealistic timelines or bad product decisions. It won’t raise a flag when the design doesn’t make sense. It won’t say, *“Are you sure?”* It just says “yes,” in a thousand variations.
+
+But real developers? We say *why*.
+
+We protect the product from shortsighted calls, even when it’s uncomfortable. We ask questions. We resist shortcuts when they come with future costs. We care—not just about shipping, but about *what* we’re shipping and *why*.
+
+AI doesn’t.
+
+That’s why we can’t let go of the thinking—even when it’s slower.  
+Especially when it’s slower.
+
+> **“AI can write the code. But only you can own the consequences.”**

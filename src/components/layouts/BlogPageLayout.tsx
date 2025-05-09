@@ -80,9 +80,9 @@ export const BlogPage = ({ post, content }: { post: BlogPost; content: React.Rea
 							alt="Hero"
 							className="w-full h-auto object-cover max-h-[500px]"
 						/>
-						<figcaption className="text-sm mt-2 text-center italic text-[var(--color-stone-500)]">
+						{/*<figcaption className="text-sm mt-2 text-center italic text-[var(--color-stone-500)]">
 							Image: Zen garden representing the harmony and balance in design {post.imageUrl}
-						</figcaption>
+						</figcaption>*/}
 					</figure>
 				</Container>
 			</header>
