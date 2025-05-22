@@ -1,0 +1,594 @@
+---
+title: "Demystifying JSX: How Babel Really Transforms React Components"
+publishDate: "13/11/2024" 
+modifiedDate: "13/11/2024" 
+author:
+  name: "Daniel Philip Johnson"
+  role: "Full Stack Developer"
+  avatar: "/images/profile.webp"
+category: "React" # Or "JavaScript", "Web Development", "Frontend Tooling"
+readingTime: "16 min read"
+tags:
+  - "JSX"
+  - "Babel"
+  - "React"
+  - "JavaScript Transformation"
+  - "Compiler Internals"
+  - "Frontend Development"
+imageUrl: "/images/blog/jsx/hero.jpeg"
+excerpt: "Dive deep into how Babel transforms JSX, debunking common myths about React Fiber. Understand the true mechanics behind the magic for better React development."
+
+---
+
+import CodeBlock from '@/components/CodeBlock'
+
+
+**Understanding how JSX is transformed into JavaScript is crucial for any React developer aiming to write efficient and maintainable code. Yet, misconceptions abound, leading to confusion about what happens under the hood.**
+
+**As a developer mentor, I was recently approached by some junior team members who were puzzled after reading a blog post that claimed:**
+
+*"When Babel encounters a name starting with a capital letter, it knows it’s dealing with a React component and converts it into a React Fiber object."*
+
+Their confusion worried me because this statement contains several inaccuracies about how Babel and React work together. Misunderstandings like these can hinder a developer's growth and lead to misconceptions about fundamental concepts.
+
+In this post, I aim to clarify how JSX is actually transformed under the hood by Babel and explain why the claim about creating React Fiber objects during transformation is misleading. More importantly, I want to highlight the importance of critically evaluating the information we come across, especially in rapidly evolving fields like web development. By understanding the true mechanics behind JSX transformation, we can write better code and guide others more effectively.
+
+## Putting JSX Transformation to the Test with Babel REPL
+
+Before diving into the theoretical aspects of JSX transformation, let's put the assumption to the test. The blog post in question claimed:
+
+*"When Babel encounters a name starting with a capital letter, it knows it's dealing with a React component and converts it into a React Fiber object."*
+
+To verify this, we'll experiment with different JSX elements using the **Babel REPL** (Read-Eval-Print Loop), an online tool that allows us to input JSX code and see how Babel transforms it.
+
+### Testing Babel’s JSX Rules in Action
+
+**Step 1: Prepare the Test Cases**
+
+We'll use a variety of JSX elements to cover different scenarios:
+
+<CodeBlock language="typescript">
+{`
+// 1. Basic component variations
+const foo = { bar: () => null };
+const Baz = () => null;
+
+// Test cases to compile:
+const tests = {
+    builtIn: <div>Hello</div>,
+    notHtmlElement: <Div>Hello</Div>,
+    memberExpr: <foo.bar>World</foo.bar>,
+   capitalRef: <Baz>Test</Baz>,
+   nested: <foo.bar.baz>Nested</foo.bar.baz>,
+};
+`}
+</CodeBlock>
+
+
+**Explanation of Test Cases:**
+
+1. **builtIn**: `<div>Hello</div>` — A standard HTML element.
+    
+2. **notHtmlElement**: `<Div>Hello</Div>` — An element that looks like an HTML element but is capitalised.
+    
+3. **memberExpr**: `<foo.bar>World</foo.bar>` — A component accessed via a member expression starting with a lowercase letter.
+    
+4. **capitalRef**: `<Baz>Test</Baz>` — A component starting with a capital letter.
+    
+5. **nested**: `<foo.bar.baz>Nested</foo.bar.baz>` — A nested member expression.
+    
+
+## Decoding Babel’s JSX Transformation Results
+
+To see how Babel transforms JSX in action, you can try the code directly in the **Babel REPL** or view a preconfigured example [here](https://babeljs.io/repl#?browsers=defaults%2C%20not%20ie%2011%2C%20not%20ie_mob%2011&build=&builtIns=false&corejs=3.21&spec=false&loose=false&code_lz=PTAEEYDpQIQQwM4EsDGoUHsC2AHDA7AU3wBdQA3OAJyThKQIQChN8EyAzDDUAXlADeoAEbUAXKAAUASj4A-UPgCuAGxWgAvgG4WjMvABefKbN4LlanUxCgAKoXbpED0CR6ZcSFYTG62ZEgcSBGMBJlARJS8SAEl8CQAeABMkcjkACUI1DATgFLSAGnDFDBJ0kiwVAFFvLGISRIARVIyslRzgZsLiuqxhQioqgA8cKkSuDEhRKjkAdQwqFSTcianqOSKIlDgcJBI4FQAlQg5Ewzl7dlzzzcUgwiTx7jWqNYM5ADl75eBV6beNkxtEwgA&debug=false&forceAllTransforms=false&modules=false&shippedProposals=false&evaluate=false&fileSize=false&timeTravel=false&sourceType=module&lineWrap=true&presets=env%2Creact%2Cstage-2&prettier=false&targets=&version=7.26.2&externalPlugins=&assumptions=%7B%7D).
+
+If you’d like to try it yourself, copy the test cases below and paste them into the Babel REPL. This setup will transform the JSX code into JavaScript, allowing you to observe the results first-hand:
+
+
+<CodeBlock language="typescript">
+{`const tests = {
+    builtIn: <div>Hello</div>,
+    notHtmlElement: <Div>Hello</Div>,
+    memberExpr: <foo.bar>World</foo.bar>,
+    capitalRef: <Baz>Test</Baz>,
+    nested: <foo.bar.baz>Nested</foo.bar.baz>,
+};`}
+</CodeBlock>
+
+
+When you run the code, Babel will produce output like this:
+
+<CodeBlock language="typescript">
+{`const tests = {
+    builtIn: /*#__PURE__*/ _jsx("div", { children: "Hello" }),
+    notHtmlElement: /*#__PURE__*/ _jsx(Div, { children: "Hello" }),
+    memberExpr: /*#__PURE__*/ _jsx(foo.bar, { children: "World" }),
+    capitalRef: /*#__PURE__*/ _jsx(Baz, { children: "Test" }),
+    nested: /*#__PURE__*/ _jsx(foo.bar.baz, { children: "Nested" }),
+};`}
+</CodeBlock>
+
+
+**Note:** The `_jsx` function is a helper used by Babel when the "automatic" JSX runtime is enabled. It serves a similar purpose to `React.createElement`.
+
+## Breaking Down Babel’s JSX Transformation
+
+Let's dissect each transformed element:
+
+1. **builtIn (**`<div>Hello</div>`):
+    
+    * **Transformed to:**
+        
+        ```jsx
+        /*#__PURE__*/ _jsx("div", { children: "Hello" })
+        ```
+        
+    * **Analysis:**
+        
+        * The tag is a string `"div"`, indicating a built-in HTML element.
+            
+        * Babel treats it as a standard DOM element.
+            
+2. **notHtmlElement (**`<Div>Hello</Div>`):
+    
+    * **Transformed to:**
+        
+        ```jsx
+        /*#__PURE__*/ _jsx(Div, { children: "Hello" })
+        ```
+        
+    * **Analysis:**
+        
+        * The tag is `Div`, a variable starting with an uppercase letter.
+            
+        * Even though "Div" resembles the HTML element "div," Babel treats it as a custom component because of the capitalisation.
+            
+        * Babel does not check against a list of valid HTML tags; it relies purely on capitalisation.
+            
+3. **memberExpr (**`<foo.bar>World</foo.bar>`):
+    
+    * **Transformed to:**
+        
+        ```jsx
+        /*#__PURE__*/ _jsx(foo.bar, { children: "World" })
+        ```
+        
+    * **Analysis:**
+        
+        * The tag is `foo.bar`, a member expression.
+            
+        * Despite starting with a lowercase letter, Babel correctly references the variable.
+            
+        * Babel handles member expressions without applying the lowercase check.
+            
+4. **capitalRef (**`<Baz>Test</Baz>`):
+    
+    * **Transformed to:**
+        
+        ```jsx
+        /*#__PURE__*/ _jsx(Baz, { children: "Test" })
+        ```
+        
+    * **Analysis:**
+        
+        * The tag is `Baz`, a variable starting with an uppercase letter.
+            
+        * Babel treats it as a custom React component.
+            
+5. **nested (**`<foo.bar.baz>Nested</foo.bar.baz>`):
+    
+    * **Transformed to:**
+        
+        ```jsx
+        /*#__PURE__*/ _jsx(foo.bar.baz, { children: "Nested" })
+        ```
+        
+    * **Analysis:**
+        
+        * The tag is a nested member expression `foo.bar.baz`.
+            
+        * Babel maintains the full reference, handling complex expressions.
+            
+
+### **Key Takeaways from Babel’s Transformation?**
+
+* **Capitalisation and Syntax Determine Treatment:**
+    
+    * For **simple identifiers** (like `Div` or `Baz`), Babel relies on the capitalisation of the tag name to decide whether it's a built-in element or a custom component.
+        
+        * **Capitalised identifiers** are treated as custom components.
+            
+        * **Lowercase identifiers** are treated as strings representing HTML tags.
+            
+    * For **member expressions** (like `foo.bar` or `foo.bar.baz`), Babel treats them as component references regardless of the capitalisation of the initial identifier.
+        
+        * The structure of the expression takes precedence over the capitalisation of individual parts.
+            
+    * Therefore, **capitalisation is not the sole factor**; the syntax of the tag (whether it's an identifier or a member expression) also influences how Babel transforms it.
+        
+* **No Internal HTML Tag List:**
+    
+    * Babel does not check the tag name against a list of valid HTML elements.
+        
+    * The differentiation is based on syntactic rules rather than knowledge of HTML specifications.
+        
+    * This is evident in the `notHtmlElement` example, where `<Div>` is treated as a component simply because it's capitalised.
+        
+* **No React Fiber Objects Are Created:**
+    
+    * The transformation results in calls to helper functions like `_jsx`, which generate JavaScript objects representing elements.
+        
+    * There is no evidence of React Fiber objects being created during this process.
+        
+    * **React Fiber** is part of React's runtime internals, handling rendering and reconciliation, and is not involved in Babel's compile-time transformations.
+        
+
+### Debunking the Misconception About JSX Transformation
+
+This analysis further refutes the blog's claim:
+
+* **Babel Does Not Create React Fiber Objects:**
+    
+    * The transformation process outputs JavaScript function calls and object literals, not React Fiber structures.
+        
+    * React Fiber operates at runtime within the React library, not at the compile-time stage handled by Babel.
+        
+* **Capitalisation Is a Syntax-Based Decision:**
+    
+    * Babel's treatment of tags is based on syntactic rules defined in the JSX specification.
+        
+    * It does not possess any knowledge of which tags are valid HTML elements or actual React components.
+        
+    * The differentiation between strings and variables in the transformed code is based on whether the tag is a lowercase string or an uppercase identifier.
+        
+
+## **How Babel Really Handles JSX: A Source Code Dive**
+
+To **drive the point home**, let's look at the actual Babel source code responsible for transforming JSX. By doing so, we can see precisely how Babel differentiates between built-in HTML elements and custom React components, and confirm that it does not create React Fiber objects during this process.
+
+### **Locating the Relevant Code**
+
+The JSX transformation is handled by Babel's `@babel/plugin-transform-react-jsx` plugin. Specifically, the transformation logic is found in the file [`transform-automatic.js`](https://github.com/babel/babel/blob/master/packages/babel-plugin-transform-react-jsx/src/transform-automatic.js).
+
+### **The** `isCompatTag` Function
+
+In the transformation process, Babel uses the [`isCompatTag`](https://github.com/babel/babel/blob/38d26cd5eeb66b697671cfb8c78f963f02992073/packages/babel-types/src/validators/react/isCompatTag.ts#L3) function to determine whether a JSX tag should be treated as a built-in element (like an HTML tag) or as a component reference. Here's the relevant part of the code:
+
+<CodeBlock language="typescript">
+{`
+const args = state.args;
+if (t.react.isCompatTag(tagName)) {
+	// Handle as built-in element
+	args.push(t.stringLiteral(tagName));
+} else {
+	// Handle as component reference
+	args.push(state.tagExpr);
+}
+
+`}
+</CodeBlock>
+
+
+
+The `isCompatTag` function is defined as follows:
+
+<CodeBlock language="typescript">
+{`
+export default function isCompatTag(tagName?: string): boolean {
+	// Must start with a lowercase ASCII letter
+	return !!tagName && /^[a-z]/.test(tagName);
+}
+`}
+</CodeBlock>
+
+
+
+### **Understanding** `isCompatTag`
+
+Let's break down what this function does:
+
+* **Logic**:
+    
+    * `!!tagName` ensures that `tagName` is a truthy value (not `null` or `undefined`).
+        
+    * `/^[a-z]/.test(tagName)` checks if the first character of `tagName` is a lowercase ASCII letter (from 'a' to 'z').
+        
+* **Return Value**:
+    
+    * `true`: If `tagName` starts with a lowercase letter, indicating a built-in element.
+        
+    * `false`: If `tagName` does not start with a lowercase letter, indicating a custom component or a member expression.
+        
+
+### **Implications of** `isCompatTag`
+
+* **Built-in Elements**:
+    
+    * Tags like `<div>`, `<span>`, `<button>`, which start with lowercase letters.
+        
+    * Babel transforms them into `React.createElement('div', ...)`, using the tag name as a string.
+        
+* **Custom Components**:
+    
+    * Tags like `<MyComponent>`, `<App>`, which start with uppercase letters.
+        
+    * Babel transforms them into `React.createElement(MyComponent, ...)`, using the component reference.
+        
+* **Member Expressions**:
+    
+    * Tags like `<foo.bar>`, `<this.props.component>`.
+        
+    * Since they are not simple identifiers, `isCompatTag` does not apply, and Babel treats them as component references regardless of the capitalisation of individual parts.
+        
+
+### **Demonstrating with Code Examples**
+
+Let's revisit the test cases from our earlier experiment to see how Babel uses `isCompatTag`:
+
+<CodeBlock language="typescript">
+{`
+// 1. Basic component variations
+const foo = { bar: () => null };
+const Baz = () => null;
+
+// Test cases to compile:
+const tests = {
+	builtIn: <div>Hello</div>,
+	notHtmlElement: <Div>Hello</Div>,
+	memberExpr: <foo.bar>World</foo.bar>,
+	capitalRef: <Baz>Test</Baz>,
+	nested: <foo.bar.baz>Nested</foo.bar.baz>,
+};
+
+`}
+</CodeBlock>
+
+
+
+**Transformed Output:**
+
+<CodeBlock language="typescript">
+{`
+const tests = {
+	builtIn: /*#__PURE__*/ _jsx("div", { children: "Hello" }),
+	notHtmlElement: /*#__PURE__*/ _jsx(Div, { children: "Hello" }),
+	memberExpr: /*#__PURE__*/ _jsx(foo.bar, { children: "World" }),
+	capitalRef: /*#__PURE__*/ _jsx(Baz, { children: "Test" }),
+	nested: /*#__PURE__*/ _jsx(foo.bar.baz, { children: "Nested" }),
+};
+`}
+</CodeBlock>
+
+
+
+Let's analyse each case in the context of `isCompatTag`:
+
+1. `builtIn`:
+    
+    * **Tag**: `<div>`
+        
+    * **Tag Name**: `'div'`
+        
+    * `isCompatTag('div')` returns `true`.
+        
+    * **Transformation**: `_jsx("div", { ... })`, with the tag name as a string.
+        
+    * **Explanation**: Since the tag name starts with a lowercase letter, Babel treats it as a built-in element.
+        
+2. `notHtmlElement`:
+    
+    * **Tag**: `<Div>`
+        
+    * **Tag Name**: `'Div'`
+        
+    * `isCompatTag('Div')` returns `false`.
+        
+    * **Transformation**: `_jsx(Div, { ... })`, with the component reference.
+        
+    * **Explanation**: Although "Div" resembles an HTML element, the capitalisation leads Babel to treat it as a custom component.
+        
+3. `memberExpr`:
+    
+    * **Tag**: `<foo.bar>`
+        
+    * **Tag Name**: `null` (since it's not a simple identifier)
+        
+    * `isCompatTag` is **not applicable**.
+        
+    * **Transformation**: `_jsx(foo.bar, { ... })`, with the member expression.
+        
+    * **Explanation**: Member expressions are treated as component references, and `isCompatTag` is not used.
+        
+4. `capitalRef`:
+    
+    * **Tag**: `<Baz>`
+        
+    * **Tag Name**: `'Baz'`
+        
+    * `isCompatTag('Baz')` returns `false`.
+        
+    * **Transformation**: `_jsx(Baz, { ... })`, with the component reference.
+        
+    * **Explanation**: Starts with an uppercase letter, so Babel treats it as a custom component.
+        
+5. `nested`:
+    
+    * **Tag**: `<foo.bar.baz>`
+        
+    * **Tag Name**: `null` (it's a nested member expression)
+        
+    * `isCompatTag` is **not applicable**.
+        
+    * **Transformation**: `_jsx(foo.bar.baz, { ... })`, with the nested member expression.
+        
+    * **Explanation**: Babel handles nested member expressions as component references.
+        
+
+### **Confirming Babel's Transformation Logic**
+
+By examining the `isCompatTag` function and the transformed output, we can conclude:
+
+1. **Babel Uses Simple Syntax Rules**:
+    
+    * The decision is based on whether the tag is a simple identifier starting with a lowercase letter.
+        
+    * There is no complex analysis or interaction with React's internals or HTML specifications.
+        
+2. **No Creation of React Fiber Objects**:
+    
+    * The transformation results in calls to helper functions like `_jsx`, which generate JavaScript objects or function calls.
+        
+    * React Fiber is a runtime implementation detail within React and is not involved in Babel's compile-time transformation.
+        
+3. **Member Expressions Are Treated as Component References**:
+    
+    * Babel treats member expressions as component references, regardless of the capitalisation of the individual identifiers within them.
+        
+    * The `isCompatTag` function does not apply to member expressions since they are not simple tag names.
+        
+
+### **Linking Back to the Misconception**
+
+The claim that "Babel converts capitalised names into React Fiber objects" is clearly refuted by the source code analysis:
+
+* **Babel's Role**:
+    
+    * **Syntax Transformation**: Babel's responsibility is to convert JSX syntax into standard JavaScript code, following syntactic rules.
+        
+    * **No Runtime Behaviour**: Babel operates at compile-time and does not create or manipulate runtime objects like React Fiber nodes.
+        
+* **React Fiber**:
+    
+    * **Runtime Concern**: React Fiber is part of React's internal rendering mechanism, dealing with reconciliation and rendering.
+        
+    * **Not Involved in Compilation**: Babel has no awareness of React's runtime implementations and does not generate Fiber objects during transformation.
+        
+
+### **Key Takeaways**
+
+* **Capitalisation Matters for Simple Identifiers**:
+    
+    * For tags that are simple identifiers, Babel uses capitalisation to decide whether it's a built-in element or a custom component.
+        
+    * Lowercase starts indicate built-in elements, while uppercase starts indicate custom components.
+        
+* **Member Expressions Are Handled Differently**:
+    
+    * Member expressions and other complex tag expressions are treated as component references, bypassing the `isCompatTag` check.
+        
+    * This allows for the use of components accessed via objects or props, regardless of capitalisation.
+        
+* **Babel's Transformation Is Syntax-Based**:
+    
+    * Babel relies on syntactic cues rather than semantic understanding.
+        
+    * It does not verify tag names against a list of HTML elements or React components.
+        
+
+By examining Babel's source code and understanding the `isCompatTag` function, we've confirmed that Babel's transformation logic is based on simple syntactic rules, primarily the capitalisation of simple tag names. This analysis dispels the misconception that Babel creates React Fiber objects during JSX transformation.
+
+Now that we've delved into both practical examples and the underlying source code, we have a comprehensive understanding of how Babel transforms JSX and how it distinguishes between built-in elements and custom components. This clarity reinforces the importance of syntax in JSX and the distinct roles that Babel and React play in the development process.
+
+## **Addressing Misconceptions and Concluding Insights**
+
+Through experiments and code analysis, we've clarified the key misconceptions presented in the original blog post. Understanding these nuances helps illuminate the distinct roles of Babel and React in JSX transformation and rendering processes.
+
+### **Misconception 1: Babel Creates React Fiber Objects**
+
+**Claim:** *"When Babel encounters a name starting with a capital letter, it knows it's dealing with a React component and converts it into a React Fiber object."*
+
+**Clarification:**
+
+* **Babel's Role**: Babel is a compile-time tool that transforms JSX into JavaScript syntax using function calls (e.g., `_jsx`, `React.createElement`). It doesn’t execute code or manage runtime objects like React Fiber.
+    
+* **React Fiber**: Fiber is part of React’s internal runtime system for efficient reconciliation and rendering, created only when React processes the component tree at runtime—not during Babel’s compile-time transformations.
+    
+
+**Conclusion**: This clear separation of compile-time and runtime responsibilities shows that Babel merely transforms code without affecting runtime data structures, such as React Fiber objects, which are managed internally by React during rendering.
+
+### **Misconception 2: Capitalisation Rules in Babel's JSX Transformation**
+
+**Claim:** *"When Babel encounters a name starting with a capital letter, it knows it's dealing with a React component..."*
+
+**Clarification:**
+
+* **Syntax-Based Transformation**: Babel follows capitalisation conventions for simple tags, treating lowercase tags as HTML elements and uppercase tags as components. For member expressions (e.g., `foo.bar`), Babel handles them as component references, regardless of capitalisation.
+    
+* **Example**:**Transformation**:**Explanation**: Babel recognizes `foo.bar` as a component reference, bypassing capitalisation checks for member expressions.
+    
+    ```typescript
+    const foo = { bar: () => <div>Bar</div> };
+    const element = <foo.bar />;
+    ```
+    
+    ```typescript
+    const element = /*#__PURE__*/ _jsx(foo.bar, {});
+    ```
+    
+
+**Conclusion**: The capitalisation rule applies only to simple identifiers, not member expressions. This distinction prevents misinterpretation of Babel’s JSX transformation behaviour.
+
+## **Final Thoughts and Best Practices**
+
+By clarifying these misconceptions, we’ve highlighted the following key distinctions:
+
+1. **Babel’s Responsibility**:
+    
+    * **Syntax Transformation**: Converts JSX into JavaScript function calls based on syntactic rules.
+        
+    * **No Runtime Data Structures**: Babel does not create runtime objects like React Fiber nodes; it transforms syntax only.
+        
+2. **React’s Responsibility**:
+    
+    * **Runtime Rendering**: Manages component lifecycle, state, and rendering using the Fiber architecture, instantiated at runtime.
+        
+3. **Compile-Time vs. Runtime**:
+    
+    * **Compile-Time (Babel)**: Focused on transforming syntax with no side effects.
+        
+    * **Runtime (React)**: Handles component reconciliation and rendering tasks, creating and managing Fiber nodes internally.
+        
+4. **Syntactic Conventions in JSX**:
+    
+    * **Capitalisation Rules**: Capitalisation helps differentiate between HTML elements and custom components but isn’t an enforced rule for member expressions.
+        
+    * **Member Expressions**: Treated as component references regardless of capitalisation, enhancing component organisation and flexibility.
+        
+
+## **Moving Forward: A Developer's Toolkit for Truth**
+
+In our exploration of JSX transformation, we clarified that Babel’s role is purely syntactic and does not involve creating React Fiber objects. This distinction not only dispels common misconceptions but also underscores the importance of carefully verifying technical claims.
+
+In a field where tools and best practices evolve rapidly, and where AI-generated content becomes increasingly common, the ability to verify and validate becomes as crucial as technical knowledge itself.
+
+**Here’s a practical approach to navigating and understanding technical claims:**
+
+1. **Check the Source**: Dive into implementations, like we did with Babel’s `isCompatTag`, consult official documentation, and explore commit histories.
+    
+2. **Test Assumptions**: Use tools like Babel REPL, create test cases, and validate claims hands-on.
+    
+3. **Question the Narrative**: Consider whether the claim accurately reflects how the technology functions in practice and aligns with its intended purpose, rather than assuming explanations are complete or universally applicable.
+    
+
+## **Final Thoughts**
+
+With these practices, the next time you encounter a technical explanation, you’ll be equipped to:
+
+* Test it yourself,
+    
+* Check the source code,
+    
+* Question assumptions,
+    
+* Share your findings.
+    
+
+In the end, true understanding doesn’t come from accepting explanations; it comes from verifying them. This approach strengthens your skills and helps you confidently guide others in a complex, ever-evolving field.
+
+---
+
+### **About the Author**
+
+If you’d like to explore more of my approach and connect with me, here's a bit about who I am:
+
+**I'm Daniel Philip Johnson**, a senior frontend engineer specializing in frontend development and architecture. I’m passionate about simplifying complex challenges and building scalable, innovative solutions. To explore more of my work, visit my [personal website](https://danielphilipjohnson.com/about/), or connect with me on [LinkedIn](https://uk.linkedin.com/in/daniel-philip-johnson) for insights on tech leadership and the future of frontend development.
