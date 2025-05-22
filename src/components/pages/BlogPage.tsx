@@ -20,16 +20,20 @@ const BlogPage = async () => {
 	});
 	const blogListingJsonLdData = getBlogListingPageJsonLd(postSummaries);
 
-	const mappedBlogPosts = blogPosts.map(post => ({
-		...post,
-		category: post.categories?.[0]?.name || 'Uncategorized'
-	}));
+	const mappedBlogPosts = blogPosts
+		.map(post => ({
+			...post,
+			category: post.categories?.[0]?.name || 'Uncategorized',
+			parsedDate: parse(post.publishDate, 'dd/MM/yyyy', new Date())
+		}))
+		.sort((a, b) =>  b.parsedDate.getTime() - a.parsedDate.getTime())
 
 	return (
 		<>
 			<StructuredData data={blogListingJsonLdData} id="blog-listing-jsonld" />
 			<BlogPageClient initialBlogPosts={mappedBlogPosts} />
 		</>
-	); };
+	);
+};
 
 export default BlogPage;
