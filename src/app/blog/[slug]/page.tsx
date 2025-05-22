@@ -13,15 +13,17 @@ export async function generateStaticParams() {
 		slug: file.replace(/\.mdx$/, ''),
 	}))
 }
+type Params = Promise<{ slug: string }>;
 
 export async function generateMetadata(
-	{ params }: { params: { slug: string } }
+	{ params }: { params: Params }
 ): Promise<Metadata> {
-	const filePath = path.join(postsDirectory, `${params.slug}.mdx`);
+	const { slug } = await params;
+	const filePath = path.join(postsDirectory, `${slug}.mdx`);
 	const fileContents = fs.readFileSync(filePath, 'utf8');
 	const { data: frontmatter } = matter(fileContents);
 
-	const postUrl = `${SITE_URL}/blog/${params.slug}`;
+	const postUrl = `${SITE_URL}/blog/${slug}`;
 
 	const parsedDate = parse(frontmatter.publishDate, 'dd/MM/yyyy', new Date());
 	const formattedDate = format(parsedDate, 'yyyy-MM-dd');
