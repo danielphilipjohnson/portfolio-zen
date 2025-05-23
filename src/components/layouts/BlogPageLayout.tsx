@@ -5,6 +5,7 @@ import Text from '../ui/Text'
 import { BlogFooter } from '../blog/single/BlogFooter';
 import { BlogPost } from '@/types/blog-post';
 import { BlogSidebar } from '../blog/single/BlogSidebar';
+import Quote from '../ui/Quote';
 
 export const BlogPage = ({ post, content }: { post: BlogPost; content: React.ReactNode }) => {
 	return (
@@ -95,11 +96,9 @@ export const BlogPage = ({ post, content }: { post: BlogPost; content: React.Rea
 						
 
 						<article className="lg:w-3/4">
-							<div className="mb-8 p-6 bg-[var(--color-moss-50)] border-l-4 border-[var(--color-moss-500)]">
-								<Text variant="body" className="text-[var(--color-stone-800)]">
-									{post.excerpt}
-								</Text>
-							</div>
+							<Quote>
+								{post.excerpt}
+							</Quote>
 
 							<div>
 								{content}

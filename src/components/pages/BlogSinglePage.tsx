@@ -16,6 +16,7 @@ import { format, parse } from 'date-fns';
 import StructuredData from '../StructuredData';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import { kebabCase } from 'change-case';
+import Quote from '@/components/ui/Quote';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
@@ -168,7 +169,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 			CalloutBox,
 			InfoPanel,
 			Grid,
-			GridItem
+			GridItem,
+			Quote
 		}
 	});
 
