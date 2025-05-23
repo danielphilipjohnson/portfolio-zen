@@ -18,7 +18,9 @@ tags:
 imageUrl: "/images/blog/no-memory/hero.png" # Placeholder for a relevant hero image
 excerpt: "AI writes code fast, but often misses the critical 'why.' Discover the risks of contextless AI-generated code and how to prevent maintenance nightmares before they haunt your systems."
 ---
+
 import CodeBlock from '@/components/CodeBlock'
+import Quote from '@/components/ui/Quote'
 
 
 We’ve all heard the hype. Clean code. Fast demos. Deadlines magically met. Features ship like clockwork. Until they don’t. What happens after the demo is done? After the pitch deck glow fades and the stakeholders log off?
@@ -35,8 +37,10 @@ It’s what lets someone join a team and make sense of the architecture.
 It’s what lets you debug an outage at 3 a.m. without first trying to channel the ghost of the last dev.  
 It’s how we move fast *without* breaking everything.
 
+<Quote>
 > “When you lose the why, you don’t just slow down.  
 > You lose the system.”
+</Quote>
 
 ## It Writes Code — But Not the Why
 
@@ -48,7 +52,9 @@ Code is not just syntax. It’s a reflection of messy business rules, evolving r
 
 It didn’t sit in the planning meeting where Marketing rewrote the requirements—again. It didn’t argue over technical trade-offs under a deadline. It doesn’t understand the verbal patch you made to keep a legacy data contract alive.
 
+<Quote>
 > In software, **context isn’t just king—it’s the whole damn kingdom.** And AI lives outside the gates.
+</Quote>
 
 ## Systems Are Stories
 
@@ -71,21 +77,28 @@ This is how maintainability survives. Not in the syntax—but in the context.
 
 AI-generated code offers no such memory. It’s like receiving a precisely machined engine part, delivered without a serial number, material specification, or performance test results: its tolerances are unknown, its stress limits untested, its role in the larger assembly a dangerous guess. Just a seemingly perfect solution until it shatters under operational strain.
 
+<Quote>
+
 > **Context lingers. AI erases.**
+</Quote>
 
 ## The Context Window Is Not Enough
 
 AI models operate within narrow context windows. Even the most advanced ones don’t remember your planning meetings, your war-room debates, or that one bizarre constraint Legal demanded during a hallway chat. Those details aren’t in the repo. They’re in your head. In Slack. In timeboxed meetings. In decisions made under pressure—and never written down. And if the AI didn’t see them? It doesn’t know them. Worse, any context it was fed—say, the initial specs from a Jira ticket—can rapidly become outdated as requirements shift and discussions evolve. Unless someone meticulously re-briefs the AI with every single change, its understanding becomes a dangerously misleading snapshot of the past. So when it writes code, it’s not preserving your system’s story. It’s overwriting it—with silence.
 
+<Quote>
 > **And silence doesn’t scale.**
+</Quote>
 
-## **The Illusion of Help**
+## The Illusion of Help
 
 AI feels fast—until it doesn’t. You describe the task, and out comes code. Neat! But then it doesn’t quite fit. So you clarify. Add edge cases. Paste old snippets. Rewrite the prompt. Again.
 
 It starts to feel less like acceleration and more like stenography. You're feeding the machine what it needs—step by step—until eventually, it spits something back that looks vaguely right. But something unsettling happens along the way:
 
+<Quote>
 > The more context you give it, the more obvious it becomes—you already *had* everything you needed to solve the problem.
+</Quote>
 
 The AI didn’t solve it. *You* did—piecemeal, in slow motion, while explaining it to a tool that can’t understand you.
 
@@ -96,7 +109,7 @@ What starts as collaboration ends in recursion.You don’t save time. You just o
 **And that’s the real problem.**
 
 
-## **When Chat Becomes a Dead End**
+## When Chat Becomes a Dead End
 
 In a normal workflow, someone makes a decision—and leaves a trail. A Jira ticket. A commit message. A Slack thread. Even a lazy `“// TODO: Fix this later”` can be a breadcrumb.
 
@@ -111,7 +124,7 @@ So, what are you left with? No version control for the prompt that *actually* ge
 Just a block of working code, utterly severed from the iterative, context-rich dialogue that birthed it. When that chat history evaporates—and it so often does—the *why* evaporates with it. No one can trace a bug back to a design choice explored only in that fleeting AI chat. No one can reconstruct the full intent behind a feature that was incrementally coaxed out of a series of prompts. You’re not debugging a system—you’re reverse-engineering a ghost.
 
 
-## **When It Breaks, It Breaks Hard**
+## When It Breaks, It Breaks Hard
 
 You know the moment. Tuesday morning. 9:47 a.m. Slack’s on fire. Prod’s down. CEO’s typing. Everyone’s pretending to stay calm. You open the file. And there it is: a wall of perfectly formatted logic. It compiles. It runs. But no one knows what it’s doing—or why it’s there.
 
@@ -127,14 +140,17 @@ The questions come fast, **each one a testament to a context that vanished with 
     
 * Who crafted that final, critical prompt, and what vital piece of their human understanding evaporated when the AI chat session ended?
     
-
+<Quote>
 > Spoiler: it came from a prompt. A one-off test. A forgotten tab. The dev’s gone. The context? Deleted before it ever hit Git. And now it’s your job to make sense of it.
+</Quote>
 
-## **Ghost Code, Haunted Teams**
+## Ghost Code, Haunted Teams
 
 This is the risk. Code stitched by AI. Shipped under pressure. Prompt long forgotten. No context. No history. No human connection to the decision.
 
+<Quote>
 > **Code written by a ghost, for a problem no one remembers.** That’s not engineering. That’s séance work.
+</Quote>
 
 Here’s what it looks like in the wild:
 
