@@ -21,8 +21,6 @@ excerpt: "AI writes code fast, but often misses the critical 'why.' Discover the
 import CodeBlock from '@/components/CodeBlock'
 
 
-> **“AI? It writes code. Some of it, folks—some of it’s actually not bad. I’ve seen it. Believe me. It’s fast. It’s clean. Some people say it’s tremendous code. But does it build systems? Not even close. Total disaster.”**
-
 We’ve all heard the hype. Clean code. Fast demos. Deadlines magically met. Features ship like clockwork. Until they don’t. What happens after the demo is done? After the pitch deck glow fades and the stakeholders log off?
 
 **Maintenance begins.**
@@ -77,11 +75,11 @@ AI-generated code offers no such memory. It’s like receiving a precisely machi
 
 ## The Context Window Is Not Enough
 
-AI models operate within narrow context windows. Even the most advanced ones don’t remember your planning meetings, your war-room debates, or that one bizarre constraint Legal demanded during a hallway chat. Those details aren’t in the repo. They’re in your head. In Slack. In timeboxed meetings. In decisions made under pressure—and never written down. And if the AI didn’t see them? It doesn’t know them. **Worse, any context it was fed—say, the initial specs from a Jira ticket—can rapidly become outdated as requirements shift and discussions evolve. Unless someone meticulously re-briefs the AI with every single change, its understanding becomes a dangerously misleading snapshot of the past.** So when it writes code, it’s not preserving your system’s story. It’s overwriting it—with silence.
+AI models operate within narrow context windows. Even the most advanced ones don’t remember your planning meetings, your war-room debates, or that one bizarre constraint Legal demanded during a hallway chat. Those details aren’t in the repo. They’re in your head. In Slack. In timeboxed meetings. In decisions made under pressure—and never written down. And if the AI didn’t see them? It doesn’t know them. Worse, any context it was fed—say, the initial specs from a Jira ticket—can rapidly become outdated as requirements shift and discussions evolve. Unless someone meticulously re-briefs the AI with every single change, its understanding becomes a dangerously misleading snapshot of the past. So when it writes code, it’s not preserving your system’s story. It’s overwriting it—with silence.
 
 > **And silence doesn’t scale.**
 
-## The Illusion of Help
+## **The Illusion of Help**
 
 AI feels fast—until it doesn’t. You describe the task, and out comes code. Neat! But then it doesn’t quite fit. So you clarify. Add edge cases. Paste old snippets. Rewrite the prompt. Again.
 
@@ -97,25 +95,23 @@ What starts as collaboration ends in recursion.You don’t save time. You just o
 
 **And that’s the real problem.**
 
----
 
-## When Chat Becomes a Dead End
+## **When Chat Becomes a Dead End**
 
 In a normal workflow, someone makes a decision—and leaves a trail. A Jira ticket. A commit message. A Slack thread. Even a lazy `“// TODO: Fix this later”` can be a breadcrumb.
 
 But when you work with an AI? The initial spark of an idea, the core of a decision, lives within the transient space of a prompt. The code gets generated—but the nuanced human reasoning that guided it vanishes the moment you close the tab or scroll away.
 
-> **And this is where the illusion of AI efficiency often shatters. Think about your interactions in tools like Cursor IDE, or any AI chat window. That entire conversational dance—the initial prompt, the back-and-forth clarifications, the AI’s suggestions you refined, the subtle pivots in your request—forms the *true* origin story of the code. Yet, this vital context is dangerously ephemeral. Close that chat, lose that session, or let the context window refresh, and that precise line of reasoning, that specific evolutionary path of the prompt, is often gone. *Forever*. Not archived, not versioned alongside the code, just… gone.**
+And this is where the illusion of AI efficiency often shatters. Think about your interactions in tools like Cursor IDE, or any AI chat window. That entire conversational dance—the initial prompt, the back-and-forth clarifications, the AI’s suggestions you refined, the subtle pivots in your request—forms the *true* origin story of the code. Yet, this vital context is dangerously ephemeral. Close that chat, lose that session, or let the context window refresh, and that precise line of reasoning, that specific evolutionary path of the prompt, is often gone. *Forever*. Not archived, not versioned alongside the code, just… gone.
 
-This isn't like a buried Slack thread you might eventually unearth. In many current AI tools, this critical dialogue is simply not designed for the same persistence or traceability we demand for every other engineering artifact.
+This isn't like a buried Slack thread you might eventually unearth. In many current AI tools, this critical dialogue is simply not designed for the same persistence or traceability we demand for every other engineering artefact.
 
 So, what are you left with? No version control for the prompt that *actually* generated the final accepted code. No searchable thread linking the iterative human-AI conversation to the resulting logic. No reliable audit trail for a significant part of your creative process.
 
 Just a block of working code, utterly severed from the iterative, context-rich dialogue that birthed it. When that chat history evaporates—and it so often does—the *why* evaporates with it. No one can trace a bug back to a design choice explored only in that fleeting AI chat. No one can reconstruct the full intent behind a feature that was incrementally coaxed out of a series of prompts. You’re not debugging a system—you’re reverse-engineering a ghost.
 
----
 
-## When It Breaks, It Breaks Hard
+## **When It Breaks, It Breaks Hard**
 
 You know the moment. Tuesday morning. 9:47 a.m. Slack’s on fire. Prod’s down. CEO’s typing. Everyone’s pretending to stay calm. You open the file. And there it is: a wall of perfectly formatted logic. It compiles. It runs. But no one knows what it’s doing—or why it’s there.
 
@@ -134,7 +130,7 @@ The questions come fast, **each one a testament to a context that vanished with 
 
 > Spoiler: it came from a prompt. A one-off test. A forgotten tab. The dev’s gone. The context? Deleted before it ever hit Git. And now it’s your job to make sense of it.
 
-## Ghost Code, Haunted Teams
+## **Ghost Code, Haunted Teams**
 
 This is the risk. Code stitched by AI. Shipped under pressure. Prompt long forgotten. No context. No history. No human connection to the decision.
 
@@ -215,8 +211,8 @@ So yes, let the AI write the code. But be ready.
 
 Because when something finally goes wrong—and it will—you won’t just be debugging.  
 You’ll be summoning context from the dead.  
-You’ll be holding a séance.
+You’ll be holding a [séance](https://en.wikipedia.org/wiki/S%C3%A9ance).
 
 ## So What Do We Do?
 
-This isn't a rejection of AI, but rather a crucial reminder for how we must operate: while AI can indeed generate code with impressive efficiency, it's human engineers who are ultimately responsible for building and maintaining coherent, understandable systems. Therefore, if you integrate AI into your development workflow, the onus is on you to meticulously document the 'why', archive the specific prompts that yielded the code, capture the essential back-and-forth dialogue, and version this entire contextual rationale with the same diligence you apply to the code itself. Neglect these practices, and the outcome is stark: you won't merely be losing pieces of context—you'll be actively constructing the haunted systems of tomorrow.
+This isn't a rejection of AI, but rather a crucial reminder for how we must operate: while AI can indeed generate code with impressive efficiency, it's human engineers who are ultimately responsible for building and maintaining coherent, understandable systems. Therefore, if you integrate AI into your development workflow, the onus is on you to meticulously document the 'why,' archive the specific prompts that yielded the code, capture the essential back-and-forth dialogue, and version this entire contextual rationale with the same diligence you apply to the code itself. Neglect these practices, and the outcome is stark: you won't merely be losing pieces of context—you'll be actively constructing the haunted systems of tomorrow.
