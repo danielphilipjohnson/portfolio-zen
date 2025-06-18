@@ -84,10 +84,10 @@ const BlogHero = ({
 							{categories?.map((category) => (
 								<button
 									key={category.slug}
-									onClick={() => onCategoryChange(category.slug)}
+									onClick={() => onCategoryChange(category.name)}
 									className={cn(
 										'px-4 py-2 text-sm transition-colors border',
-										activeCategory === category.slug
+										activeCategory === category.name
 											? 'bg-[var(--color-moss-600)] text-[var(--color-stone-50)] border-[var(--color-moss-600)]'
 											: 'bg-transparent text-[var(--color-stone-700)] border-[var(--color-stone-300)]'
 									)}
