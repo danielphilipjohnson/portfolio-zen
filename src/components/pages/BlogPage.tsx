@@ -3,6 +3,7 @@ import BlogPageClient from '@/components/blog/BlogPageClient';
 import { format, isValid, parse } from 'date-fns';
 import { getBlogListingPageJsonLd } from '@/utils/jsonLd';
 import StructuredData from '../StructuredData';
+import { getAllCategories } from '@/helper/getAllCategories';
 
 const BlogPage = async () => {
 	const blogPosts = await getAllBlogs();
@@ -28,10 +29,12 @@ const BlogPage = async () => {
 		}))
 		.sort((a, b) =>  b.parsedDate.getTime() - a.parsedDate.getTime())
 
+	const categories = await getAllCategories();
+
 	return (
 		<>
 			<StructuredData data={blogListingJsonLdData} id="blog-listing-jsonld" />
-			<BlogPageClient initialBlogPosts={mappedBlogPosts} />
+			<BlogPageClient initialBlogPosts={mappedBlogPosts} categories={categories} />
 		</>
 	);
 };
