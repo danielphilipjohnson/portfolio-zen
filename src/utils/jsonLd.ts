@@ -443,3 +443,125 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
 		"@graph": graph
 	};
 }
+
+export function getSecurityPageJsonLd(): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+
+	const securityPageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${SITE_URL}/security/#webpage`,
+		"url": `${SITE_URL}/security/`,
+		"name": "Web Security & OWASP | Daniel Philip Johnson",
+		"description": "Learn about Daniel Philip Johnson's security expertise including OWASP certification, XSS prevention, secure authentication, and frontend security best practices.",
+		"isPartOf": {
+			"@type": "WebSite",
+			"@id": WEBSITE_SCHEMA_ID
+		},
+		"about": {
+			"@type": "Person",
+			"@id": PERSON_SCHEMA_ID
+		},
+		"inLanguage": "en-GB"
+	};
+
+	const securityBreadcrumb: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "Security", "item": `${SITE_URL}/security/` }
+		]
+	};
+
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
+		securityPageSchema,
+		securityBreadcrumb
+	];
+
+	return {
+		...baseJsonLd,
+		"@graph": graph
+	};
+}
+
+export function getPhilosophyPageJsonLd(): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+
+	const philosophyPageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${SITE_URL}/philosophy/#webpage`,
+		"url": `${SITE_URL}/philosophy/`,
+		"name": "Bonsai Coding: My Philosophy of Software | Daniel Philip Johnson",
+		"description": "Discover bonsai coding: a philosophy of frontend architecture shaped by Stoicism, Taoism, and classical strategy. Build minimal, secure, and scalable React & Next.js apps.",
+		"isPartOf": {
+			"@type": "WebSite",
+			"@id": WEBSITE_SCHEMA_ID
+		},
+		"about": {
+			"@type": "Person",
+			"@id": PERSON_SCHEMA_ID
+		},
+		"inLanguage": "en-GB",
+		"keywords": ["bonsai coding", "software minimalism", "frontend philosophy", "React architecture", "software development philosophy", "Stoic programming", "minimalist code"]
+	};
+
+	const philosophyBreadcrumb: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "Philosophy", "item": `${SITE_URL}/philosophy/` }
+		]
+	};
+
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
+		philosophyPageSchema,
+		philosophyBreadcrumb
+	];
+
+	return {
+		...baseJsonLd,
+		"@graph": graph
+	};
+}
+
+export function getServicesPageJsonLd(): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+
+	const servicesPageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${SITE_URL}/services/#webpage`,
+		"url": `${SITE_URL}/services/`,
+		"name": "React & Next.js Consulting Services | Daniel Philip Johnson",
+		"description": "Hire a React/Next.js consultant in the UK. Services include OWASP security audits, frontend architecture reviews, and scalable design system strategy.",
+		"isPartOf": {
+			"@type": "WebSite",
+			"@id": WEBSITE_SCHEMA_ID
+		},
+		"about": {
+			"@type": "Person",
+			"@id": PERSON_SCHEMA_ID
+		},
+		"inLanguage": "en-GB",
+		"keywords": ["React consultant UK", "Next.js security audit", "frontend architecture consultant", "React design system consulting", "OWASP frontend audit"]
+	};
+
+	const servicesBreadcrumb: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "Services", "item": `${SITE_URL}/services/` }
+		]
+	};
+
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
+		servicesPageSchema,
+		servicesBreadcrumb
+	];
+
+	return {
+		...baseJsonLd,
+		"@graph": graph
+	};
+}
