@@ -3,7 +3,10 @@ export type SeoPagePath =
 	| '/about'
 	| '/projects'
 	| '/blog'
-	| '/contact';
+	| '/contact'
+	| '/security'
+	| '/philosophy'
+	| '/services';
 
 export interface SEOData {
 	title: string;
@@ -80,6 +83,42 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: '/images/og/contact-og.jpg' }],
 				type: 'website',
 				url: 'https://www.danielphilipjohnson.com/contact',
+			},
+		},
+		'/security': {
+			title: 'Frontend Security for React & Next.js | OWASP, XSS, CSRF',
+			description: 'Explore React & Next.js security guides. Learn OWASP Top 10, XSS prevention, CSRF vs CORS, authentication patterns, and frontend security best practices.',
+			keywords: ['React security', 'Next.js security', 'OWASP Top 10 frontend', 'XSS prevention React', 'CSRF protection', 'frontend security guide', 'React authentication security', 'Next.js OWASP'],
+			openGraph: {
+				title: 'Frontend Security for React & Next.js | OWASP, XSS, CSRF',
+				description: 'Explore React & Next.js security guides. Learn OWASP Top 10, XSS prevention, CSRF vs CORS, authentication patterns, and frontend security best practices.',
+				images: [{ url: '/images/og/security-og.jpg' }],
+				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/security',
+			},
+		},
+		'/philosophy': {
+			title: 'Bonsai Coding | Frontend Philosophy & Software Minimalism',
+			description: 'Discover bonsai coding: a philosophy of frontend architecture shaped by Stoicism, Taoism, and classical strategy. Build minimal, secure, and scalable React & Next.js apps.',
+			keywords: ['bonsai coding', 'software minimalism', 'frontend philosophy', 'React architecture philosophy', 'Next.js design philosophy', 'software development philosophy', 'Stoic programming', 'minimalist code'],
+			openGraph: {
+				title: 'Bonsai Coding | Frontend Philosophy & Software Minimalism',
+				description: 'Discover bonsai coding: a philosophy of frontend architecture shaped by Stoicism, Taoism, and classical strategy. Build minimal, secure, and scalable React & Next.js apps.',
+				images: [{ url: '/images/og/philosophy-og.jpg' }],
+				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/philosophy',
+			},
+		},
+		'/services': {
+			title: 'React & Next.js Consulting | Security Audits & Frontend Architecture UK',
+			description: 'Hire a React/Next.js consultant in the UK. Services include OWASP security audits, frontend architecture reviews, and scalable design system strategy.',
+			keywords: ['React consultant UK', 'Next.js security audit', 'frontend architecture consultant', 'React design system consulting', 'OWASP frontend audit', 'Next.js consulting services', 'React security consultant'],
+			openGraph: {
+				title: 'React & Next.js Consulting | Security Audits & Frontend Architecture UK',
+				description: 'Hire a React/Next.js consultant in the UK. Services include OWASP security audits, frontend architecture reviews, and scalable design system strategy.',
+				images: [{ url: '/images/og/services-og.jpg' }],
+				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/services',
 			},
 		},
 	};
