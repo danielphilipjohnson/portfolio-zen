@@ -4,7 +4,7 @@ export default function NotFoundPage() {
 	return (
 		<main className="min-h-screen bg-[#f8f8f2] flex flex-col items-center justify-center px-4 text-center">
 			<h1 className="text-4xl font-serif mb-2">This page does not exist.</h1>
-			<p className="text-stone-500 mb-8 italic">"Even the moon cannot be grasped."</p>
+			<p className="text-stone-500 mb-8 italic">&quot;Even the moon cannot be grasped.&quot;</p>
 
 			<Link
 				href="/"
