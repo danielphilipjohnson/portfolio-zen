@@ -18,12 +18,13 @@ interface BlogPost {
 
 interface BlogPageClientProps {
 	initialBlogPosts: BlogPost[];
+	categories: { name: string; slug: string }[];
 }
 
-const BlogPageClient = ({ initialBlogPosts }: BlogPageClientProps) => {
-	const [activeCategory, setActiveCategory] = useState("all");
+const BlogPageClient = ({ initialBlogPosts, categories }: BlogPageClientProps) => {
+	const [activeCategory, setActiveCategory] = useState("All");
 	const filteredBlogPosts = useMemo(() => {
-		if (activeCategory === "all") return initialBlogPosts;
+		if (activeCategory === "All") return initialBlogPosts;
 		return initialBlogPosts.filter(post => 
 			post.tags?.some(tag => tag.toLowerCase() === activeCategory.toLowerCase())
 		);
@@ -40,12 +41,7 @@ const BlogPageClient = ({ initialBlogPosts }: BlogPageClientProps) => {
 				notification="⚡ Here are my current collection of blogs"
 				description="On this page, you will see a list of my blogs."
 				backgroundImageUrl="/images/blogs/hero.png"
-				categories={[
-					{ name: "All", slug: "all", isDefault: true },
-					{ name: "Technology", slug: "technology" },
-					{ name: "Reflection", slug: "reflection" },
-					{ name: "Frontend", slug: "frontend" },
-				]}
+				categories={categories}
 				activeCategory={activeCategory}
 				onCategoryChange={handleCategoryChange}
 			/>
