@@ -11,7 +11,7 @@ interface QuickGuide {
 const quickGuides: QuickGuide[] = [
 	{
 		title: "OWASP Top 10 for Frontend Developers",
-		href: "/blog/owasp-top-10-frontend"  // Will be blog posts when created
+		href: "/blog/owasp-top-10-frontend" 
 	},
 	{
 		title: "React XSS Prevention Guide", 
@@ -73,7 +73,7 @@ const QuickStartGuides = () => {
 					<Text as="p" variant="body-sm" className="text-[var(--color-stone-700)] text-center">
 						📝 <strong>Content Coming Soon:</strong> These guides are currently being written and will be published over the coming weeks. 
 						<a href="/contact" className="ml-1 text-[var(--color-moss-600)] hover:text-[var(--color-moss-700)] underline">
-							Get notified when they're live
+							Get notified when they&apos;re live
 						</a>
 					</Text>
 				</div>

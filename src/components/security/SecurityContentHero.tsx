@@ -22,7 +22,7 @@ const SecurityContentHero = () => {
 					{/* CTA Button */}
 					<div className="mb-16">
 						<Button
-							variant="default"
+							variant="primary"
 							size="lg"
 							asChild
 							className="bg-[var(--color-moss-600)] hover:bg-[var(--color-moss-700)] text-white"

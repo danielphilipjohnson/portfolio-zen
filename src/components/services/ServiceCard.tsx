@@ -68,7 +68,7 @@ const ServiceCard = ({
           variant="h6"
           className="mb-4 text-stone-800 font-semibold text-center"
         >
-          What's Included:
+          What&apos;s Included:
         </Text>
         <ul className="space-y-3">
           {offerings.map((offering, index) => (

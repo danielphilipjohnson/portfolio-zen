@@ -130,7 +130,7 @@ const SecurityByTopic = () => {
 						📚 Content Development in Progress
 					</Text>
 					<Text as="p" variant="body" className="text-[var(--color-stone-700)]">
-						I'm actively writing comprehensive guides for each of these topics. The content will be published incrementally over the next few weeks. 
+						I&apos;m actively writing comprehensive guides for each of these topics. The content will be published incrementally over the next few weeks. 
 						<a href="/contact" className="ml-1 text-[var(--color-moss-600)] hover:text-[var(--color-moss-700)] underline">
 							Subscribe to get notified
 						</a> when new security guides go live.

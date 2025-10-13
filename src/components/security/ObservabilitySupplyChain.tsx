@@ -1,12 +1,10 @@
 import Container from '@/components/ui/Container';
 import Text from '@/components/ui/Text';
-import { SectionHeader } from '@/components/about/SectionHeader';
 
 const ObservabilitySupplyChain = () => {
 	return (
 		<section className="py-16 bg-white">
 			<Container>
-				{/* Observability Section */}
 				<div className="mb-16">
 					<div className="flex items-center mb-8">
 						<span className="text-2xl mr-3">📊</span>
@@ -18,7 +16,6 @@ const ObservabilitySupplyChain = () => {
 					</div>
 
 					<div className="grid gap-8 lg:grid-cols-2">
-						{/* Observability Card */}
 						<div className="p-6 border border-[var(--color-stone-200)] rounded-lg bg-[var(--color-stone-50)]">
 							<div className="flex items-center mb-4">
 								<span className="text-xl mr-3">👁️</span>
@@ -28,7 +25,7 @@ const ObservabilitySupplyChain = () => {
 							</div>
 							
 							<Text as="p" variant="body" className="mb-6 text-[var(--color-stone-700)]">
-								Frontend security isn't just about prevention — it's also about visibility.
+								Frontend security isn&apos;t just about prevention — it&apos;s also about visibility.
 							</Text>
 
 							<div className="space-y-3">
@@ -52,7 +49,7 @@ const ObservabilitySupplyChain = () => {
 								</div>
 							</div>
 
-							<div className="mt-6">
+							{/*<div className="mt-6">
 								<a
 									href="/blog/owasp-logging-monitoring"
 									className="inline-flex items-center text-sm font-medium text-[var(--color-moss-600)] hover:text-[var(--color-moss-700)] transition-colors"
@@ -62,7 +59,7 @@ const ObservabilitySupplyChain = () => {
 										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
 									</svg>
 								</a>
-							</div>
+							</div>*/}
 						</div>
 
 						{/* Supply Chain Card */}
@@ -105,7 +102,7 @@ const ObservabilitySupplyChain = () => {
 								</div>
 							</div>
 
-							<div className="mt-6">
+							{/*<div className="mt-6">
 								<a
 									href="/blog/owasp-outdated-components"
 									className="inline-flex items-center text-sm font-medium text-[var(--color-moss-600)] hover:text-[var(--color-moss-700)] transition-colors"
@@ -115,7 +112,7 @@ const ObservabilitySupplyChain = () => {
 										<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
 									</svg>
 								</a>
-							</div>
+							</div>*/}
 						</div>
 					</div>
 				</div>

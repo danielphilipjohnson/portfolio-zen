@@ -49,7 +49,7 @@ const OWASPLearnings = () => {
 				
 				<div className="mb-12">
 					<Text as="p" variant="body" className="max-w-4xl text-[var(--color-stone-700)] mb-6">
-						Through comprehensive OWASP training, I've developed expertise in identifying, preventing, and mitigating 
+						Through comprehensive OWASP training, I&apos;ve developed expertise in identifying, preventing, and mitigating 
 						the most critical web application security risks. Here are the key areas where I can add value to your projects:
 					</Text>
 				</div>

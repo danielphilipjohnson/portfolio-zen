@@ -31,7 +31,7 @@ const SecurityHero = () => {
 
 						<div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
 							<Button
-								variant="default"
+								variant="primary"
 								size="lg"
 								asChild
 							>

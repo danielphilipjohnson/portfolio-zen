@@ -27,14 +27,6 @@ const CertificationCard = ({ certification }: CertificationCardProps) => {
 							src={certification.badgeUrl}
 							alt={`${certification.title} Badge`}
 							className="w-16 h-16 rounded-lg"
-							onError={(e) => {
-								// Fallback to emoji if image fails to load
-								(e.target as HTMLImageElement).style.display = 'none';
-								const fallback = document.createElement('div');
-								fallback.className = 'w-16 h-16 bg-[var(--color-moss-100)] rounded-lg flex items-center justify-center text-2xl';
-								fallback.textContent = '🏅';
-								(e.target as HTMLImageElement).parentNode?.insertBefore(fallback, e.target);
-							}}
 						/>
 					</div>
 				)}

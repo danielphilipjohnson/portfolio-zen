@@ -49,7 +49,7 @@ const ProcessSection = () => {
             variant="body"
             className="text-stone-600 max-w-2xl mx-auto"
           >
-            A proven process that delivers results without disrupting your team's workflow.
+            A proven process that delivers results without disrupting your team&apos;s workflow.
           </Text>
         </div>
 

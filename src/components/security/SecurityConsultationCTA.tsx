@@ -11,7 +11,7 @@ const SecurityConsultationCTA = () => {
 						💼 Hire Me for Security Reviews
 					</Text>
 					<Text as="p" variant="body" className="max-w-3xl mx-auto mb-8 text-[var(--color-stone-300)]">
-						Modern frontend developers can't afford to ignore security. If your React or Next.js application 
+						Modern frontend developers can&apos;t afford to ignore security. If your React or Next.js application 
 						handles sensitive data, payments, or authentication flows, a <strong>security-first architecture review</strong> is essential.
 					</Text>
 
@@ -56,7 +56,7 @@ const SecurityConsultationCTA = () => {
 
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 sm:justify-center">
 						<Button
-							variant="default"
+							variant="primary"
 							size="lg"
 							asChild
 							className="bg-[var(--color-moss-600)] hover:bg-[var(--color-moss-700)] text-white"

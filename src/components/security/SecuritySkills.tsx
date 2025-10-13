@@ -65,7 +65,7 @@ const SecuritySkills = () => {
 						Security-First Development Approach
 					</Text>
 					<Text as="p" variant="body" className="text-[var(--color-stone-700)] mb-4">
-						Security isn't an afterthought—it's integrated into every step of my development process. 
+						Security isn&apos;t an afterthought—it&apos;s integrated into every step of my development process. 
 						From initial architecture decisions to deployment configurations, I ensure that security 
 						considerations are baked into the foundation of every application.
 					</Text>

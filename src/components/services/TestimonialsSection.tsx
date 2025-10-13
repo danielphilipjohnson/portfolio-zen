@@ -37,7 +37,7 @@ const TestimonialsSection = () => {
             variant="body"
             className="text-stone-600 max-w-2xl mx-auto"
           >
-            Real results from teams who've worked with me on security audits, architecture reviews, and design systems.
+            Real results from teams who&apos;ve worked with me on security audits, architecture reviews, and design systems.
           </Text>
         </div>
 

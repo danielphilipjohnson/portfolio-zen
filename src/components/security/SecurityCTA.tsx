@@ -17,7 +17,7 @@ const SecurityCTA = () => {
 
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 sm:justify-center">
 						<Button
-							variant="default"
+							variant="primary"
 							size="lg"
 							asChild
 							className="bg-[var(--color-moss-600)] hover:bg-[var(--color-moss-700)] text-white"
@@ -64,7 +64,7 @@ const SecurityCTA = () => {
 									Performance & Security
 								</Text>
 								<Text as="p" variant="body-sm" className="text-[var(--color-stone-400)]">
-									Security implementations that don't compromise on user experience
+									Security implementations that don&apos;t compromise on user experience
 								</Text>
 							</div>
 							<div className="text-center">
