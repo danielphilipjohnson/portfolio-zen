@@ -6,6 +6,7 @@ import ContactCard from "@/components/ContactCard";
 import Experience from "@/components/experience/Experience";
 import { getHomePageJsonLd } from "@/utils/jsonLd";
 import StructuredData from "../StructuredData";
+import LatestBlogs from "@/components/home/LatestBlogs";
 
 export default function HomePage() {
 	const homePageJsonLdData = getHomePageJsonLd();
@@ -14,6 +15,7 @@ export default function HomePage() {
 			<StructuredData data={homePageJsonLdData} id="homepage-jsonld" />
 			<Hero />
 			<About />
+			<LatestBlogs />
 			<Experience />
 			<Education />
 			<OnlineCourses />
