@@ -14,8 +14,8 @@ export default function HomePage() {
 		<main>
 			<StructuredData data={homePageJsonLdData} id="homepage-jsonld" />
 			<Hero />
-			<About />
 			<LatestBlogs />
+			<About />
 			<Experience />
 			<Education />
 			<OnlineCourses />

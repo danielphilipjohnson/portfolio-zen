@@ -82,7 +82,7 @@ const ZenValuesMission = () => {
 							</div>
 
 							<Text variant="caption" className="py-2 text-center text-stone-700">
-								My first day as a FullStack engineer
+								My first day as a Frontend Engineer
 							</Text>
 						</figure>
 
