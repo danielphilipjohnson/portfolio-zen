@@ -43,7 +43,7 @@ const Hero = () => {
 								weight="light"
 								className="text-[color:var(--color-stone-800)]"
 							>
-								Fullstack Engineer @ <span className="text-[color:var(--color-moss-600)]">Loan.co.uk</span>
+								Frontend Engineer @ <span className="text-[color:var(--color-moss-600)]">Loan.co.uk</span>
 							</Text>
 						</div>
 

@@ -148,3 +148,40 @@
 
   }
 }
+
+@layer components {
+  .prose table {
+    @apply w-full border-collapse border border-zinc-200 text-sm mb-6;
+  }
+
+  .prose thead {
+    @apply bg-zinc-50 ;
+  }
+
+  .prose th {
+    @apply border border-zinc-200 px-4 py-3 text-left font-semibold text-zinc-900;
+  }
+
+  .prose td {
+    @apply border border-zinc-200 px-4 py-3 align-top text-zinc-800 ;
+  }
+
+  .prose tbody tr:nth-child(even) {
+    @apply bg-zinc-50;
+  }
+}
+
+
+@layer components {
+  .prose a {
+    @apply font-medium text-zinc-900 underline underline-offset-4 decoration-zinc-300 transition-colors;
+  }
+
+  .prose a:hover {
+    @apply decoration-zinc-900;
+  }
+
+  .prose a:focus-visible {
+    @apply outline-none ring-2 ring-zinc-400 ring-offset-2 ring-offset-white;
+  }
+}

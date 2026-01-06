@@ -1,0 +1,452 @@
+---
+title: "Hydration Is a Handover, Not a Feature"
+publishDate: "06/01/2026"
+modifiedDate: "06/01/2026"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "Software Architecture"
+readingTime: 14 mins read
+tags:
+  - hydration
+  - server-side rendering
+  - frontend architecture
+  - web performance
+  - distributed systems
+  - React
+  - rendering models
+imageUrl: "/images/blogs/covers/hydration-orchestator.avif"
+excerpt: "Hydration isn’t just about attaching event listeners. It’s a fragile handover between past and present, where fast paint, interactivity, and continuity collide—and where most bugs aren’t mistakes, but broken assumptions."
+---
+
+## TL;DR
+
+* **Hydration is not just “attaching event listeners”** it’s a fragile handover where client-side logic must take control of a DOM that already exists and may already be changing.
+    
+* It exists because we want **fast first paint, rich interactivity, and continuity of meaning** at the same time, even though these goals fundamentally pull against each other.
+    
+* Hydration breaks in strange ways because it’s a **reconciliation problem**, not a rendering one: two authorities, different timelines, and no chance to reset.
+    
+* Most hydration bugs aren’t mistakes they’re the result of **hidden constraints like determinism and timing** being quietly violated in real applications.
+    
+* Hydration isn’t broken, but it is **highly constrained**, and using it deliberately matters more than mastering its mechanics.
+    
+
+---
+
+## What We Mean by Hydration
+
+Let’s start with the narrowest definition possible:
+
+> Hydration attaches event listeners to server-rendered HTML.
+
+That’s it.
+
+No magic. No re-rendering. No “making it interactive” in the abstract.
+
+The browser already has a DOM.
+
+Hydration’s job is to **bind behaviour to that existing structure** without changing what the user is already seeing.
+
+This definition matters because hydration is often described too generously. When we say “hydration makes the page interactive,” we hide what’s actually happening: JavaScript code is loaded later, executed later, and asked to *take ownership* of a document that was created somewhere else, at an earlier time, under different conditions.
+
+Crucially, hydration does **not**:
+
+* create the DOM
+    
+* control the initial layout
+    
+* reset state
+    
+* guarantee a clean starting point
+    
+
+All of that has already happened by the time hydration begins.
+
+Hydration is therefore not the act of rendering it is the act of **agreement**. The client must agree with the server about what the UI *means*, based solely on what’s already there. If that agreement holds, the illusion of continuity survives. If it doesn’t, the system has no safe way to recover without breaking something the user can see or feel.
+
+This is why hydration is best understood not as a feature, but as a **handover**, one that only works if both sides independently arrive at the same interpretation of the page.
+
+And that assumption turns out to be far more fragile than it sounds.
+
+> Hydration only works if both sides independently arrive at the same meaning and the system offers no safe recovery when they don’t.
+
+---
+
+## How We Ended Up Here
+
+Hydration wasn’t designed so much as it was **backed into**.
+
+It emerged as a response to the constraints of the web platform: HTML arrives first, JavaScript arrives later, and users expect the page they see to remain meaningful throughout that gap. Hydration is the compromise that tries to hold those pieces together.
+
+In the early days of JavaScript frameworks roughly the mid-2010s the model was relatively simple. Data was fetched on the server, HTML was fully rendered, and the entire page was sent to the browser in one go. Only after everything arrived would the JavaScript bundle load, execute, and “wake up” the page. Hydration, in this context, was often described as *running the same code again on the client to make the page interactive*.
+
+This is what we can think of as **classical hydration**.
+
+It’s like opening a pop-up book all at once. The entire scene appears immediately: the backdrop, the characters, the props. But nothing moves yet. Only once all the hidden strings and levers are installed once the full JavaScript bundle has loaded and executed does the scene come to life. Until then, the page is complete but inert.
+
+That model worked because the world was relatively static. The server finished its work before anything was sent. The client started its work only after everything arrived. There was a clean, single moment where control changed hands.
+
+Modern web applications broke that assumption.
+
+Today, content arrives in pieces. HTML can be streamed as it becomes available. JavaScript is split, deferred, and lazily loaded. Some parts of a page may be static, others dynamic, others interactive only after user intent. The server might render eagerly in some places and defer work in others. The client might become interactive in one region while another is still waiting on code.
+
+This is **modern hydration**.
+
+The pop-up book no longer opens all at once. The scenery unfolds first. Individual characters appear later. Small mechanisms are installed incrementally, sometimes while the reader is already touching the page. The challenge is no longer just “attach behaviour after render,” but **ensure that each new piece fits the scene exactly as it already exists**, without disturbing what’s already in motion.
+
+What changed wasn’t the goal fast pages that become interactive but the delivery model. Hydration had to evolve from a single, blocking step into an ongoing coordination process because the web itself stopped arriving as a single, finished artefact.
+
+Seen this way, hydration isn’t a clean architectural choice. It’s an evolutionary response to a platform where delivery is fragmented, execution is delayed, and users are present the entire time.
+
+---
+
+## The Three Things We Want (That Don’t Coexist)
+
+Hydration exists because we want **three incompatible things at the same time**.
+
+First, we want a **fast first paint**. HTML should arrive immediately, giving the user something real to look at without waiting for JavaScript to download, parse, and execute. This is the promise of server rendering: visible progress now, not later.
+
+Second, we want **rich interactivity**. The page shouldn’t just be visible it should behave like a client application. Buttons should respond instantly, inputs should feel alive, and complex interactions should be possible once JavaScript is available.
+
+Third, we want **continuity of meaning**. The page should not reset, replay, or visibly change identity when the client takes over. What the user sees before JavaScript loads should be the *same thing* they continue interacting with afterwards, not a placeholder that gets replaced.
+
+Individually, each of these goals is reasonable. Together, they are in tension.
+
+Fast first paint requires doing work early, before JavaScript exists. Rich interactivity requires JavaScript to arrive later and take control. Continuity of meaning requires that this handover happens without undoing anything the user has already seen or done.
+
+Hydration is the compromise that attempts to satisfy all three. It doesn’t eliminate the conflict it manages it. The system renders early, enhances late, and hopes the transition is invisible.
+
+When that hope holds, hydration feels seamless.
+
+When it doesn’t, the trade-offs stop being theoretical and start becoming visible.
+
+<table>
+  <thead>
+    <tr>
+      <th>Optimised For</th>
+      <th>What You Get</th>
+      <th>What You Sacrifice</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Fast paint + continuity</td>
+      <td>Stable, meaningful HTML that doesn’t reset</td>
+      <td>Interactivity is delayed until hydration completes</td>
+    </tr>
+    <tr>
+      <td>Fast paint + interactivity</td>
+      <td>Early responsiveness and visible progress</td>
+      <td>Continuity breaks as the client replays or replaces UI</td>
+    </tr>
+    <tr>
+      <td>Interactivity + continuity</td>
+      <td>A coherent, responsive client application</td>
+      <td>First paint is slower because JavaScript must arrive earlier</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+Each row represents a *valid* optimisation choice. Each column shows what that choice prioritises and what it necessarily gives up.
+
+No row is “wrong.” What fails is the assumption that all three properties can be maximised simultaneously.
+
+## Hydration as a Stage Handover
+
+To make that tension concrete, it helps to think of hydration as a stage handover in a theatre.  
+**This metaphor matters because hydration fails when authority changes without resetting state.**
+
+### Phase 1: Server render
+
+Before any actors arrive, the stage is prepared.
+
+The set is built.
+
+Props are placed.
+
+Lighting is fixed.
+
+When the audience enters, they see a complete scene. Nothing is moving yet, but **something real already exists**. The play already has an identity, even without performers.
+
+This is the server-rendered page: a fully formed visual world, presented before any client-side logic is present.
+
+### Phase 2: Hydration
+
+Hydration begins when the actors quietly enter the stage.
+
+They don’t get to redesign the set.
+
+They can’t rearrange props.
+
+They can’t reset the lighting.
+
+They must **match the frozen scene exactly**, inferring the script from what’s already there. Every movement and interaction has to align with the stage as it exists, not as they expected it to be.
+
+If an actor reaches for a chair that has already been moved,
+
+or delivers a line after the cue has passed,
+
+the illusion breaks.
+
+There’s no graceful recovery. The audience notices immediately.
+
+The key insight is that hydration is not *starting* a play.
+
+It is **joining one already in progress**.
+
+Correctness, in this model, isn’t about executing code successfully it’s about preserving the illusion that nothing ever changed hands at all.
+
+---
+
+## Why Hydration Isn’t Simple
+
+Hydration isn’t hard because it’s poorly engineered.
+
+It’s hard because of what it’s asked to reconcile.
+
+The core problem is this: **HTML is not state**. It is a *projection* of state a snapshot taken at a particular moment, rendered elsewhere, and delivered late.
+
+By the time JavaScript loads, that snapshot is already out of date.
+
+The DOM exists.
+
+The user may have scrolled.
+
+Inputs may have changed.
+
+Focus may have moved.
+
+Reality has progressed, but hydration arrives carrying assumptions from the past.
+
+And yet hydration has to do something very specific. It must:
+
+* accept the world as it is
+    
+* avoid overwriting what the user has already done
+    
+* and still take control as if nothing ever happened
+    
+
+Those requirements are fundamentally in tension.
+
+If hydration ignores reality, it breaks continuity by resetting the page.
+
+If it fully accepts reality, it risks losing control altogether.
+
+There is no clean midpoint only careful compromise.
+
+These constraints don’t fail loudly.
+
+When they fail, they fail *strangely*.
+
+---
+
+## Why Hydration Bugs Feel Haunted
+
+When hydration fails, it rarely fails in obvious ways.
+
+There’s no single crash. No clear error. Nothing that cleanly points to a broken line of code. Instead, the page mostly works just not quite the way it should.
+
+Clicks register twice.
+
+Inputs lose characters.
+
+Text briefly disagrees with itself.
+
+Focus jumps or disappears.
+
+Components re-render without an obvious trigger.
+
+These issues are difficult to reproduce and even harder to reason about. Refreshing the page often “fixes” them. Slowing things down makes them worse. Adding logging changes their behaviour.
+
+From the outside, the system looks inconsistent. From the inside, it feels irrational.
+
+Developers often describe these bugs as *flaky* or *non-deterministic*. Users describe them as *glitchy* or *untrustworthy*. Both are reacting to the same thing: behaviour that doesn’t map cleanly to cause and effect.
+
+Nothing is completely broken.
+
+Nothing is reliably correct.
+
+That in-between state is what makes hydration bugs feel haunted as if the page remembers something you can’t see, or reacts to events that already passed.
+
+At this stage, it’s tempting to treat these symptoms as isolated edge cases. But taken together, they point to a deeper pattern — one that has less to do with rendering, and more to do with coordination.
+
+---
+
+## What Kind of Problem This Actually Is
+
+This reframing matters because hydration failures follow the same patterns as coordination failures elsewhere: delayed effects, partial correctness, and no clean rollback.
+
+Once you step back from the symptoms, a pattern starts to emerge.
+
+Hydration doesn’t behave like a rendering problem.
+
+It behaves like a **coordination problem**.
+
+More specifically, it behaves like a **distributed reconciliation problem**.
+
+There are two authorities involved:
+
+* The **server**, which produced the page in the past
+    
+* The **client**, which arrives later and expects to control the present
+    
+
+Between them is delay the time it takes for JavaScript to download, execute, and become capable of taking over. During that delay, the DOM sits in the middle as a shared artefact: a visible record of what the server believed to be true at render time, plus anything the user has already done since.
+
+Hydration effectively asks a single question:
+
+> “Can we agree that this DOM represents the same state I would have produced locally?”
+
+If the answer is yes, the client attaches behaviour and continues as if nothing happened.
+
+If the answer is no, the system has very few safe options: warn, throw, or re-render.
+
+This is the same class of problem you see in other distributed systems:
+
+* Replaying events against a snapshot
+    
+* Reconciling divergent replicas
+    
+* Recovering state from partial logs
+    
+
+In all of these cases, correctness depends on alignment between an expected history and the reality that actually unfolded. When that alignment holds, the system converges quietly. When it doesn’t, the failure modes are subtle, delayed, and difficult to reason about.
+
+Hydration fails for the same reason distributed systems fail: **the snapshot no longer matches the expected log**.
+
+Nothing is inherently broken.
+
+The system simply cannot prove that past assumptions still hold.
+
+Once you see hydration through this lens, the haunted symptoms stop looking mysterious. They look like what happens when coordination is attempted after the fact — with incomplete information and no opportunity to rewind.
+
+---
+
+## The Hidden Constraint Everything Depends On
+
+Hydration only works if rendering is **deterministic**.
+
+That constraint is rarely stated, but everything depends on it. Given the same inputs and the same code, the server and the client must independently produce the **same output**. Not something equivalent. Not something close. The same structure, in the same order, with the same meaning.
+
+The moment that assumption breaks, hydration has nothing to stand on.
+
+Anything non-deterministic is a risk:
+
+* random identifiers
+    
+* time-based values
+    
+* locale or environment differences
+    
+* browser-only APIs leaking into render logic
+    
+
+These don’t fail hydration because they’re “bad practices.” They fail it because they violate the one rule hydration silently relies on: that cause and effect remain stable across time and execution contexts.
+
+This is why frameworks emit warnings like:
+
+> “Text content does not match server-rendered HTML”
+
+They aren’t really complaining about text.
+
+They’re signalling something more fundamental.
+
+The client is saying: *given the same story, I arrived at a different ending*.
+
+At that point, hydration can’t safely attach behaviour. It no longer knows which version of reality it’s supposed to trust. The illusion of continuity collapses, not because the system is fragile, but because the underlying causality no longer holds.
+
+Determinism isn’t an implementation detail.
+
+It’s the price hydration charges for pretending that time never passed.
+
+---
+
+## The Pop-Up Book (That Can Tear)
+
+A common way to explain modern hydration is as a pop-up book.
+
+The book opens and the basic scene appears — the HTML shell.
+
+Later, individual sections rise into place as their mechanisms arrive — hydrated regions, interactive components, deferred behaviour.
+
+When everything aligns, the illusion is delightful. Each piece snaps into place and the scene feels richer without feeling rebuilt.
+
+But pop-up books only work because their mechanics are precise.
+
+Each fold assumes a specific sequence.
+
+Each tab expects a particular angle.
+
+Each piece depends on every other piece being exactly where it should be.
+
+If one section pops too early, it collides with the page around it.
+
+If it pops too late, the scene feels incomplete or unresponsive.
+
+If it connects at the wrong angle, the entire structure strains.
+
+When that happens, the book doesn’t fail gracefully.
+
+It tears.
+
+Partial hydration doesn’t remove these constraints — it multiplies them. By splitting behaviour into smaller, independently activated pieces, the system increases the number of moving parts that must remain aligned across time.
+
+The result is not less complexity, but **mechanical complexity**: more joints, more assumptions, and more opportunities for subtle misalignment.
+
+The metaphor still holds but only if you also acknowledge how easily pop-up books break when their timing or geometry is even slightly off.
+
+---
+
+## What This Changes About How You Think
+
+Up to this point, hydration has been described as a mechanism.
+
+From here on, it’s better understood as a **risk surface**.
+
+Once you see hydration as reconciliation across time, certain instincts start to change. You stop asking *“How do I hydrate this?”* and start asking *“What am I risking by hydrating this at all?”*
+
+Hydration is always trying to reconcile competing forces:
+
+* The server speaks with authority about the past
+    
+* The client asserts authority over the present
+    
+* The user exists continuously in between
+    
+
+Speed, interactivity, and continuity pull in different directions, and hydration sits uncomfortably in the middle, attempting to honour all of them without fully owning any.
+
+This reframing matters because it dissolves the idea of hydration as a neutral default. Every hydrated boundary introduces assumptions about timing, determinism, and user behaviour. Some of those assumptions will hold. Others won’t. The cost only becomes visible when they break.
+
+Frameworks inevitably make trade-offs here. They optimise for certain axes and downplay others. Those choices are often presented as features, but they are still choices — and reality, not marketing, is what ultimately enforces their limits.
+
+Seen this way, hydration stops being something you reach for automatically. It becomes something you **justify**. A deliberate decision made with an understanding of what can drift, what can collide, and what cannot be undone once the user is already present.
+
+That shift in mindset doesn’t eliminate hydration’s problems but it makes them predictable, and therefore survivable.
+
+---
+
+## Hydration Isn’t Broken — It’s Constrained
+
+Hydration doesn’t fail because engineers are careless or frameworks are immature. It fails because it operates under constraints that are easy to ignore and impossible to escape.
+
+It can offer early HTML and later interactivity. It can preserve the appearance of continuity. What it cannot do is erase time, rewind user behaviour, or guarantee perfect alignment between past and present execution.
+
+Those limits aren’t accidental. They fall directly out of the problem hydration is trying to solve: attaching live behaviour to a world that already exists and may already be changing.
+
+Seen clearly, this shifts what mastery means. It’s no longer about knowing the right APIs or avoiding the wrong patterns. It’s about recognising where hydration is doing real work for you — and where it’s quietly introducing risk.
+
+When hydration behaves strangely, it’s rarely a sign that something is broken. More often, it’s a signal that one of its assumptions has failed: timing drifted, determinism cracked, reality moved on.
+
+Hydration works best when it’s **chosen**, not assumed.
+
+Not as a default. Not as a convenience.
+
+But as a tool with sharp edges used deliberately, with a clear understanding of the risks it introduces as well as the problems it solves.
+
+> This is why modern frameworks feel opinionated about hydration boundaries, client-only regions, and server-only guarantees they are attempts to make invisible constraints explicit.
