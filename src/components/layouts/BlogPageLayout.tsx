@@ -9,7 +9,7 @@ import Quote from '../ui/Quote';
 
 export const BlogPage = ({ post, content }: { post: BlogPost; content: React.ReactNode }) => {
 	return (
-		<main className="min-h-screen bg-[var(--color-stone-50)]">
+		<main className="min-h-screen bg-[var(--color-stone-50)] prose">
 			<header className="pt-24 pb-8">
 				<Container className="container px-6 mx-auto mb-4">
 					<div className="flex flex-wrap items-center justify-between">
