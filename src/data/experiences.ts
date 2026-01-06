@@ -20,7 +20,7 @@ export const defaultExperiences: ExperienceItem[] = [
   },
   {
     id: "exp-idhl",
-    role: "BigCommerce Developer",
+    role: "Frontend Developer",
     company: "IDHL",
     period: "Jul 2023 – Aug 2024",
     location: "Remote · Hayle, UK",
