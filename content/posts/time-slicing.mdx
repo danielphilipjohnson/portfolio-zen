@@ -1,0 +1,554 @@
+---
+title: "Time Slicing Isn’t Magic — It’s the Event Loop (Thanks, Ryan)"
+publishDate: "30/12/2025"
+modifiedDate: "30/12/2025"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "Frontend Architecture"
+readingTime: 17 mins read
+tags:
+  - Event Loop
+  - Browser Scheduling
+  - Performance
+  - Time Slicing
+  - JavaScript
+  - Frontend Architecture
+imageUrl: "/images/blogs/covers/time-slicing.webp"
+excerpt: "A reframing of time slicing, transitions, and responsiveness through the lens that actually matters: the browser’s event loop. Inspired by Ryan Carniato’s talk, this essay strips away framework mythology and replaces it with constraints, cooperation, and humility."
+---
+
+> This post isn’t me being clever.
+> 
+> It’s me standing slightly to the side of Ryan Carniato while he explains, very calmly, why half the frontend discourse about “transitions” and “responsiveness” is misplaced.
+> 
+> If you haven’t watched the video yet, stop here and do that first. Everything below is a **summary of themes**, not a replacement for the source.
+
+---
+import Quote from '@/components/ui/Quote'
+
+
+## Why This Video Exists at All
+
+This video exists because frontend developers keep arguing about the wrong thing.
+
+Not because we’re careless — but because we’re trapped inside the abstractions we work with every day. Transitions. Suspense. Scheduling APIs. Concurrent rendering. We inherit the vocabulary of our tools, and eventually mistake that vocabulary for reality.
+
+Ryan opens the talk by quietly refusing to play that game.
+
+He doesn’t start with React. He doesn’t start with Solid. He doesn’t even start with “time slicing” as a concept worth defending. Instead, he rewinds the conversation back to the thing all of these ideas sit on top of: the browser itself.
+
+That move matters.
+
+Because time slicing wasn’t invented to make frameworks feel clever. It exists because the browser has always had to balance competing responsibilities — user input, rendering, layout, scripting — without freezing the interface. The problem predates modern frameworks. We just keep rediscovering it under new names.
+
+Ryan’s framing here is subtle but important: *transitions aren’t the solution*. They’re a coping mechanism. A pattern that emerges when we feel the pain of blocking work but don’t yet have a shared mental model for why that pain exists.
+
+This is why the talk feels almost corrective in tone. Ryan isn’t introducing a new idea; he’s stripping narrative away from an old one. He’s trying to dissolve a layer of framework mythology that has built up around scheduling and responsiveness especially in React-centric discourse and replace it with something more boring, more mechanical, and ultimately more useful.
+
+At several points, Ryan effectively pauses the conversation to reset the frame. Not to argue, but to realign. To say: *before we talk about APIs, we need to talk about constraints*. Before we debate solutions, we need to understand the system we’re operating inside.
+
+That’s the real reason this video exists.
+
+Not to persuade you to adopt a particular approach but to remind you that the browser was already doing scheduling long before we showed up with abstractions and opinions. And that if we don’t understand *that* first, everything else we argue about will stay strangely ungrounded.
+
+---
+
+## Forget Transitions. Look at the Loop.
+
+After resetting *why* the conversation exists, Ryan makes a second, more decisive move: he takes transitions off the table entirely.
+
+Not because they’re useless but because they’re downstream.
+
+Ryan’s argument here is simple, and slightly uncomfortable: if you start your mental model at the level of framework APIs, you’ve already missed the point. You end up debating *behavioural symptoms* instead of the mechanism that produces them.
+
+So he rewinds again this time past libraries, past abstractions, past even the word “time slicing” and lands on the JavaScript event loop.
+
+This is where the talk quietly becomes about power.
+
+The browser is not a passive executor of your code. It is an active scheduler with its own priorities, deadlines, and veto rights. Your JavaScript does not *run whenever it wants*; it runs when the browser decides it’s safe to do so without breaking the user experience.
+
+Ryan is careful here not to dramatise this. He doesn’t frame the browser as hostile or restrictive. He frames it as pragmatic. Rendering needs to happen. Input needs to be processed. Frames need to be painted. Your code is just one participant in that negotiation.
+
+This is the moment where “scheduling” stops being a developer-controlled concept and starts being a cooperative one.
+
+The reason Ryan insists on starting with the event loop not APIs is that every abstraction inherits its constraints from here. Once you understand how work is queued, flushed, deferred, or allowed to yield, many higher-level debates lose their mystique. They stop feeling like clever tricks and start feeling like trade-offs.
+
+And crucially, the event loop doesn’t care about your intent.
+
+It doesn’t care whether you meant your update to be “low priority” or whether you wrapped it in the right abstraction. It cares about *where* the work landed, *when* it’s allowed to run, and *what must complete before rendering can proceed*.
+
+This is why Ryan’s framing feels almost deflationary. He’s not adding conceptual layers he’s removing them. He’s saying: before you ask how to schedule work *better*, you need to understand how work is scheduled *at all*.
+
+Transitions, suspense, yielding all of those ideas only make sense once the loop is in focus. Until then, they’re stories we tell ourselves to explain behaviour we don’t fully control.
+
+Ryan doesn’t say this explicitly, but the implication is hard to miss: if you want responsive interfaces, you don’t start by choosing the right abstraction. You start by respecting the system you’re running inside.
+
+---
+
+## Macro Tasks, Microtasks, and Why Starvation Happens
+
+This is where Ryan’s explanation stops being abstract and starts becoming uncomfortably practical.
+
+Once the event loop is in view, the next thing Ryan does is separate work into categories not by intent, but by *how interruptible it is*. This distinction is doing far more work than most developers realise.
+
+Macro tasks are, in a sense, polite. They run, they finish, and then they give the browser a chance to breathe. Between macro tasks, the browser can step in paint the screen, handle input, do the things users actually notice.
+
+Microtasks are different.
+
+Ryan describes them less as “smaller tasks” and more as *obligations*. When a microtask is scheduled, the browser isn’t allowed to partially process them. It must flush the entire microtask queue before it can move on before it can render, before it can respond, before it can visually recover.
+
+This is where the problem of starvation enters the picture.
+
+Because if microtasks keep scheduling more microtasks, the browser never reaches a safe point to render. Nothing is technically blocked JavaScript is still progressing but from the user’s perspective, the interface appears frozen. The system is busy honouring its promises.
+
+Ryan is careful not to demonise microtasks. He doesn’t frame them as a mistake. In fact, he points out that their *guarantees* are exactly what make them powerful. They exist to provide consistency to ensure certain invariants hold before anything else can happen.
+
+But that power comes with a cost.
+
+If you treat microtasks as just another async tool interchangeable with timeouts or animation frames you end up accidentally telling the browser: *do not render until I’m finished thinking*. And the browser, being obedient, complies.
+
+This is why Ryan’s critique of “Promise everywhere” culture lands so cleanly. Promises aren’t slow. They aren’t inefficient. They’re just uncompromising. They prioritise correctness over responsiveness, and if you’re not aware of that trade-off, you can very easily starve the UI without realising you’ve done anything wrong.
+
+What’s striking here is that none of this is framework-specific. These behaviours exist before React, before Solid, before modern scheduling APIs. Ryan isn’t exposing an edge case he’s exposing a rule.
+
+And once you see that rule, a lot of mysterious UI behaviour stops being mysterious.
+
+The screen didn’t freeze because the app was “heavy.”
+
+It froze because the browser was never given permission to stop and draw.
+
+---
+
+## requestAnimationFrame Is a Request (Not a Command)
+
+> Ryan is very deliberate with his wording here — request isn’t a metaphor.
+
+At this point in the talk, Ryan slows down and so should we.
+
+Because this is where a lot of developers think they understand what’s happening, but are quietly wrong about *who’s in charge*.
+
+`requestAnimationFrame` sounds authoritative. It feels like scheduling. It feels like you’re telling the browser, *run this before the next paint*. But Ryan is very deliberate here: that’s not what’s happening.
+
+You’re not scheduling anything.
+
+You’re asking.
+
+The browser decides whether there *is* a next frame worth running your code in. It decides when that frame happens. It decides whether the system is in a state where rendering can safely proceed. Your callback is conditional on all of that being true.
+
+This is why Ryan keeps emphasising the word *request*. Not as semantics, but as a mental correction.
+
+When you call `requestAnimationFrame`, you’re borrowing time from the renderer. You’re saying: *if you’re about to paint anyway, and if there’s room, I’d like to run something first*. If the browser can’t honour that because it’s busy, because frames are being skipped, because the tab isn’t visible your work simply waits.
+
+Or never runs at all.
+
+That’s not a failure mode. That’s the contract.
+
+Ryan’s point isn’t that `requestAnimationFrame` is unreliable. It’s that it’s honest. It exposes the fact that rendering is not guaranteed, and that scheduling visual work only makes sense when the browser has decided a frame is happening.
+
+This is also where a lot of performance folklore quietly breaks down.
+
+You’ll hear advice like “do expensive work in rAF to avoid blocking rendering.” Ryan’s framing makes it clear why that advice is incomplete. If the work is expensive enough, it doesn’t matter *where* you put it the browser still has to decide whether it can afford to render afterward.
+
+`requestAnimationFrame` doesn’t grant priority. It aligns you with the browser’s priorities.
+
+And once again, this is the pattern Ryan keeps reinforcing: you don’t control the timeline. You negotiate with it. The browser isn’t an execution engine waiting for instructions it’s a scheduler trying to keep the experience intact.
+
+This section lands quietly, but it changes how you read almost every animation-related API afterward. Not as tools for control, but as points of coordination.
+
+---
+
+## Why Microtasks Are a Framework Superpower
+
+Up to now, Ryan has been describing *mechanics*. In this section, he starts talking about *responsibility*.
+
+Microtasks, as Ryan frames them, are not just a scheduling primitive — they’re a liability surface. They execute with guarantees so strong that misuse doesn’t merely degrade performance; it can lock the system into doing the wrong thing very efficiently.
+
+And that’s exactly why they don’t belong everywhere.
+
+Ryan draws a line here that most frontend conversations blur: the difference between **library-level code** and **application-level code**. Both can use the same primitives, but they shouldn’t exercise the same power.
+
+Microtasks are powerful *because* they’re dangerous. They allow you to say, “Before anything else happens before rendering, before user input, before the browser regains control this must be true.” That’s an extraordinary level of authority to grant to arbitrary code.
+
+Framework authors understand this.
+
+They operate at a layer where enforcing invariants is the job. Where consistency across a render pass matters more than moment-to-moment responsiveness. Where flushing a queue completely is not a bug, but a requirement.
+
+Application code lives in a different world.
+
+It’s not responsible for maintaining global invariants. It’s responsible for staying responsive. For yielding. For cooperating with the browser rather than insisting on correctness at all costs.
+
+Ryan doesn’t moralise this distinction. He doesn’t say microtasks are “bad” or that developers shouldn’t use them. He simply points out that once you understand the guarantees microtasks provide, you also understand why they’re best handled by code that knows the full blast radius of invoking them.
+
+This is a subtle but important reframing.
+
+The question stops being “Can I use this?” and becomes “Am I the right layer to use this?” That shift alone eliminates a surprising number of accidental performance problems.
+
+Seen this way, microtasks aren’t an optimisation tool. They’re a coordination tool. And coordination, by definition, belongs at the level that can see the whole system.
+
+Ryan doesn’t push a solution here. He just makes the boundary visible. And once it’s visible, it becomes very hard to unsee.
+
+---
+
+## Idle Time, Yielding, and Cooperative Scheduling
+
+> Ryan isn’t advocating for more APIs — he’s advocating for better manners.
+
+By this point in the talk, the tone shifts.
+
+Up until now, Ryan has been explaining *why things go wrong*. Here, he starts talking about what it looks like when things go *right* not because we’ve found a perfect API, but because we’ve adopted a different attitude toward time.
+
+The word that keeps surfacing, implicitly and explicitly, is **cooperation**.
+
+Idle time exists because the browser is not always under pressure. There are moments small, fragmented, unpredictable moments where nothing urgent is happening. No input to process. No frame deadline to hit. No layout work queued up. Just… space.
+
+Ryan is careful not to romanticise this. Idle time isn’t a promise. It’s not guaranteed. It’s an opportunity the browser may or may not offer, depending on conditions you don’t fully control.
+
+And that’s exactly the point.
+
+APIs like `requestIdleCallback` and ideas like yielding aren’t about squeezing more work into the system. They’re about **learning when to step back**. About giving the browser explicit permission to prioritise the user over your computation.
+
+This is a very different posture from traditional async thinking.
+
+Instead of asking, *When can I run?*
+
+You start asking, *When should I not?*
+
+Yielding, in Ryan’s framing, is an act of trust. You’re acknowledging that the browser has a better global view of urgency than you do. That it can decide when your work is no longer appropriate to continue uninterrupted.
+
+This is also where the illusion of control finally dissolves.
+
+You can break work into chunks. You can defer it. You can ask nicely. But you can’t force the browser to care about your task more than it cares about responsiveness. Cooperative scheduling works not because it’s clever, but because it respects that hierarchy.
+
+Ryan isn’t advocating for more APIs here. He’s advocating for better manners.
+
+For writing code that assumes interruption is normal. That progress may be incremental. That finishing later is preferable to blocking now. It’s a mindset shift away from “make it finish” and toward “make it survivable.”
+
+Once you see scheduling this way, performance stops being a battle for priority and starts becoming a conversation about timing.
+
+---
+
+## The Mental Model Ryan Is Actually Teaching
+
+> This is the real lesson of the video, not how to schedule work, but how to think about time.
+
+By the time Ryan reaches this point in the talk, he’s already said everything he needs to say.
+
+The rest is integration.
+
+What becomes clear even though he never states it outright is that this talk was never really about time slicing as a technique. It was about **recalibrating how we think about time itself in the browser**.
+
+The browser is not a neutral stage where your code performs. It’s an active participant with its own goals: keep the interface responsive, honour user input, and render frames when it can do so safely. Your code runs *inside* that system, not above it.
+
+Once you internalise that, several long-running frontend debates start to lose their urgency.
+
+Responsiveness is no longer something you “add” with the right abstraction. It’s something you preserve by not overstaying your welcome. Scheduling stops being about clever prioritisation and starts being about *knowing when to yield*.
+
+Time slicing, in this light, isn’t an optimisation trick. It’s a **social contract**. An agreement between your code and the platform: *I’ll make progress in pieces, and you’ll let me keep going as long as I don’t monopolise the system*.
+
+This is why Ryan keeps returning to constraints instead of solutions. Constraints are stable. APIs change. Frameworks evolve. But the browser’s need to remain interactive does not.
+
+The real lesson here is not how to schedule work more aggressively, but how to think more humbly. To assume interruption. To expect preemption. To design systems that degrade gracefully rather than insisting on finishing everything in one uninterrupted stretch.
+
+Ryan doesn’t give you a recipe at the end of this talk. He gives you a lens. One that makes a lot of existing behaviour both good and bad suddenly make sense.
+
+And once you adopt that lens, it becomes much harder to write code that accidentally fights the browser instead of working alongside it.
+
+## The Main Takeaway
+
+If there’s a single idea to take from Ryan’s talk, it’s this:
+
+**Responsiveness isn’t something you bolt on. It’s something you preserve by respecting the browser’s priorities.**
+
+Ryan doesn’t present time slicing as a feature or a technique to adopt. He presents it as an *emergent behaviour* of a system that is constantly negotiating between work and experience. The browser isn’t trying to be clever it’s trying to stay usable.
+
+Once you internalise that, a lot of frontend advice starts to sound slightly off.
+
+You stop asking which abstraction gives you more control, and start asking which ones assume control they don’t actually have. You become more suspicious of anything that promises uninterrupted execution. You start designing work to be interruptible by default, not as an afterthought.
+
+The deeper lesson here isn’t about queues or APIs it’s about humility.
+
+Ryan’s framing reminds us that the browser has always been the scheduler. Frameworks can cooperate with that reality, or they can fight it, but they can’t replace it. The more your code acknowledges that fact, the less surprising performance problems become.
+
+Time slicing, in this sense, isn’t a trick.
+
+It’s what happens when you stop trying to win against the platform and start working with it.
+
+---
+
+## Watch the Video. Seriously.
+
+> If any of this felt useful, it’s because Ryan already did the hard thinking.
+
+If this post worked at all, it’s because the thinking didn’t start here.
+
+Everything above is a summary, a reframing, a set of notes written in the margins of someone else’s explanation. The clarity the insistence on starting from constraints instead of abstractions comes from Ryan Carniato, not from me.
+
+This is one of those talks that’s worth watching more than once. Not because it’s dense, but because it quietly rewires how you interpret everyday frontend behaviour. You start noticing *why* certain updates feel janky. Why some async work feels harmless and other work feels toxic. Why the browser sometimes feels like it’s “fighting you,” when in reality it’s just enforcing priorities you didn’t account for.
+
+If you take one thing from this post, let it be this:
+
+don’t outsource your mental model of time to a framework.
+
+Watch the video. Pause it. Rewind it. Let the event loop not the abstraction be the thing you reason from. Everything else makes more sense once that’s in focus.
+
+---
+
+# A–Z Terminology Appendix (End Section)
+
+**Purpose:** Reference, not teaching.
+
+**Important framing sentence:**
+
+> These terms appear either directly in Ryan’s talk or naturally orbit the concepts he’s explaining.
+
+### A–Z Terminology Appendix
+
+> These terms appear either directly in Ryan’s talk or naturally orbit the constraints he’s describing. Definitions are intentionally brief — the goal is orientation, not mastery.
+
+---
+
+### **A — Animation Frame**
+
+A single visual update cycle in the browser, typically targeting ~60 frames per second. Each frame represents an opportunity for the browser to update layout, paint, and composite the UI.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/Performance/Guides/Critical_rendering_path) — *Critical rendering*
+    
+* [web.dev](https://web.dev/articles/rendering-performance) — *Rendering performance overview*
+    
+
+---
+
+### **B — Browser Scheduler**
+
+The internal browser mechanism responsible for deciding *when* JavaScript runs relative to rendering, input handling, layout, and other system work.
+
+**Suggested links:**
+
+* [Scheduler](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler) — *Scheduling tasks*
+    
+* [web.dev](https://web.dev/articles/optimize-long-tasks) — *Optimize long tasks*
+    
+
+---
+
+### **C — Cooperative Scheduling**
+
+A scheduling model where tasks voluntarily yield control back to the scheduler, allowing higher-priority work (like rendering or input) to proceed.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Background_Tasks_API) — *Cooperative scheduling of background tasks*
+    
+* [W3C](https://github.com/WICG/scheduling-apis) — *Scheduling APIs explainer*
+    
+
+---
+
+### **D — Dead Time**
+
+Periods where the browser is idle — no urgent rendering, input, or high-priority tasks are pending — and background work may safely proceed.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) — *requestIdleCallback*
+    
+* [web.dev](https://philipwalton.com/articles/idle-until-urgent/) — *Idle until urgent*
+    
+
+---
+
+### **E — Event Loop**
+
+The core execution model that processes tasks, microtasks, and rendering steps in a defined order, ensuring JavaScript runs in a single-threaded but asynchronous environment.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model) — *Concurrency model and event loop*
+    
+* [Jake Archibald](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/) — *Tasks, microtasks, queues and schedules*
+    
+
+---
+
+### **F — Frame Budget**
+
+The amount of time available to complete work within a single frame without dropping frames (roughly 16ms at 60fps).
+
+**Suggested links:**
+
+* [web.dev](https://web.dev/articles/rail) — *RAIL performance model*
+    
+* [Chrome Developers](https://developer.chrome.com/docs/devtools/rendering/performance) — *Rendering performance*
+    
+
+---
+
+### **G — Garbage Collection**
+
+The automatic process by which the JavaScript engine reclaims memory that is no longer reachable, potentially causing pauses if triggered during critical rendering moments.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Memory_management) — *Memory management*
+    
+* [V8.dev](https://v8.dev/blog/trash-talk) — *Garbage collection*
+    
+
+---
+
+### **H — High-Priority Tasks**
+
+Work that the browser prioritises to maintain usability, such as user input processing, visual updates, and accessibility-related operations.
+
+**Suggested links:**
+
+* [web.dev](https://web.dev/blog/better-responsiveness-metric) — *Input responsiveness*
+    
+* [Chrome Developers](https://web.dev/articles/user-centric-performance-metrics) — *User-centric performance metrics*
+    
+
+---
+
+### **I — Idle Callback**
+
+A callback scheduled to run during browser idle periods, allowing non-urgent work to execute without blocking rendering or input.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) — *Using requestIdleCallback*
+    
+
+---
+
+### **J — Job Queue**
+
+An internal queue (often used interchangeably with microtask queue) that holds promise reactions and other jobs that must complete before rendering continues.
+
+**Suggested links:**
+
+* [ECMAScript spec](https://tc39.es/ecma262/#sec-jobs) — *Jobs and Job Queues*
+    
+* [Jake Archibald](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/) — *Tasks vs microtasks*
+    
+
+---
+
+### **M — Macro Task**
+
+A unit of work scheduled via mechanisms like `setTimeout`, `setInterval`, or I/O events. After each macro task, the browser has an opportunity to render.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout) — *setTimeout*
+    
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model) — *Event loop*
+    
+
+---
+
+### **M — Microtask**
+
+A high-priority task (e.g. Promise callbacks) that must fully flush before the browser can render or process the next macro task.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide) — *Microtask queue*
+    
+* [Jake Archibald](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/) — *Tasks, microtasks, queues and schedules*
+    
+
+---
+
+### **P — Promise Semantics**
+
+The guarantees provided by Promises — particularly that their callbacks execute as microtasks — ensuring consistency, sometimes at the expense of responsiveness.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises) — *Using Promises*
+    
+* [ECMAScript spec](https://tc39.es/ecma262/#sec-promise-jobs) — *Promise jobs*
+    
+
+---
+
+### **R — requestAnimationFrame**
+
+An API that requests a callback before the next browser repaint, allowing visual updates to align with the rendering pipeline.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) — *requestAnimationFrame*
+    
+* [web.dev](http://web.dev) — *Using requestAnimationFrame*
+    
+
+---
+
+### **R — requestIdleCallback**
+
+An API that schedules low-priority work during idle periods, when the browser determines it won’t impact responsiveness.
+
+**Suggested links:**
+
+* [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback) — *requestIdleCallback*
+    
+* [Blog](https://philipwalton.com/articles/idle-until-urgent/) — *Idle until urgent*
+    
+
+---
+
+### **S — Scheduler API**
+
+An emerging set of APIs designed to give developers better control over task prioritisation and yielding without blocking the main thread.
+
+**Suggested links:**
+
+* [web.dev](https://developer.mozilla.org/en-US/docs/Web/API/Scheduler) — *Scheduler API*
+    
+* [WICG](https://wicg.github.io/scheduling-apis/) — *Scheduler API explainer*
+    
+
+---
+
+### **T — Time Slicing**
+
+A technique where long-running work is broken into smaller chunks, allowing the browser to interleave rendering and input between them.
+
+**Suggested links:**
+
+* [web.dev](http://web.dev) — *Optimize long tasks*
+    
+* [Docs](https://medium.com/@ignatovich.dm/react-19s-engine-a-quick-dive-into-concurrent-rendering-6436d39efe2b) — *Concurrent rendering (for context only)*
+    
+
+---
+
+### **Y — Yielding**
+
+The act of voluntarily pausing or deferring work so the browser can prioritise rendering, input, or other high-priority tasks.
+
+**Suggested links:**
+
+* [web.dev](http://web.dev) — *Yielding to the main thread*
+    
+* [Chrome Developers](https://web.dev/articles/optimize-long-tasks) — *Scheduling strategies*
+    
+
+---
+<br/>
+
+<Quote>
+
+> Attribution
+> 
+> This article is a thematic summary of a talk by Ryan Carniato.
+> 
+> All original insights belong to the creator.
+> 
+> Any framing errors are mine.
+</Quote>

@@ -170,3 +170,18 @@
     @apply bg-zinc-50;
   }
 }
+
+
+@layer components {
+  .prose a {
+    @apply font-medium text-zinc-900 underline underline-offset-4 decoration-zinc-300 transition-colors;
+  }
+
+  .prose a:hover {
+    @apply decoration-zinc-900;
+  }
+
+  .prose a:focus-visible {
+    @apply outline-none ring-2 ring-zinc-400 ring-offset-2 ring-offset-white;
+  }
+}
