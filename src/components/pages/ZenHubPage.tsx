@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import Quote from "@/components/ui/Quote";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ZenHero from "@/components/zen/ZenHero";
+import { cn } from "@/lib/utils";
 
 interface ZenSectionBlock {
   type: "paragraph" | "list";
@@ -259,7 +260,7 @@ const principleCards = [
 
 const ZenHubPage = () => {
   return (
-    <main className="bg-stone-50">
+    <main className="">
       <ZenHero />
 
       <section className="bg-white py-16 border-y border-color-stone-200">
@@ -289,7 +290,7 @@ const ZenHubPage = () => {
                 form.
               </Text>
               <Text variant="body" className="text-stone-700">
-                Each principle card below is simply a branch of this trunk.
+                Each principle below is simply a branch of this trunk.
               </Text>
             </div>
             <Quote className="text-left bg-color-stone-50 shadow-sm">
@@ -304,7 +305,7 @@ const ZenHubPage = () => {
         </Container>
       </section>
 
-      <section className="py-16">
+      <section className="py-16 bg-stone-50">
         <Container>
           <SectionHeader
             title="Introduction"
@@ -315,7 +316,7 @@ const ZenHubPage = () => {
               variant="body"
               className="max-w-3xl text-[color:var(--color-stone-700)]"
             >
-              They are not rules or dogma. They are ways of thinkingshaped by
+              They are not rules or dogma. They are ways of thinking—shaped by
               experience, iteration, and long-term responsibility.
             </Text>
             <Text
@@ -327,17 +328,44 @@ const ZenHubPage = () => {
               that age well.
             </Text>
           </div>
+        </Container>
+      </section>
 
-          <div className="grid gap-8">
-            {sections.map((section) => (
-              <article
-                key={section.id}
-                id={section.id}
-                className="rounded-2xl border border-stone-200 bg-white p-8 shadow-sm"
-              >
-                <Text as="h2" variant="h3" className="mb-4 text-stone-900">
-                  {section.title}
-                </Text>
+      <section className="py-16">
+        <Container>
+          <div className="mb-10 text-center">
+            <Text as="h2" variant="h3" className="text-stone-900">
+              Principles in Practice
+            </Text>
+            <Text
+              variant="body"
+              className="mx-auto max-w-3xl text-[color:var(--color-stone-700)]"
+            >
+              Each section below explores a practical expression of the
+              philosophy above.
+            </Text>
+            <Text
+              variant="body"
+              className="mx-auto max-w-3xl text-[color:var(--color-stone-700)]"
+            >
+              These principles show how mindful engineering translates into real
+              decisions — in code, architecture, and product design.
+            </Text>
+          </div>
+        </Container>
+        <div className="">
+          {sections.map((section, index) => (
+            <section
+              key={section.id}
+              id={section.id}
+              className={cn(
+                "py-28 px-6 border-t border-color-stone-200",
+                index % 2 === 0 ? "bg-white" : "bg-stone-50",
+              )}
+            >
+              <Container>
+                <SectionHeader title={section.title} subtitle="" />
+
                 <div className="space-y-4">
                   {section.blocks.map((block, idx) => {
                     if (block.type === "paragraph" && block.content) {
@@ -385,12 +413,11 @@ const ZenHubPage = () => {
                     return null;
                   })}
                 </div>
-              </article>
-            ))}
-          </div>
-        </Container>
+              </Container>
+            </section>
+          ))}
+        </div>
       </section>
-
       <section className="border-t border-[color:var(--color-stone-200)] bg-[color:var(--color-stone-100)] py-16">
         <Container>
           <div className="mb-8">
