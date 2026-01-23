@@ -2,6 +2,7 @@ import Container from "@/components/ui/Container";
 import Text from "@/components/ui/Text";
 import { Button } from "@/components/ui/Button";
 import Quote from "@/components/ui/Quote";
+import SectionHeader from "@/components/ui/SectionHeader";
 import ZenHero from "@/components/zen/ZenHero";
 
 interface ZenSectionBlock {
@@ -258,67 +259,83 @@ const principleCards = [
 
 const ZenHubPage = () => {
   return (
-    <main className="bg-[color:var(--color-stone-50)]">
+    <main className="bg-stone-50">
       <ZenHero />
-		<section className="bg-white py-16 border-y border-[color:var(--color-stone-200)]">
-			<Container className="space-y-6">
-				<Text as="h2" variant="h2" className="text-[color:var(--color-stone-900)]">
-					A Root Philosophy
-				</Text>
-				<Text variant="body" className="text-[color:var(--color-stone-700)]">
-					This page is the root of how I think about software.
-				</Text>
-				<Text variant="body-medium" className="text-[color:var(--color-stone-800)]">
-					From here branch my philosophies on:
-				</Text>
-				<ul className="list-disc space-y-2 pl-6 text-[color:var(--color-stone-800)]">
-					<li>React and modern frontend frameworks</li>
-					<li>State management and data flow</li>
-					<li>UI architecture and component design</li>
-					<li>Performance, accessibility, and resilience</li>
-				</ul>
-				<Text variant="body" className="text-[color:var(--color-stone-700)]">
-					All of them are grounded in the same idea:
-				</Text>
-				<Text variant="h4" className="text-[color:var(--color-moss-700)]">
-					Software, like a bonsai, is shaped over time — not forced into form.
-				</Text>
-			</Container>
-		</section>
 
-		<section className="bg-[color:var(--color-stone-50)] py-12">
-			<Container>
-				<Quote className="text-left bg-[color:var(--color-stone-100)]">
-					<Text
-						variant="quote"
-						className="mx-auto mb-2 max-w-3xl text-left text-[color:var(--color-stone-800)]"
-					>
-						“The art is not in adding more, but in knowing what to remove.”
-					</Text>
-					<Text
-						variant="caption"
-						className="text-left text-[color:var(--color-stone-600)]"
-					>
-						— Zen hub philosophy
-					</Text>
-				</Quote>
-			</Container>
-		</section>
+      <section className="bg-white py-16 border-y border-color-stone-200">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[2fr_1fr] items-start">
+            <div className="space-y-6">
+              <Text as="h2" variant="h2" className="text-stone-900">
+                A Root Philosophy
+              </Text>
+              <Text variant="body" className="text-color-stone-700">
+                This page is the root of how I think about software.
+              </Text>
+              <Text variant="body-medium" className="text-stone-800">
+                From here branch my philosophies on:
+              </Text>
+              <ul className="list-disc space-y-2 pl-6 text-color-stone-800">
+                <li>React and modern frontend frameworks</li>
+                <li>State management and data flow</li>
+                <li>UI architecture and component design</li>
+                <li>Performance, accessibility, and resilience</li>
+              </ul>
+              <Text variant="body" className="text-stone-700">
+                All of them are grounded in the same idea:
+              </Text>
+              <Text variant="h4" className="text-moss-700">
+                Software, like a bonsai, is shaped over time — not forced into
+                form.
+              </Text>
+              <Text variant="body" className="text-stone-700">
+                Each principle card below is simply a branch of this trunk.
+              </Text>
+            </div>
+            <Quote className="text-left bg-color-stone-50 shadow-sm">
+              <Text variant="quote" className="mb-2 text-stone-800">
+                “The art is not in adding more, but in knowing what to remove.”
+              </Text>
+              <Text variant="caption" className="text-stone-600">
+                — Zen hub philosophy
+              </Text>
+            </Quote>
+          </div>
+        </Container>
+      </section>
 
       <section className="py-16">
         <Container>
+          <SectionHeader
+            title="Introduction"
+            subtitle="This section captures the core principles that guide how I approach software."
+          />
+          <div className="mb-12 space-y-4 text-center">
+            <Text
+              variant="body"
+              className="max-w-3xl text-[color:var(--color-stone-700)]"
+            >
+              They are not rules or dogma. They are ways of thinkingshaped by
+              experience, iteration, and long-term responsibility.
+            </Text>
+            <Text
+              variant="body"
+              className="max-w-3xl text-[color:var(--color-stone-700)]"
+            >
+              Each principle explores a different aspect of how mindful
+              engineering leads to calmer systems, clearer code, and products
+              that age well.
+            </Text>
+          </div>
+
           <div className="grid gap-8">
             {sections.map((section) => (
               <article
                 key={section.id}
                 id={section.id}
-                className="rounded-2xl border border-[color:var(--color-stone-200)] bg-white p-8 shadow-sm"
+                className="rounded-2xl border border-stone-200 bg-white p-8 shadow-sm"
               >
-                <Text
-                  as="h2"
-                  variant="h3"
-                  className="mb-4 text-[color:var(--color-stone-900)]"
-                >
+                <Text as="h2" variant="h3" className="mb-4 text-stone-900">
                   {section.title}
                 </Text>
                 <div className="space-y-4">
@@ -341,7 +358,7 @@ const ZenHubPage = () => {
                           {block.title && (
                             <Text
                               variant="body"
-                              className="mb-2 text-[color:var(--color-stone-600)]"
+                              className="mb-2 text-stone-600"
                             >
                               {block.title}
                             </Text>
@@ -349,8 +366,8 @@ const ZenHubPage = () => {
                           <ul
                             className={
                               block.variant === "questions"
-                                ? "list-disc space-y-2 pl-6 italic text-[color:var(--color-stone-800)]"
-                                : "list-disc space-y-2 pl-6 text-[color:var(--color-stone-800)]"
+                                ? "list-disc space-y-2 pl-6 italic text-stone-800"
+                                : "list-disc space-y-2 pl-6 text-stone-800"
                             }
                           >
                             {block.items.map((item, itemIdx) => (
@@ -377,11 +394,7 @@ const ZenHubPage = () => {
       <section className="border-t border-[color:var(--color-stone-200)] bg-[color:var(--color-stone-100)] py-16">
         <Container>
           <div className="mb-8">
-            <Text
-              as="h2"
-              variant="h3"
-              className="text-[color:var(--color-stone-900)]"
-            >
+            <Text as="h2" variant="h3" className="text-stone-900">
               Future Cards for Each Principle
             </Text>
             <Text
@@ -406,11 +419,7 @@ const ZenHubPage = () => {
                   >
                     {card.label}
                   </Text>
-                  <Text
-                    as="h3"
-                    variant="h4"
-                    className="mb-2 text-[color:var(--color-stone-900)]"
-                  >
+                  <Text as="h3" variant="h4" className="mb-2 text-stone-900">
                     {card.title}
                   </Text>
                   <Text
@@ -427,6 +436,26 @@ const ZenHubPage = () => {
             ))}
           </div>
         </Container>
+
+        <section className="relative max-w-3xl mx-auto px-6 py-20">
+          <span className="absolute left-0 top-20 h-24 w-px bg-moss-300" />
+
+          <h2 className="text-2xl font-medium text-stone-900 mb-6 pl-6">
+            Less Code. More Intention.
+          </h2>
+
+          <div className="pl-6 space-y-5 text-stone-900">
+            <p>Zen teaches that clarity comes from removal, not addition.</p>
+
+            <ul className="list-disc list-inside space-y-2">
+              <li>
+                fewer abstractions, introduced only when pressure demands them
+              </li>
+              <li>components that do one thing clearly</li>
+              <li>data flows that are easy to trace</li>
+            </ul>
+          </div>
+        </section>
       </section>
     </main>
   );
