@@ -331,28 +331,28 @@ const ZenHubPage = () => {
         </Container>
       </section>
 
-      <section className="py-16">
-        <Container>
-          <div className="mb-10 text-center">
-            <Text as="h2" variant="h3" className="text-stone-900">
-              Principles in Practice
-            </Text>
-            <Text
-              variant="body"
-              className="mx-auto max-w-3xl text-[color:var(--color-stone-700)]"
-            >
+      <Container>
+        <section
+          aria-labelledby="principles-in-practice-title"
+          className="py-20"
+        >
+          <SectionHeader title="Principles in Practice" subtitle="" />
+
+          <div className="zen-content">
+            <p>
               Each section below explores a practical expression of the
               philosophy above.
-            </Text>
-            <Text
-              variant="body"
-              className="mx-auto max-w-3xl text-[color:var(--color-stone-700)]"
-            >
+            </p>
+
+            <p>
               These principles show how mindful engineering translates into real
               decisions — in code, architecture, and product design.
-            </Text>
+            </p>
           </div>
-        </Container>
+        </section>
+      </Container>
+
+      <section className="py-16">
         <div className="">
           {sections.map((section, index) => (
             <section
