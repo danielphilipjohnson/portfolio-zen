@@ -421,16 +421,18 @@ const ZenHubPage = () => {
       <section className="border-t border-[color:var(--color-stone-200)] bg-[color:var(--color-stone-100)] py-16">
         <Container>
           <div className="mb-8">
-            <Text as="h2" variant="h3" className="text-stone-900">
-              Future Cards for Each Principle
-            </Text>
+            <SectionHeader
+              title="Future Cards for Each Principle"
+              subtitle="This hub will gradually expand."
+            />
             <Text
               variant="body"
               className="max-w-3xl text-[color:var(--color-stone-700)]"
             >
-              This hub will eventually link each card to deeper dives,
-              exercises, and production examples. For now, these summaries act
-              as anchors so navigation and IA are ready when the cards go live.
+              Each principle below will link to deeper dives, exercises, and
+              real production examples. For now, these summaries act as anchors
+              — establishing structure, language, and intent as the system
+              grows.
             </Text>
           </div>
           <div className="grid gap-6 md:grid-cols-2">
