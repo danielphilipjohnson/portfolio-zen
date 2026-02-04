@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 @layer theme {
   :root {
     /* Stone */
@@ -145,8 +144,152 @@
     --color-danger-800: #7f1d1a;
     --color-danger-900: #681a17;
     --color-danger-950: #370d0c;
-
   }
+}
+
+@theme {
+  /* Stone */
+  --color-stone-50: var(--color-stone-50);
+  --color-stone-100: var(--color-stone-100);
+  --color-stone-200: var(--color-stone-200);
+  --color-stone-300: var(--color-stone-300);
+  --color-stone-400: var(--color-stone-400);
+  --color-stone-500: var(--color-stone-500);
+  --color-stone-600: var(--color-stone-600);
+  --color-stone-700: var(--color-stone-700);
+  --color-stone-800: var(--color-stone-800);
+  --color-stone-900: var(--color-stone-900);
+  --color-stone-950: var(--color-stone-950);
+
+  /* Moss */
+  --color-moss-50: var(--color-moss-50);
+  --color-moss-100: var(--color-moss-100);
+  --color-moss-200: var(--color-moss-200);
+  --color-moss-300: var(--color-moss-300);
+  --color-moss-400: var(--color-moss-400);
+  --color-moss-500: var(--color-moss-500);
+  --color-moss-600: var(--color-moss-600);
+  --color-moss-700: var(--color-moss-700);
+  --color-moss-800: var(--color-moss-800);
+  --color-moss-900: var(--color-moss-900);
+  --color-moss-950: var(--color-moss-950);
+
+  /* Bamboo */
+  --color-bamboo-50: var(--color-bamboo-50);
+  --color-bamboo-100: var(--color-bamboo-100);
+  --color-bamboo-200: var(--color-bamboo-200);
+  --color-bamboo-300: var(--color-bamboo-300);
+  --color-bamboo-400: var(--color-bamboo-400);
+  --color-bamboo-500: var(--color-bamboo-500);
+  --color-bamboo-600: var(--color-bamboo-600);
+  --color-bamboo-700: var(--color-bamboo-700);
+  --color-bamboo-800: var(--color-bamboo-800);
+  --color-bamboo-900: var(--color-bamboo-900);
+  --color-bamboo-950: var(--color-bamboo-950);
+
+  /* Clay */
+  --color-clay-50: var(--color-clay-50);
+  --color-clay-100: var(--color-clay-100);
+  --color-clay-200: var(--color-clay-200);
+  --color-clay-300: var(--color-clay-300);
+  --color-clay-400: var(--color-clay-400);
+  --color-clay-500: var(--color-clay-500);
+  --color-clay-600: var(--color-clay-600);
+  --color-clay-700: var(--color-clay-700);
+  --color-clay-800: var(--color-clay-800);
+  --color-clay-900: var(--color-clay-900);
+  --color-clay-950: var(--color-clay-950);
+
+  /* Water */
+  --color-water-50: var(--color-water-50);
+  --color-water-100: var(--color-water-100);
+  --color-water-200: var(--color-water-200);
+  --color-water-300: var(--color-water-300);
+  --color-water-400: var(--color-water-400);
+  --color-water-500: var(--color-water-500);
+  --color-water-600: var(--color-water-600);
+  --color-water-700: var(--color-water-700);
+  --color-water-800: var(--color-water-800);
+  --color-water-900: var(--color-water-900);
+  --color-water-950: var(--color-water-950);
+
+  /* Blossom */
+  --color-blossom-50: var(--color-blossom-50);
+  --color-blossom-100: var(--color-blossom-100);
+  --color-blossom-200: var(--color-blossom-200);
+  --color-blossom-300: var(--color-blossom-300);
+  --color-blossom-400: var(--color-blossom-400);
+  --color-blossom-500: var(--color-blossom-500);
+  --color-blossom-600: var(--color-blossom-600);
+  --color-blossom-700: var(--color-blossom-700);
+  --color-blossom-800: var(--color-blossom-800);
+  --color-blossom-900: var(--color-blossom-900);
+  --color-blossom-950: var(--color-blossom-950);
+
+  /* Ink */
+  --color-ink-50: var(--color-ink-50);
+  --color-ink-100: var(--color-ink-100);
+  --color-ink-200: var(--color-ink-200);
+  --color-ink-300: var(--color-ink-300);
+  --color-ink-400: var(--color-ink-400);
+  --color-ink-500: var(--color-ink-500);
+  --color-ink-600: var(--color-ink-600);
+  --color-ink-700: var(--color-ink-700);
+  --color-ink-800: var(--color-ink-800);
+  --color-ink-900: var(--color-ink-900);
+  --color-ink-950: var(--color-ink-950);
+
+  /* Paper */
+  --color-paper-50: var(--color-paper-50);
+  --color-paper-100: var(--color-paper-100);
+  --color-paper-200: var(--color-paper-200);
+  --color-paper-300: var(--color-paper-300);
+  --color-paper-400: var(--color-paper-400);
+  --color-paper-500: var(--color-paper-500);
+  --color-paper-600: var(--color-paper-600);
+  --color-paper-700: var(--color-paper-700);
+  --color-paper-800: var(--color-paper-800);
+  --color-paper-900: var(--color-paper-900);
+  --color-paper-950: var(--color-paper-950);
+
+  /* Success */
+  --color-success-50: var(--color-success-50);
+  --color-success-100: var(--color-success-100);
+  --color-success-200: var(--color-success-200);
+  --color-success-300: var(--color-success-300);
+  --color-success-400: var(--color-success-400);
+  --color-success-500: var(--color-success-500);
+  --color-success-600: var(--color-success-600);
+  --color-success-700: var(--color-success-700);
+  --color-success-800: var(--color-success-800);
+  --color-success-900: var(--color-success-900);
+  --color-success-950: var(--color-success-950);
+
+  /* Warning */
+  --color-warning-50: var(--color-warning-50);
+  --color-warning-100: var(--color-warning-100);
+  --color-warning-200: var(--color-warning-200);
+  --color-warning-300: var(--color-warning-300);
+  --color-warning-400: var(--color-warning-400);
+  --color-warning-500: var(--color-warning-500);
+  --color-warning-600: var(--color-warning-600);
+  --color-warning-700: var(--color-warning-700);
+  --color-warning-800: var(--color-warning-800);
+  --color-warning-900: var(--color-warning-900);
+  --color-warning-950: var(--color-warning-950);
+
+  /* Danger */
+  --color-danger-50: var(--color-danger-50);
+  --color-danger-100: var(--color-danger-100);
+  --color-danger-200: var(--color-danger-200);
+  --color-danger-300: var(--color-danger-300);
+  --color-danger-400: var(--color-danger-400);
+  --color-danger-500: var(--color-danger-500);
+  --color-danger-600: var(--color-danger-600);
+  --color-danger-700: var(--color-danger-700);
+  --color-danger-800: var(--color-danger-800);
+  --color-danger-900: var(--color-danger-900);
+  --color-danger-950: var(--color-danger-950);
 }
 
 @layer components {
@@ -155,7 +298,7 @@
   }
 
   .prose thead {
-    @apply bg-zinc-50 ;
+    @apply bg-zinc-50;
   }
 
   .prose th {
@@ -163,14 +306,24 @@
   }
 
   .prose td {
-    @apply border border-zinc-200 px-4 py-3 align-top text-zinc-800 ;
+    @apply border border-zinc-200 px-4 py-3 align-top text-zinc-800;
   }
 
   .prose tbody tr:nth-child(even) {
     @apply bg-zinc-50;
   }
-}
+  .prose {
+    @apply bg-zinc-50 leading-relaxed;
+  }
 
+  .prose h2 {
+    @apply font-medium tracking-tight;
+  }
+
+  .prose p {
+    @apply text-[17px];
+  }
+}
 
 @layer components {
   .prose a {

@@ -2,6 +2,7 @@ import path from 'path';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { createWriteStream } from 'fs';
 import { getAllBlogs } from './blogs/getAllBlogs.js';
+import { getAllProjects } from './projects/getAllProjects.js';
 
 const BASE_URL = 'https://danielphilipjohnson.com';
 
@@ -18,6 +19,7 @@ async function generateSitemap() {
 		'',
 		'about',
 		'contact',
+		'projects',
 	];
 
 	for (const page of staticPages) {
@@ -35,11 +37,22 @@ async function generateSitemap() {
 		});
 	});
 
+	// Project posts from MDX
+	const projectPosts = await getAllProjects();
+
+	projectPosts.forEach((post) => {
+		sitemap.write({
+			url: `/projects/${post.slug}`,
+			changefreq: 'weekly',
+			priority: 0.7
+		});
+	});
+
 
 	sitemap.end();
 
 	await streamToPromise(sitemap);
-	console.log('✅ sitemap.xml generated with', staticPages.length + blogPosts.length, 'entries');
+	console.log('✅ sitemap.xml generated with', staticPages.length + blogPosts.length + projectPosts.length, 'entries');
 }
 
 generateSitemap().catch(console.error);

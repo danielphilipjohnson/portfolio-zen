@@ -3,7 +3,8 @@ export type SeoPagePath =
 	| '/about'
 	| '/projects'
 	| '/blog'
-	| '/contact';
+	| '/contact'
+	| '/zen';
 
 export interface SEOData {
 	title: string;
@@ -80,6 +81,18 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: '/images/og/contact-og.jpg' }],
 				type: 'website',
 				url: 'https://www.danielphilipjohnson.com/contact',
+			},
+		},
+		'/zen': {
+			title: 'Zen Hub | Daniel Johnson - Mindful Engineering Philosophy',
+			description: 'Explore Daniel\'s zen-inspired philosophy of programming that favors intention, pruning, stillness, and calm software experiences.',
+			keywords: ['zen programming', 'mindful engineering', 'software philosophy', 'intentional development', 'calm software'],
+			openGraph: {
+				title: 'Zen Hub | Daniel Johnson - Mindful Engineering Philosophy',
+				description: 'A living notebook for cultivating resilient systems through presence, pruning, and user calm.',
+				images: [{ url: '/images/og/home-og.jpg' }],
+				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/zen',
 			},
 		},
 	};
