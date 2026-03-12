@@ -9,6 +9,7 @@ const ZenNavbar = () => {
 
 	const navLinks = [
 		{ id: 'about', label: 'About', href: '/about' },
+		{ id: 'zen', label: 'Zen Hub', href: '/zen' },
 		{ id: 'work', label: 'Work', href: '/projects' },
 		{ id: 'blog', label: 'Blog', href: '/blog' },
 	];
