@@ -127,6 +127,24 @@ export function getPageSEO(pathname: string): SEOData {
 				url: 'https://www.danielphilipjohnson.com/mcp',
 			},
 		},
+		'/zen': {
+			title: 'Zen of Software Engineering | Daniel Johnson',
+			description: 'A curated set of principles for calm software engineering: clarity, maintainability, and long-term system design.',
+			keywords: [
+				'zen of software engineering',
+				'calm software engineering',
+				'software architecture principles',
+				'maintainable systems',
+				'engineering philosophy',
+			],
+			openGraph: {
+				title: 'Zen of Software Engineering',
+				description: 'Principles for building software with clarity, intention, and long-term resilience.',
+				images: [{ url: '/images/og/engineering-og.jpg' }],
+				type: 'website',
+				url: 'https://www.danielphilipjohnson.com/zen',
+			},
+		},
 		'/zen/cultivate-systems-dont-rush-code': {
 			title: "Cultivate Systems, Don't Rush Code | Daniel Johnson",
 			description: 'Principle 1 of calm software engineering: how long-term cultivation, architectural pruning, and deliberate system design create software that ages well.',
