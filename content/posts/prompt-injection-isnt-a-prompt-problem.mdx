@@ -1,0 +1,150 @@
+---
+title: "Prompt Injection Isn’t a Prompt Problem"
+publishDate: "07/02/2026"
+modifiedDate: "07/02/2026"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Senior Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "AI Systems & Security"
+readingTime: "12 min read"
+tags:
+  - "Prompt Injection"
+  - "AI Security"
+  - "LLM Architecture"
+  - "OWASP"
+  - "System Design"
+  - "Frontend Architecture"
+imageUrl: "/images/blogs/covers/ai_system_architecture.webp"
+excerpt: "Prompt injection isn’t a prompt problem—it’s a system design failure. This article breaks down how it emerges across retrieval, conversation, tools, and knowledge layers, and why boundaries—not prompts—are the real solution."
+---
+
+## The first version of an LLM feature is deceptively simple.
+
+You connect a chatbot to a model, write a prompt, and something that feels coherent appears almost immediately. The responses look reasonable, the flow holds together, and the demo passes without much resistance. It creates a sense that the difficult part is already behind you, as if the core problem has been solved and the rest is refinement.
+
+In practice, that assumption doesn’t hold for long.
+
+What that early success hides is not complexity, but fragility the system appears stable because it hasn’t yet been exposed to the conditions where its boundaries actually matter. And those boundaries are rarely defined at this stage, because the system seems to be behaving well enough without them.
+
+At the centre of this is a subtle but important shift.
+
+In traditional systems, there is a clear separation between data and instructions. User input is treated as untrusted data, while system logic remains explicit, controlled, and bounded. Even when inputs are messy or adversarial, they do not redefine how the system behaves, because execution is governed elsewhere.
+
+LLMs erode that separation.
+
+Everything that enters the system user messages, retrieved documents, conversation history, and even system prompts exists in the same form: language. And once everything is reduced to language, it is no longer simply read; it is interpreted. That interpretation is what drives behaviour, and it happens without any inherent understanding of which parts of that language should carry authority.
+
+This is where prompt injection begins not as a clever exploit or malformed input, but as a structural failure to distinguish between what should be followed and what should merely be considered.
+
+## **How Prompt Injection Shows Up in Real Systems**
+
+Prompt injection is often explained as a problem with user input, usually framed as a malicious string inserted into a prompt. That explanation is convenient because it localises the problem, but it doesn’t reflect how these failures actually appear in production systems.
+
+In reality, prompt injection emerges across multiple layers.
+
+It appears anywhere untrusted language is allowed to influence behaviour without clear constraints, and while the entry points differ, the underlying mechanism remains the same. To understand it properly, you have to look at how language enters the system, how it is combined, and how little distinction the model makes once it is there.
+
+## **1\. Retrieval: When Data Quietly Becomes Instruction**
+
+In fintech systems, document ingestion is routine. Bank statements, invoices, and identity records are parsed, structured, and indexed so they can be queried efficiently. At this stage, they are treated as passive data inputs that can be retrieved and displayed, but not something that influences how the system behaves.
+
+That assumption breaks down once retrieval is combined with generation.
+
+When documents are pulled into the model’s context, they stop being passive. They become part of the language the model is interpreting, and that shift while subtle changes their role entirely. They are no longer just being accessed; they are participating in the reasoning process.
+
+A document does not need to be obviously malicious to create problems. It only needs to contain language that resembles an instruction. A sentence framed as a compliance requirement or a procedural step can be interpreted as something to follow, particularly when it appears alongside actual system guidance.
+
+From the model’s perspective, there is no boundary marking that content as untrusted. It is simply relevant text, presented in the same context as everything else. If the phrasing aligns closely enough with the task, it can shape the output, even when it contradicts the system’s intended behaviour.
+
+The retrieval system itself has not failed. It has returned exactly what it was designed to return.
+
+The failure occurs in how that content is treated once it arrives when retrieved data is implicitly trusted as safe to interpret, rather than recognised as another untrusted input channel.
+
+This becomes more difficult to manage because of persistence. Once a document is indexed, it does not disappear after a single interaction. It becomes part of the system’s knowledge layer, meaning the same influence can surface repeatedly over time, often without visibility.
+
+## **2\. Conversation: When Behaviour Drifts Instead of Breaks**
+
+Not all prompt injection happens in a single step.
+
+In many cases, it emerges gradually through the structure of the conversation itself, which makes it harder to detect because there is no obvious point of failure. The interaction often begins in a completely legitimate way a user asking about loan eligibility or exploring financial options and each subsequent question appears reasonable when viewed in isolation.
+
+Over time, however, the direction of the conversation begins to shift.
+
+The questions become more specific, moving toward edge cases, internal reasoning, or system behaviour. Individually, these steps don’t appear problematic, but collectively they start to reshape how the model responds.
+
+This happens because LLMs are optimised for coherence, not enforcement.
+
+They adapt to the evolving context, placing more weight on recent inputs and adjusting their responses accordingly. As a result, the model may become more permissive over time, expanding on areas it would not have addressed earlier or revealing information that was not originally intended to be exposed.
+
+There is no single moment where the system is explicitly overridden.
+
+Instead, the behaviour drifts.
+
+And without mechanisms to reinforce constraints across the interaction, that drift becomes the dominant force shaping the model’s output, gradually replacing the original intent with whatever the conversation has become.
+
+## **3\. System Prompts: When “Hidden” Isn’t a Boundary**
+
+System prompts are often treated as if they exist outside the interaction hidden from the user and therefore protected by default. They are typically described as configuration, something the model follows but the user cannot access.
+
+In practice, that boundary is far weaker than it appears.
+
+System prompts are not external to the model; they are part of the same context the model processes when generating a response. This means they are subject to the same limitations as any other input. The model does not treat them as inherently privileged—it treats them as text to interpret and reason about.
+
+That distinction becomes important when users begin to probe the system.
+
+Requests for the reasoning behind an answer, or the rules guiding a response, can lead the model to expose fragments of its internal instructions. Even when it does not reveal the exact prompt, it may summarise or infer its contents in a way that still provides useful insight. Over time, these fragments can be combined into a clearer picture of how the system operates.
+
+Once that structure is understood, it becomes easier to work around.
+
+The issue is not simply that system prompts can be accessed indirectly, but that hiding them is assumed to be sufficient protection. In a system where all inputs are processed as language, hidden instructions are still part of the same interpretive surface as everything else, and they can be influenced in the same way.
+
+## **4\. Tools: When Language Starts Moving the System**
+
+The risks associated with prompt injection change significantly once LLMs are connected to tools.
+
+At that point, the system is no longer limited to generating text. It can influence real operations—retrieving account data, triggering workflows, or interacting with internal APIs—and the model moves from describing actions to participating in them.
+
+This transition increases the impact of even subtle forms of injection.
+
+If the model is given the ability to decide when and how to invoke tools, it will base those decisions on the language it receives. It does not evaluate permissions or intent in a deterministic way; instead, it generates behaviour that appears consistent with the context it has been given.
+
+That creates a gap between what the system intends and what the model may attempt.
+
+An instruction that appears to be part of a legitimate task can lead the model toward actions that exceed its intended scope, whether that involves retrieving more data than necessary, exposing sensitive information, or initiating operations that were never meant to be triggered in that context.
+
+At this point, prompt injection is no longer just about influencing responses.
+
+It becomes a question of control over system behaviour.
+
+And the underlying issue is straightforward: decision-making authority has been delegated to a component that cannot reliably enforce boundaries.
+
+## **5\. Knowledge: When the System Slowly Drifts**
+
+Some forms of prompt injection are not designed to affect a single interaction.
+
+Instead, they target the system over time.
+
+In many retrieval-based systems, the knowledge base is treated as a trusted source once content is ingested. Documents are indexed and reused across interactions, often without further validation after the initial processing step.
+
+This creates a different kind of vulnerability.
+
+Content can be introduced that appears legitimate but contains subtle distortions—slightly incorrect policies, biased explanations, or instruction-like phrasing embedded within otherwise normal text. Once this content is indexed, it becomes part of the system’s working context, retrieved alongside other information without any distinction between trusted and untrusted sources.
+
+Over time, it begins to influence outputs in small, often unnoticed ways.
+
+The system does not fail in a way that is immediately obvious. Instead, it drifts, producing responses that remain plausible but are no longer consistently aligned with the original source of truth.
+
+## **Conclusion**
+
+Prompt injection is not a problem that sits within a single prompt, nor is it something that can be resolved by refining instructions or adding more careful wording. It is a systemic issue that emerges when a system allows language to operate without clearly defined boundaries, treating everything that enters the model as equally interpretable regardless of its origin or level of trust.
+
+In LLM-powered systems, all inputs user messages, retrieved documents, system prompts, and tool outputs are ultimately combined into a single context. Once that happens, the model processes them in the same way, without any inherent ability to distinguish between what should be followed and what should be ignored. It will produce outputs that are coherent within that context, even if that coherence conflicts with the system’s intended behaviour.
+
+For that reason, prompt injection should not be understood as an edge case or a clever exploit, but as a predictable outcome of a system that has not made its boundaries explicit. If the system does not define which inputs are authoritative, how they are separated, and what they are allowed to influence, then those decisions are effectively delegated to the model itself.
+
+And the model is not designed to make them.
+
+Control does not come from better prompts or more careful phrasing. It comes from how the system constructs context, how it enforces separation between trusted and untrusted inputs, and how it validates actions before they are executed. Without that structure, behaviour is not constrained by design, but shaped by whatever language happens to be present in the moment.
+
+Which means it is no longer controlled it is inferred.

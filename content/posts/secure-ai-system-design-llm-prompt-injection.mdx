@@ -1,0 +1,439 @@
+---
+title: "Secure AI System Design: Preventing Prompt Injection in LLM Applications"
+publishDate: "12/02/2026"
+modifiedDate: "12/02/2026"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Senior Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "AI Architecture"
+readingTime: 18 mins read
+tags:
+  - LLM Security
+  - Prompt Injection
+  - AI System Design
+  - Application Security
+  - Secure Architecture
+  - OWASP
+  - Frontend Architecture
+  - AI Safety
+imageUrl: "/images/blogs/covers/ai_system_architecture.webp"
+excerpt: "Most AI systems work in demos but fail in production. This guide explores secure AI system design, prompt injection prevention, and how to build LLM applications with proper boundaries, control, and safety in mind."
+---
+
+
+## The Illusion of a Working System
+
+Most AI chat systems begin the same way.
+
+A team connects to a model, adds a chat interface, wires in some retrieval, and within a few days sometimes within a few hours they have something that looks impressively real. The responses are fluent. The interaction feels smooth. In a demo, it can seem like most of the difficult work is already done.
+
+It usually isn’t.
+
+The real difficulty shows up later, once the system leaves the safe conditions of a prototype and starts operating in the real world: untrusted users, messy documents, internal tools, and sensitive data. At that point, the important question is no longer whether the chatbot can answer a prompt. It becomes a much more architectural question: how much influence are we giving the model over the system around it?
+
+That is where many teams get pulled off course.
+
+They spend early energy on prompt wording, UI polish, model choice, and conversational quality. Those things matter. They are part of the product. But they are not the foundation of a safe system. The foundation is control.
+
+Before deciding how a system should respond, you need to decide what it is allowed to see, what it is allowed to suggest, what it is allowed to trigger, and what should happen when it gets something wrong. Those decisions shape everything else.
+
+Designing AI systems properly means starting from a position of deliberate mistrust.
+
+Not just mistrust of users.
+
+Mistrust of the model itself.
+
+## Start With the Real Architectural Question
+
+One of the earliest mistakes is framing the work as “building a chatbot.”
+
+It sounds harmless enough, but it quietly shifts attention toward the most visible part of the system: the conversation layer. Teams start focusing on tone, response quality, retrieval tweaks, and prompt phrasing. Those are all legitimate concerns, but they sit on the surface.
+
+The harder question sits underneath:
+
+**What role is the model actually allowed to play inside this system?**
+
+If that question never gets answered clearly, the design tends to drift. And drift, in systems like these, usually means risk.
+
+A model should not be treated as an authority. It should not be the component deciding what is true, what is permitted, or what action should happen next without oversight. That is not where it is reliable. What it is good at is interpreting messy language, helping structure ambiguous requests, and proposing possible next steps.
+
+Useful, yes. In charge, no.
+
+Once you accept that, the architecture becomes clearer. Validation, decision-making, and boundary enforcement cannot live inside the model. They have to sit around it. The model can assist, but the system has to remain in control.
+
+That is the design shift that matters most. You are not building around intelligence. You are building around containment.
+
+## Plan the Boundaries Before the Conversation
+
+Before writing prompts or designing the chat experience, it helps to step back and ask where the actual boundaries of the system are.
+
+In practice, most LLM failures trace back to the same four areas: how input enters the system, how context is assembled, what the model is allowed to trigger, and how output is handled once it leaves the model. Those are not abstract categories. They are the main control points.
+
+If they remain implicit, untrusted language starts moving too freely. User input bleeds into context. Retrieved documents quietly influence behaviour. Model output gets treated as if it were already validated. And by the time something goes wrong, it is hard to tell where control was lost.
+
+This is why security in LLM systems does not really come from making the model “smarter.” A stronger model may behave better at the margins, but it still will not enforce architectural boundaries on its own. That responsibility belongs to the surrounding system.
+
+Each boundary needs to be explicit, observable, and enforceable. You need to know what entered, what was treated as reference material, what actions were available, and what left the system in the end.
+
+And those controls cannot be fixed in place.
+
+A production system needs the ability to tighten constraints, disable parts of the pipeline, or reduce capability under pressure without waiting for a full redeploy. When something starts behaving badly, the safest system is not the one that keeps pushing forward. It is the one that can degrade gracefully.
+
+That is the difference between a demo that works and a system that can actually be trusted.
+
+## **Treat the Kill Switch as a Core Requirement**
+
+One of the clearest signs that an AI system was designed like a demo rather than a production system is the absence of a kill switch.
+
+In a real environment, key behaviours need to be reversible immediately, without waiting for a redeploy. Retrieval should be able to be turned off. Tool execution should be disableable globally or selectively. The system should be able to fall back into a more constrained mode—read-only, reduced-context, or no-action—when risk increases.
+
+The point is not elegance. It is response time.
+
+If a prompt injection path is discovered, a retrieval source starts behaving suspiciously, or a tool begins producing unsafe outcomes, the system should be able to reduce its own blast radius in seconds, not hours.
+
+Without that capability, every incident becomes a race between the failure and your deployment pipeline.
+
+A kill switch does not replace good design.
+
+It proves you planned for bad days as well as good ones.
+
+## Use a Pre-LLM Detection Layer for Suspicious Inputs
+
+Not every safeguard belongs inside a prompt. Some of the strongest ones belong before the model is involved at all.
+
+A pre-LLM detection layer whether rule-based, heuristic, or classifier-driven—can screen inputs before they ever reach the model. The aim is not perfection. It is simply to reduce the amount of adversarial or suspicious language the model has to interpret in the first place.
+
+That can mean detecting attempts to override instructions, extract hidden prompts, imitate command structures, or push the model beyond its intended role. Some of those patterns are obvious. Others are more subtle. Either way, they are easier to reason about before they are mixed into the model’s context window.
+
+Once those signals are detected, the system has choices. It can block the request, strip suspicious fragments, rewrite the input into a safer form, or route it through a more constrained path. The important thing is that the decision happens outside the model.
+
+That changes the shape of the problem. Instead of hoping the model recognises manipulation and resists it consistently, you reduce the amount of manipulation it ever sees. The model gets less room to make the wrong call because the system has already narrowed the space it operates in.
+
+It is a small design decision on paper. In practice, it moves part of the defence into something far more predictable than the model itself.
+
+## Plan Document Ingestion Like a Security Boundary
+
+Retrieval is often treated as a relevance problem: find the right documents, pass them to the model, improve answer quality.
+
+That is only half the story.
+
+The other half is trust.
+
+Every document in an LLM pipeline is still just language, and language can contain instructions just as easily as it contains information. A support ticket, an internal note, a bank statement, or a compliance document may look like passive data. Once it is retrieved and placed in front of the model, though, it becomes an active influence.
+
+That makes document ingestion an attack surface.
+
+The mistake is treating retrieval as simple storage and forwarding. Documents need to be processed deliberately. Content should be normalised. Prompt-like patterns and embedded instructions should be stripped or neutralised where possible. There should also be clear rules around what content types are allowed to enter the system at all.
+
+Just as importantly, raw documents should not flow straight through to the model unchanged.
+
+Retrieval should behave more like a transformation layer than a lookup step. Instead of handing the model a full document, the system should extract the smallest amount of relevant information needed for the task and present it in a controlled form. That gives the model useful context without giving the source text unnecessary influence.
+
+The distinction matters. Good retrieval supports the task. Bad retrieval lets the document start steering it.
+
+## Control What Enters Memory
+
+Memory is where temporary influence becomes persistent influence.
+
+Within a single interaction, a prompt injection attempt may distort one answer and then disappear. Once the same kind of language gets stored and reused, the problem changes. The effect no longer ends with one request. It starts echoing forward into future ones.
+
+That is why memory deserves to be treated as a boundary in its own right.
+
+A common mistake is to treat memory as a neutral record of conversation history. It is not neutral. Whatever gets stored will later come back as context, and when it does, the model does not inherently distinguish between “this was said before” and “this is something I should now follow.”
+
+That risk gets even harder to spot when summaries are involved. Summaries compress information, but they can also compress intent. If directive or malicious language slips into a summary, it becomes more portable, less visible, and easier to carry forward. Over time, the system can start drifting in strange ways without any single failure being obvious enough to explain why.
+
+The safer approach is to store less, and to store it differently.
+
+Memory should not be a raw transcript. It should be a controlled representation of what the system actually needs to retain: stable user preferences, confirmed facts, relevant state, and clear intent. Instruction-like phrasing, behaviour overrides, and conversational noise should not survive the transition into memory.
+
+That often leads to a design that feels less human on the inside and more structured. But that is usually a good trade. The point of memory is not to preserve everything that was said. It is to preserve only what remains safe and useful later.
+
+Memory is not just a record of the past. It is part of the input to the future.
+
+Once you see it that way, its importance becomes much harder to ignore.
+
+## Do Not Build Context as a Single Blob
+
+One of the easiest ways to lose control in an LLM system is also one of the most common: everything gets merged into one giant prompt.
+
+System instructions, user input, conversation history, retrieved documents, external data—all concatenated together and handed to the model with the expectation that it will sort out what matters, what is trustworthy, and what should be ignored.
+
+It will not.
+
+From the model’s point of view, all of that material is just language. It does not arrive with built-in trust levels. It does not naturally understand that one sentence is policy, another is a user request, and another came from an untrusted document. It simply processes patterns across the whole thing.
+
+That is where risk starts compounding.
+
+A retrieved document can quietly contradict a system rule. A previous conversation turn can reshape the task in an unintended way. A user can phrase a request so that it competes directly with the instructions that were supposed to constrain the interaction. Once everything is blended together, the system has already given up much of the control it needed.
+
+The problem is not that the model fails to respect boundaries.
+
+It is that the system failed to create them.
+
+A more reliable design treats context as something assembled deliberately, not dumped together. Different sources need different handling. System instructions should stay isolated and stable. User input should remain clearly marked as untrusted. Retrieved content should be framed as reference material, not authority. External data should carry metadata about where it came from and how reliable it is.
+
+Those distinctions matter before the model ever sees the prompt.
+
+Once context is structured this way, no single source gets to dominate the interaction unchecked. That does not make failure impossible, but it makes failure much harder to trigger by accident and much easier to reason about when it happens.
+
+## Design Tool Access Backwards
+
+When teams add tool use to an LLM system, the instinct is usually to ask what the model should be able to do.
+
+That question sounds productive, but it tends to pull design toward more power, more flexibility, and more surface area. A better starting point is the reverse:
+
+**What should never be possible through language alone?**
+
+That question tends to produce a much safer architecture.
+
+Tool access is where an LLM stops being merely conversational and starts becoming operational. Once the model can query databases, update records, move money, trigger workflows, or call internal APIs, generated language is no longer just text. It becomes part of an execution path.
+
+At that point, prompt injection is not just about misleading output. It becomes a route to action.
+
+Designing tool access backwards means defining the smallest set of actions the system genuinely needs and treating everything else as out of bounds by default. Tools are not made available just because they are easy to wire up or potentially useful. They are exposed because there is a specific, defensible reason for them to exist.
+
+That principle matters in the details. Tools should not be discovered dynamically. There should not be a vague “execute” capability sitting behind the scenes. The model should not be inventing tool names or filling free-form arguments into loosely defined interfaces. Every allowed action should be explicitly named, tightly scoped, and validated against a strict schema.
+
+More importantly, the model should not be the component deciding whether an action really happens.
+
+It can propose intent. The system should resolve that proposal into a valid action—or refuse it.
+
+That separation is what keeps tool use predictable. Without it, language becomes far too close to direct control.
+
+## Separate Planning From Execution
+
+One of the most important boundaries in any AI system is the one between interpretation and action.
+
+In weaker implementations, that boundary is barely visible. The model reads a request, interprets it, and immediately triggers a tool or downstream operation. Language flows almost directly into execution.
+
+That is fragile.
+
+The model is good at producing plausible interpretations of user intent. It is not good at making final decisions that carry operational consequences. Expecting it to do both at once is where many systems take on unnecessary risk.
+
+A better design splits the process in two.
+
+First comes planning. In that stage, the model turns a messy request into something structured. It identifies the user’s apparent goal, proposes a possible action, and gathers the information needed to carry it out. Nothing happens yet. The model is suggesting, not deciding.
+
+Then comes execution. That is where the surrounding system takes over. Permissions are checked. Policies are enforced. Schemas are validated. Risks are assessed. Only after those checks pass should anything operational move forward.
+
+This split creates a natural checkpoint. It gives the architecture a place to apply control before generated language turns into real behaviour.
+
+It also sets a healthier expectation for the model. It does not need to be perfectly safe or perfectly correct at all times. It only needs to produce proposals that the system can evaluate. That is a much more realistic job description.
+
+The model proposes. The system decides.
+
+That is not just a neat principle. It is one of the clearest ways to stop interpretation from becoming action too quickly.
+
+## Keep Humans in the Loop Where It Matters
+
+Not everything should be automated just because it can be.
+
+Some actions carry enough risk that they still need deliberate human oversight: moving money, changing permissions, exporting sensitive data, altering account settings, or approving exceptions in regulated workflows. These are not just technical operations. They have business, legal, and user consequences.
+
+Adding an LLM into the flow should not weaken those safeguards.
+
+If anything, it should force you to define them more clearly.
+
+One of the subtler dangers of model output is how complete it can feel. A suggested action, presented cleanly and confidently, can create the impression that the hard part is already done. But interpretation is not validation, and fluency is not approval.
+
+That is why it helps to decide early which actions always require confirmation, which require extra validation, and which should never proceed without human review. In practice, that may mean explicit confirmation steps, dual approval for sensitive operations, or routing higher-risk actions into a manual review queue.
+
+The goal is not to introduce friction everywhere. It is to place it where it matches the level of risk.
+
+If an action would normally require human judgement in a non-AI system, a model should not be used as an excuse to remove that checkpoint.
+
+## Treat Output as Untrusted
+
+Model output is still untrusted data.
+
+That should feel obvious, but in practice it is one of the easiest things to forget because the output often looks polished. It may read like a final answer, a clean summary, a valid command, or a sensible action recommendation. That appearance can be misleading. Nothing about fluent output means it has been checked, validated, or made safe to use.
+
+The risk grows the moment that text flows into another system.
+
+If model output is rendered directly in a UI, turned into a query, passed into an API call, or used to construct a command, it stops being “just text.” It becomes a potential execution path. That is where downstream issues start appearing: frontend injection, malformed queries, unsafe actions, accidental disclosures, and all the other consequences of trusting generated content too early.
+
+The safer stance is simple: every output is a candidate, not a decision.
+
+Before the system acts on it, the content should pass through the same sort of checks you would apply to any other untrusted input. Structure should be validated. Schemas should be enforced. Policies should be applied. Sensitive fragments should be removed. High-risk outputs may need to be classified before they are allowed to influence anything downstream.
+
+Not every answer needs the same level of scrutiny, of course. A low-risk informational response shown to a user is not the same thing as a generated action payload handed to an internal tool. The level of validation should match the potential impact.
+
+The key point is that the boundary does not end when the model stops generating.
+
+It ends when the system decides the output is safe to use.
+
+## Use Rate Limiting as Containment
+
+Failures in AI systems are not hypothetical. They are inevitable.
+
+The question is whether they remain small.
+
+Rate limiting is often treated as an infrastructure feature, something used to protect availability or manage usage costs. In LLM systems, it plays a more strategic role. It acts as containment.
+
+If a safeguard fails, the real issue is not just whether the system can be exploited once. It is whether the flaw can be exercised repeatedly at speed. Without limits, a small weakness can quickly turn into a much larger incident: repeated tool calls, excessive data retrieval, rapid probing, or repeated attempts to trigger sensitive behaviour.
+
+That matters even more in systems with real-world consequence. If the model can trigger tools, access sensitive data, or influence state changes, rate limiting is not just about traffic shaping. It is about reducing blast radius.
+
+Well-placed limits on frequency, volume, and scope give the system room to notice something is wrong before the impact scales. They also create visibility. Repeated tool calls, unusual retrieval patterns, or steady probing behaviour often signal systematic abuse rather than normal use.
+
+Rate limiting will not stop every failure.
+
+What it does is buy you time, reduce amplification, and make abnormal behaviour easier to detect before it spreads.
+
+That is often the difference between an incident and a disaster.
+
+## Make Prompts Observable and Auditable
+
+Prompts are often treated like hidden configuration. In production systems, they are much closer to execution logic.
+
+They determine how the model sees the world, how different inputs are framed, and how behaviour changes from one request to the next. When something goes wrong, the prompt is not just background context. It is part of the causal chain.
+
+That is why prompts need to be observable and auditable.
+
+For every meaningful interaction, you should be able to reconstruct what the model actually received: system instructions, user input, retrieved context, conversation history, and any transformations applied before the final request was sent. Without that visibility, debugging becomes guesswork.
+
+And guesswork is a bad operating model for systems with this many moving parts.
+
+The important detail here is not just storing a prompt template. It is capturing the effective prompt the fully assembled input that the model actually saw. That is what lets you understand why behaviour changed. Was it a prompt revision? A different retrieval result? A small transformation in the preprocessing layer? Without the complete picture, those answers stay frustratingly out of reach.
+
+Treating prompts like production artefacts helps. They should be version-controlled, reviewed, and traceable to deployments or configuration states. When behaviour shifts, there should be a clear path back to the exact inputs that shaped it.
+
+Observability does not make LLM systems simple.
+
+But it does make them inspectable, which is the first step toward making them manageable.
+
+## Define Safe Fallback Behaviour
+
+Every AI system eventually runs into uncertainty.
+
+Sometimes the user’s intent is unclear. Sometimes retrieved sources conflict. Sometimes validation fails, or the model produces something too inconsistent to trust. None of that is unusual. The important part is what the system does next.
+
+In many early implementations, the default behaviour is to keep going. The system smooths over ambiguity, fills in missing gaps, and returns a best-effort answer because silence or refusal feels like a worse user experience.
+
+That instinct is understandable. It is also risky.
+
+When the system pushes forward without enough confidence or validation, it quietly turns interpretation into assumption. And assumptions have a habit of becoming actions.
+
+A better design treats safe failure as part of the product. Different situations call for different fallbacks. Some requests should be refused because they cross a boundary. Others should trigger clarification. In some cases, the system should return only the part of the answer it can verify and leave the rest unresolved. In higher-risk situations, it may need to switch into a more constrained mode where certain capabilities are simply unavailable.
+
+From the outside, those responses can look less polished than a confident answer. In practice, they are a sign that the system is doing its job. It is making its limits visible instead of hiding them behind plausible language.
+
+That usually builds trust over time rather than eroding it.
+
+A safe system is not one that always says something.
+
+It is one that knows when not to.
+
+## Beyond Prompt Injection: System-Level Risks
+
+So far, the focus has been on the runtime path: inputs, context, execution, and output. That covers a large part of the risk surface, but not all of it.
+
+Some of the more serious issues in LLM systems do not appear inside a single request. They emerge gradually, through repeated interactions, evolving datasets, model updates, or changes in how the product is used over time. These risks are often less dramatic in the moment and more dangerous because of it. They do not always produce obvious failures. They accumulate quietly.
+
+That is the point where the problem gets bigger than prompt injection.
+
+An LLM system is not just a request-response loop. It is a living product. New data gets ingested. Models get swapped or updated. Users discover behaviours the designers did not predict. Small changes begin to compound. Over time, those shifts can influence system behaviour just as much as any single prompt ever could.
+
+So security cannot stop at runtime controls.
+
+It also has to cover how the system learns, how it changes, what it depends on, and how trust evolves around it.
+
+The question becomes slightly broader: not just how to prevent one bad interaction, but how to maintain control as the system itself changes.
+
+### Training Data and Knowledge Base Poisoning
+
+Not every attack happens in a single moment. Some work slowly.
+
+If a system continuously ingests support logs, uploaded files, user feedback, or a changing knowledge base, then it is also creating a path for gradual influence. Low-quality or malicious content does not need to cause immediate failure. It only needs to be accepted, stored, and reused.
+
+Given enough time, that can be enough to change behaviour.
+
+That is what makes data poisoning difficult to spot. There is rarely one obvious point of failure. Instead, the system starts drifting. It retrieves weaker information, reinforces the wrong patterns, or begins responding in ways that feel slightly off until those shifts stop feeling unusual.
+
+In LLM systems, that effect can be especially strong because retrieved data is not just stored. It is fed back into the model as language. Once poisoned content enters that loop, it starts actively shaping future behaviour.
+
+The response to this is not to freeze everything. It is to make ingestion more deliberate. Feedback loops should be filtered and validated. Trusted and untrusted sources should be kept distinct. Changes should be versioned so they can be traced and rolled back. And teams need visibility into how stored content is affecting outputs, otherwise drift will not be obvious until it is already embedded.
+
+The danger is not only bad data getting in.
+
+It is bad data quietly becoming part of the system’s normal behaviour.
+
+### Supply Chain and Model Integrity
+
+An AI system is never just the code your team writes.
+
+It also includes the base model, the fine-tunes or adapters layered on top, the datasets that shaped them, and the dependencies that connect everything together. A large portion of the behaviour sits outside your direct control.
+
+That makes model behaviour a moving target.
+
+A small base model update can change how instructions are interpreted. A fine-tune can introduce subtle biases or unstable behaviour. A library upgrade can alter how inputs are transformed or outputs are structured. None of these changes need to be malicious to become risky. They only need to be poorly understood.
+
+In higher-stakes systems, this starts to look like a supply chain issue. Models, adapters, and datasets should not be treated as trustworthy by default any more than third-party code would be. They need versioning, evaluation, observability, and rollback paths.
+
+That means knowing exactly which model version is running, testing changes for behavioural shifts rather than just benchmark performance, and avoiding blind upgrades simply because a newer release exists. If behaviour changes unexpectedly, you need to know where it came from and how to reverse it quickly.
+
+If you do not control the integrity of those dependencies, you do not fully control the system they are shaping.
+
+### Overreliance and Misinformation
+
+Even a well-secured AI system can still be wrong.
+
+LLMs are very good at producing answers that feel complete. They are clear, fluent, and often delivered with a confidence that makes them easy to accept. The problem is that this surface quality can hide weak reasoning, incomplete context, or subtle factual errors.
+
+The deeper risk is not just that the model makes mistakes.
+
+It is that people begin to trust those mistakes.
+
+As systems become more polished, users start relying on them. In low-stakes settings that may be inconvenient. In fintech or other high-trust environments, it can influence real decisions. The problem is not only bad output. It is misplaced confidence in that output.
+
+Models do not naturally express uncertainty the way humans expect. Unless a system is designed to surface uncertainty, the interface often makes generated content look more authoritative than it really is.
+
+That is why presentation matters. Generated responses should be framed as guidance where appropriate, not as unquestionable fact. Riskier flows may need explicit validation or user confirmation. Interfaces should make it clearer where an answer came from and whether it was generated, retrieved, or verified.
+
+Security is not only about resisting adversarial behaviour.
+
+It is also about preventing the system from being trusted beyond what it can actually justify.
+
+### Model Theft and Extraction
+
+Not every threat is about steering the system.
+
+Some are about learning from it.
+
+Any model exposed through an API becomes something that can be studied through interaction. An attacker can vary prompts, analyse responses, and gradually build up a picture of how the system behaves. Over time, that can reveal patterns, decision boundaries, or domain-specific logic that was meant to remain internal.
+
+This matters more when the system embodies something valuable: proprietary financial reasoning, internal workflows, specialised decision logic, or a curated knowledge layer. What appears to be a simple conversational interface may, in practice, be exposing a substantial amount of internal value.
+
+The risk is not a single request. It is sustained access.
+
+That means exposure has to be treated as a controlled surface. Even normal-looking usage may be adversarial in aggregate. The goal is not necessarily to make extraction impossible, but to make it slower, noisier, and easier to detect.
+
+That is where rate limits, usage monitoring, scoped responses, and tighter gating around high-value capabilities start to matter. Each one makes it harder to map behaviour cleanly and easier to spot when someone is trying.
+
+In systems like these, value is not only created through use.
+
+It can also be quietly extracted through repeated observation if the interface is too open.
+
+## Conclusion
+
+It is very easy to mistake a convincing AI demo for a trustworthy AI system.
+
+When the responses are fluent and the interaction feels smooth, it creates the impression that the difficult part is already behind you. In reality, that is only the beginning. The hard part starts when the model is connected to messy inputs, sensitive data, internal tools, and real consequences.
+
+At that point, the challenge is not getting the model to respond.
+
+It is deciding what those responses are allowed to influence.
+
+That is the real architectural question, and it is the one that separates novelty from engineering.
+
+A well-designed system assumes the model will sometimes be wrong. It may be manipulated. It may misunderstand intent. It may produce something that sounds completely plausible and still should not be trusted. The goal is not to eliminate those behaviours entirely. The goal is to contain them.
+
+That containment comes from boundaries: around input, memory, retrieval, planning, execution, and output. It comes from keeping trust explicit instead of implicit. And it comes from making sure the system—not the model—retains the right to decide what happens next.
+
+The model interprets language.
+
+The system decides what that interpretation is allowed to do.
+
+That decision, far more than the polish of the response, is what determines whether an AI product is safe enough to deserve trust in the real world.
