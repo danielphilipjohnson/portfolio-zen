@@ -211,6 +211,57 @@ export function getHomePageJsonLd(): { "@context": "https://schema.org"; "@graph
 	};
 }
 
+export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+
+	const mcpPageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${SITE_URL}/mcp/#webpage`,
+		"url": `${SITE_URL}/mcp/`,
+		"name": "MCP Deep Dive | Daniel Johnson",
+		"description": "A practical deep dive into Model Context Protocol (MCP): architecture, security model, integrations, and real-world usage.",
+		"isPartOf": {
+			"@type": "WebSite",
+			"@id": WEBSITE_SCHEMA_ID
+		},
+		"inLanguage": "en-GB",
+		"primaryImageOfPage": {
+			"@type": "ImageObject",
+			"url": `${SITE_URL}/images/og/home-og.jpg`
+		}
+	};
+
+	const mcpArticleSchema: BlogPosting = {
+		"@type": "BlogPosting",
+		"@id": `${SITE_URL}/mcp/#article`,
+		"mainEntityOfPage": `${SITE_URL}/mcp/`,
+		"headline": "MCP Deep Dive",
+		"name": "MCP Deep Dive",
+		"url": `${SITE_URL}/mcp/`,
+		"description": "A practical deep dive into Model Context Protocol (MCP): architecture, threat model, use cases, and expert concepts.",
+		"author": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
+		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
+		"image": {
+			"@type": "ImageObject",
+			"url": `${SITE_URL}/images/og/home-og.jpg`
+		},
+		"inLanguage": "en-GB"
+	};
+
+	const mcpBreadcrumb: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "MCP", "item": `${SITE_URL}/mcp/` }
+		]
+	};
+
+	return {
+		...baseJsonLd,
+		"@graph": [...baseJsonLd["@graph"], mcpPageSchema, mcpArticleSchema, mcpBreadcrumb]
+	};
+}
+
 export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
 	const baseJsonLd = getBaseSiteJsonLd();
 

@@ -20,6 +20,10 @@ async function generateSitemap() {
 		'about',
 		'contact',
 		'projects',
+		'blog',
+		'zen',
+		'mcp',
+		'engineering'
 	];
 
 	for (const page of staticPages) {
