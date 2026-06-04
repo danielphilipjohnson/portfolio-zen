@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { OG_IMAGE, SITE_URL } from "@/lib/constants";
 import { getPageSEO } from "@/utils/seo";
 import type { Metadata } from "next";
 import ZenCalmSoftwarePrinciplePage from "@/components/pages/ZenCalmSoftwarePrinciplePage";
@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonicalUrl =
     `${SITE_URL}/zen/calm-software-builds-trust`;
   const fallbackImage =
-    `${SITE_URL}/images/og/engineering-og.jpg`;
+    OG_IMAGE.ENGINEERING;
 
   if (!seoData || !seoData.title) {
     return {

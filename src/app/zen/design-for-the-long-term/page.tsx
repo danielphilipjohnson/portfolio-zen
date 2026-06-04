@@ -1,4 +1,4 @@
-import { SITE_URL } from "@/lib/constants";
+import { OG_IMAGE, SITE_URL } from "@/lib/constants";
 import { getPageSEO } from "@/utils/seo";
 import type { Metadata } from "next";
 import ZenLongTermPrinciplePage from "@/components/pages/ZenLongTermPrinciplePage";
@@ -8,7 +8,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonicalUrl =
     `${SITE_URL}/zen/design-for-the-long-term`;
   const fallbackImage =
-    `${SITE_URL}/images/og/engineering-og.jpg`;
+    OG_IMAGE.ENGINEERING;
 
   if (!seoData || !seoData.title) {
     return {

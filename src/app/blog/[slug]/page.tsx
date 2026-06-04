@@ -3,7 +3,7 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { Metadata } from 'next';
 import path from 'path';
-import { SITE_URL } from '@/lib/constants';
+import { OG_IMAGE, SITE_URL } from '@/lib/constants';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
 
@@ -53,7 +53,7 @@ export async function generateMetadata(
 					alt: frontmatter.imageAlt || frontmatter.title,
 				}]
 				: [{
-					url: `${SITE_URL}/images/og/default-blog-og.jpg`,
+					url: OG_IMAGE.DEFAULT_BLOG,
 					alt: frontmatter.title,
 				}],
 		},
@@ -65,7 +65,7 @@ export async function generateMetadata(
 				? [frontmatter.imageUrl.startsWith('http')
 					? frontmatter.imageUrl
 					: `${SITE_URL}${frontmatter.imageUrl}`]
-				: [`${SITE_URL}/images/og/default-blog-og.jpg`],
+				: [OG_IMAGE.DEFAULT_BLOG],
 		},
 	};
 }

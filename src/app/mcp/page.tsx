@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 import MCPPage from "@/components/mcp";
 import StructuredData from "@/components/StructuredData";
 import { getMcpPageJsonLd } from "@/utils/jsonLd";
-import { SITE_URL } from "@/lib/constants";
+import { OG_IMAGE, SITE_URL } from "@/lib/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = getPageSEO("/mcp");
   const canonicalUrl = `${SITE_URL}/mcp`;
-  const fallbackImage = `${SITE_URL}/images/og/home-og.jpg`;
+  const fallbackImage = OG_IMAGE.HOME;
 
   if (!seoData || !seoData.title) {
     return {
