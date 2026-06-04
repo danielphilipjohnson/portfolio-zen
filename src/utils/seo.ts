@@ -7,6 +7,7 @@ export type SeoPagePath =
 	| '/blog'
 	| '/contact'
 	| '/engineering'
+	| '/engineering/frontend-architecture'
 	| '/zen'
 	| '/mcp'
 	| '/zen/cultivate-systems-dont-rush-code'
@@ -92,6 +93,28 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.CONTACT }],
 				type: 'website',
 				url: `${SITE_URL}/contact`,
+			},
+		}, '/engineering/frontend-architecture': {
+			title: 'Frontend Architecture | Daniel Johnson',
+			description: 'Scalable frontend architecture patterns, design systems, component design, and platform thinking for production web applications at scale.',
+			keywords: [
+				'frontend architecture',
+				'design systems',
+				'component design',
+				'scalable frontend',
+				'React architecture',
+				'Next.js patterns',
+				'frontend platform',
+				'web application architecture',
+				'frontend system design',
+				'UI architecture',
+			],
+			openGraph: {
+				title: 'Frontend Architecture',
+				description: 'Patterns, principles, and systems thinking for frontend at scale.',
+				images: [{ url: OG_PATH.ENGINEERING }],
+				type: 'website',
+				url: `${SITE_URL}/engineering/frontend-architecture`,
 			},
 		}, '/engineering': {
 			title: 'Software Architecture, AI Systems & Frontend Architecture | Daniel Johnson',
