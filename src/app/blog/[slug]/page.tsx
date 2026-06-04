@@ -3,9 +3,9 @@ import fs from 'fs';
 import matter from 'gray-matter';
 import { Metadata } from 'next';
 import path from 'path';
+import { SITE_URL } from '@/lib/constants';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts')
-const SITE_URL = 'https://www.danielphilipjohnson.com';
 
 export async function generateStaticParams() {
 	const files = fs.readdirSync(postsDirectory)

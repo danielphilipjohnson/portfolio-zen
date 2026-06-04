@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import MCPExtraContent from "@/components/mcp-extra-content";
+import { SITE_URL } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "MCP Deep Dive | Daniel Johnson",
   description:
     "Advanced technical reference for Model Context Protocol architecture, primitives, lifecycle, and implementation patterns.",
   alternates: {
-    canonical: "https://www.danielphilipjohnson.com/mcp/deep-dive",
+    canonical: `${SITE_URL}/mcp/deep-dive`,
   },
 };
 

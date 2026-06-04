@@ -3,11 +3,12 @@ import type { Metadata } from "next";
 import MCPPage from "@/components/mcp";
 import StructuredData from "@/components/StructuredData";
 import { getMcpPageJsonLd } from "@/utils/jsonLd";
+import { SITE_URL } from "@/lib/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = getPageSEO("/mcp");
-  const canonicalUrl = "https://www.danielphilipjohnson.com/mcp";
-  const fallbackImage = "https://www.danielphilipjohnson.com/images/og/home-og.jpg";
+  const canonicalUrl = `${SITE_URL}/mcp`;
+  const fallbackImage = `${SITE_URL}/images/og/home-og.jpg`;
 
   if (!seoData || !seoData.title) {
     return {
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     seoData.openGraph?.images?.map((image) =>
       image.url.startsWith("http")
         ? image.url
-        : `https://www.danielphilipjohnson.com${image.url}`,
+        : `${SITE_URL}${image.url}`,
     ) ?? [fallbackImage];
 
   return {

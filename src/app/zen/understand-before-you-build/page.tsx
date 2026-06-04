@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { getPageSEO } from "@/utils/seo";
 import type { Metadata } from "next";
 import ZenUnderstandingPrinciplePage from "@/components/pages/ZenUnderstandingPrinciplePage";
@@ -5,9 +6,9 @@ import ZenUnderstandingPrinciplePage from "@/components/pages/ZenUnderstandingPr
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = getPageSEO("/zen/understand-before-you-build");
   const canonicalUrl =
-    "https://www.danielphilipjohnson.com/zen/understand-before-you-build";
+    `${SITE_URL}/zen/understand-before-you-build`;
   const fallbackImage =
-    "https://www.danielphilipjohnson.com/images/og/engineering-og.jpg";
+    `${SITE_URL}/images/og/engineering-og.jpg`;
 
   if (!seoData || !seoData.title) {
     return {
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     seoData.openGraph?.images?.map((image) =>
       image.url.startsWith("http")
         ? image.url
-        : `https://www.danielphilipjohnson.com${image.url}`,
+        : `${SITE_URL}${image.url}`,
     ) ?? [fallbackImage];
 
   return {

@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { getPageSEO } from "@/utils/seo";
 import type { Metadata } from "next";
 import ZenClarityPrinciplePage from "@/components/pages/ZenClarityPrinciplePage";
@@ -5,9 +6,9 @@ import ZenClarityPrinciplePage from "@/components/pages/ZenClarityPrinciplePage"
 export async function generateMetadata(): Promise<Metadata> {
   const seoData = getPageSEO("/zen/clarity-scales-across-teams");
   const canonicalUrl =
-    "https://www.danielphilipjohnson.com/zen/clarity-scales-across-teams";
+    `${SITE_URL}/zen/clarity-scales-across-teams`;
   const fallbackImage =
-    "https://www.danielphilipjohnson.com/images/og/engineering-og.jpg";
+    `${SITE_URL}/images/og/engineering-og.jpg`;
 
   if (!seoData || !seoData.title) {
     return {
@@ -29,7 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
     seoData.openGraph?.images?.map((image) =>
       image.url.startsWith("http")
         ? image.url
-        : `https://www.danielphilipjohnson.com${image.url}`,
+        : `${SITE_URL}${image.url}`,
     ) ?? [fallbackImage];
 
   return {
