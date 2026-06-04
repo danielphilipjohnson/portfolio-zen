@@ -13,6 +13,9 @@ const ZenFooter = () => {
 		],
 		resources: [
 			{ label: 'Blog', href: '/blog' },
+			{ label: 'Engineering', href: '/engineering' },
+			{ label: 'Zen', href: '/zen' },
+			{ label: 'MCP', href: '/mcp' },
 			//{ label: 'Case Studies', href: '/case-studies' },
 			//{ label: 'Resume', href: '/resume.pdf' },
 		],
