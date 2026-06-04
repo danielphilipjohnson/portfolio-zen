@@ -1,4 +1,4 @@
-import { SITE_URL } from '@/lib/constants';
+import { OG_PATH, SITE_URL } from '@/lib/constants';
 
 export type SeoPagePath =
 	| '/'
@@ -41,7 +41,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: { 
 				title: 'Daniel Philip Johnson | Full-stack Developer',
 				description: 'Full-stack developer specializing in React, Next.js, and modern web technologies, working remotely from Cornwall.',
-				images: [{ url: '/images/og/home-og.jpg' }],
+				images: [{ url: OG_PATH.HOME }],
 				type: 'website',
 				url: `${SITE_URL}`,
 			},
@@ -53,7 +53,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'About Daniel Johnson | Full-stack Developer',
 				description: 'Learn more about Daniel Philip Johnson, a full-stack developer with expertise in frontend technologies and a passion for creating elegant user experiences.',
-				images: [{ url: '/images/og/about-og.png' }],
+				images: [{ url: OG_PATH.ABOUT }],
 				type: 'profile',
 				url: `${SITE_URL}/about`,
 			},
@@ -65,7 +65,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Projects | Daniel Johnson - Full-stack Developer',
 				description: 'Explore my portfolio of web development projects using React, Next.js, Node.js, and other modern technologies.',
-				images: [{ url: '/images/og/projects-og.jpg' }],
+				images: [{ url: OG_PATH.PROJECTS }],
 				type: 'website',
 				url: `${SITE_URL}/projects`,
 			},
@@ -77,7 +77,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Blog | Daniel Johnson - Full-stack Developer',
 				description: 'Thoughts, tutorials and insights on frontend development, React, JavaScript, and modern web technologies.',
-				images: [{ url: '/images/og/blog-og.jpg' }],
+				images: [{ url: OG_PATH.BLOG }],
 				type: 'website',
 				url: `${SITE_URL}/blog`,
 			},
@@ -89,7 +89,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Contact | Daniel Johnson - Full-stack Developer',
 				description: 'Get in touch with Daniel Philip Johnson for project inquiries, collaborations, or questions about web development.',
-				images: [{ url: '/images/og/contact-og.jpg' }],
+				images: [{ url: OG_PATH.CONTACT }],
 				type: 'website',
 				url: `${SITE_URL}/contact`,
 			},
@@ -112,7 +112,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Software Architecture, AI Systems & Frontend Architecture',
 				description: 'Deep dives into software architecture, AI systems, frontend platforms, and distributed system design.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'website',
 				url: `${SITE_URL}/engineering`,
 			},
@@ -124,7 +124,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'MCP Deep Dive | Daniel Johnson',
 				description: 'Model Context Protocol explained from a systems and product engineering perspective.',
-				images: [{ url: '/images/og/home-og.jpg' }],
+				images: [{ url: OG_PATH.HOME }],
 				type: 'website',
 				url: `${SITE_URL}/mcp`,
 			},
@@ -142,7 +142,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Zen of Software Engineering',
 				description: 'Principles for building software with clarity, intention, and long-term resilience.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'website',
 				url: `${SITE_URL}/zen`,
 			},
@@ -162,7 +162,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: "Cultivate Systems, Don't Rush Code",
 				description: 'A deep dive into Principle 1: software systems should be cultivated over time, not rushed into complexity.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/cultivate-systems-dont-rush-code`,
 			},
@@ -182,7 +182,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Less Code. More Intention.',
 				description: 'A deep dive into Principle 2: intentional architecture, lower surface area, and clearer systems.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/less-code-more-intention`,
 			},
@@ -202,7 +202,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Prune Systems with Care',
 				description: 'A deep dive into Principle 3: why simplification, refactoring, and pruning keep systems healthy.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/prune-systems-with-care`,
 			},
@@ -221,7 +221,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Understand Before You Build',
 				description: 'A deep dive into Principle 4: stillness before action, explicit trade-offs, and deliberate architecture.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/understand-before-you-build`,
 			},
@@ -241,7 +241,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Calm Software Builds Trust',
 				description: 'A deep dive into Principle 5: how predictable and resilient software experiences create user confidence.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/calm-software-builds-trust`,
 			},
@@ -261,7 +261,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Design for the Long Term',
 				description: 'A deep dive into Principle 6: longevity, maintainability, and architecture that ages well.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/design-for-the-long-term`,
 			},
@@ -281,7 +281,7 @@ export function getPageSEO(pathname: string): SEOData {
 			openGraph: {
 				title: 'Clarity Scales Across Teams',
 				description: 'A deep dive into Principle 7: architecture that enables collaboration, ownership, and scalable team velocity.',
-				images: [{ url: '/images/og/engineering-og.jpg' }],
+				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/clarity-scales-across-teams`,
 			},
