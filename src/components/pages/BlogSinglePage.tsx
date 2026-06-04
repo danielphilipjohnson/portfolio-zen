@@ -109,7 +109,7 @@ const Heading = ({ level, children, ...props }: HeadingProps) => {
 	);
 };
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string[] }> }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
 	const { slug } = await params;
 	const filePath = path.join(postsDirectory, `${slug}.mdx`)
 	const source = fs.readFileSync(filePath, 'utf8')
@@ -130,7 +130,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	const formattedDate = format(parsedDate, 'yyyy-MM-dd');
 
 	const blogPostJsonLdData = getSingleBlogPostJsonLd({
-		slug: slug[0],
+		slug: slug,
 		title: data.title,
 		publishDate: formattedDate,
 		imageUrl: data.imageUrl,
