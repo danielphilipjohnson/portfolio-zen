@@ -1,3 +1,5 @@
+import { SITE_URL } from '@/lib/constants';
+
 export type SeoPagePath =
 	| '/'
 	| '/about'
@@ -41,7 +43,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Full-stack developer specializing in React, Next.js, and modern web technologies, working remotely from Cornwall.',
 				images: [{ url: '/images/og/home-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com',
+				url: `${SITE_URL}`,
 			},
 		},
 		'/about': {
@@ -53,7 +55,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Learn more about Daniel Philip Johnson, a full-stack developer with expertise in frontend technologies and a passion for creating elegant user experiences.',
 				images: [{ url: '/images/og/about-og.png' }],
 				type: 'profile',
-				url: 'https://www.danielphilipjohnson.com/about',
+				url: `${SITE_URL}/about`,
 			},
 		},
 		'/projects': {
@@ -65,7 +67,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Explore my portfolio of web development projects using React, Next.js, Node.js, and other modern technologies.',
 				images: [{ url: '/images/og/projects-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/projects',
+				url: `${SITE_URL}/projects`,
 			},
 		},
 		'/blog': {
@@ -77,7 +79,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Thoughts, tutorials and insights on frontend development, React, JavaScript, and modern web technologies.',
 				images: [{ url: '/images/og/blog-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/blog',
+				url: `${SITE_URL}/blog`,
 			},
 		},
 		'/contact': {
@@ -89,7 +91,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Get in touch with Daniel Philip Johnson for project inquiries, collaborations, or questions about web development.',
 				images: [{ url: '/images/og/contact-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/contact',
+				url: `${SITE_URL}/contact`,
 			},
 		}, '/engineering': {
 			title: 'Software Architecture, AI Systems & Frontend Architecture | Daniel Johnson',
@@ -112,7 +114,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Deep dives into software architecture, AI systems, frontend platforms, and distributed system design.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/engineering',
+				url: `${SITE_URL}/engineering`,
 			},
 		},
 		'/mcp': {
@@ -124,7 +126,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Model Context Protocol explained from a systems and product engineering perspective.',
 				images: [{ url: '/images/og/home-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/mcp',
+				url: `${SITE_URL}/mcp`,
 			},
 		},
 		'/zen': {
@@ -142,7 +144,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'Principles for building software with clarity, intention, and long-term resilience.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'website',
-				url: 'https://www.danielphilipjohnson.com/zen',
+				url: `${SITE_URL}/zen`,
 			},
 		},
 		'/zen/cultivate-systems-dont-rush-code': {
@@ -162,7 +164,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 1: software systems should be cultivated over time, not rushed into complexity.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/cultivate-systems-dont-rush-code',
+				url: `${SITE_URL}/zen/cultivate-systems-dont-rush-code`,
 			},
 		},
 		'/zen/less-code-more-intention': {
@@ -182,7 +184,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 2: intentional architecture, lower surface area, and clearer systems.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/less-code-more-intention',
+				url: `${SITE_URL}/zen/less-code-more-intention`,
 			},
 		},
 		'/zen/prune-systems-with-care': {
@@ -202,7 +204,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 3: why simplification, refactoring, and pruning keep systems healthy.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/prune-systems-with-care',
+				url: `${SITE_URL}/zen/prune-systems-with-care`,
 			},
 		},
 		'/zen/understand-before-you-build': {
@@ -221,7 +223,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 4: stillness before action, explicit trade-offs, and deliberate architecture.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/understand-before-you-build',
+				url: `${SITE_URL}/zen/understand-before-you-build`,
 			},
 		},
 		'/zen/calm-software-builds-trust': {
@@ -241,7 +243,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 5: how predictable and resilient software experiences create user confidence.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/calm-software-builds-trust',
+				url: `${SITE_URL}/zen/calm-software-builds-trust`,
 			},
 		},
 		'/zen/design-for-the-long-term': {
@@ -261,7 +263,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 6: longevity, maintainability, and architecture that ages well.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/design-for-the-long-term',
+				url: `${SITE_URL}/zen/design-for-the-long-term`,
 			},
 		},
 		'/zen/clarity-scales-across-teams': {
@@ -281,7 +283,7 @@ export function getPageSEO(pathname: string): SEOData {
 				description: 'A deep dive into Principle 7: architecture that enables collaboration, ownership, and scalable team velocity.',
 				images: [{ url: '/images/og/engineering-og.jpg' }],
 				type: 'article',
-				url: 'https://www.danielphilipjohnson.com/zen/clarity-scales-across-teams',
+				url: `${SITE_URL}/zen/clarity-scales-across-teams`,
 			},
 		},
 	};
