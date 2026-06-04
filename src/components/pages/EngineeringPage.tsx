@@ -69,6 +69,11 @@ const themeSections: ThemeSection[] = [
       "Performance optimization",
       "Scalable frontend architecture",
     ],
+    example: {
+      title: "Frontend Architecture",
+      summary: "Patterns, principles, and systems thinking for building frontend applications that scale across teams, devices, and years.",
+      href: "/engineering/frontend-architecture",
+    },
   },
   {
     title: "Distributed Systems",

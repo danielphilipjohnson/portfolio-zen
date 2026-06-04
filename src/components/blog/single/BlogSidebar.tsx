@@ -24,15 +24,20 @@ export const BlogSidebar = ({ post }: Readonly<BlogSidebarProps>) => {
           </Text>
 
           <div className="flex flex-wrap gap-2">
-            {post.tags.map((tag, index) => (
-              <a
-                key={index}
-                href={`/blog/tag/${tag.toLowerCase().replace(/ /g, '-')}`}
-                className="inline-block px-3 py-1 text-xs transition-colors bg-[var(--color-stone-100)] text-[var(--color-stone-800)] hover:bg-[var(--color-stone-200)] rounded"
-              >
-                {tag}
-              </a>
-            ))}
+            {post.tags.map((tag, index) => {
+              const href = tag.toLowerCase().trim() === 'frontend architecture'
+                ? '/engineering/frontend-architecture'
+                : `/blog/tag/${tag.toLowerCase().replace(/ /g, '-')}`;
+              return (
+                <a
+                  key={index}
+                  href={href}
+                  className="inline-block px-3 py-1 text-xs transition-colors bg-[var(--color-stone-100)] text-[var(--color-stone-800)] hover:bg-[var(--color-stone-200)] rounded"
+                >
+                  {tag}
+                </a>
+              );
+            })}
           </div>
         </div>
 

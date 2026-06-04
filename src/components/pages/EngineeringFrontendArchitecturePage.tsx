@@ -79,8 +79,11 @@ export default async function EngineeringFrontendArchitecturePage() {
             {topics.map((topic) => (
               <article
                 key={topic.title}
-                className="rounded-lg border border-[var(--color-stone-200)] bg-white p-6"
+                className="rounded-lg border border-[var(--color-stone-200)] bg-white p-6 relative"
               >
+                <span className="absolute top-3 right-3 text-[10px] uppercase tracking-widest text-[var(--color-stone-400)] font-medium">
+                  Coming Soon
+                </span>
                 <h3 className="text-lg font-sans font-medium mb-2 text-[var(--color-stone-800)]">
                   {topic.title}
                 </h3>
