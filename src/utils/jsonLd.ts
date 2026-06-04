@@ -14,6 +14,8 @@ import type {
 	CollectionPage,
 } from 'schema-dts';
 
+import { SITE_URL } from '@/lib/constants';
+
 type SchemaOrgObject = Person | Organization | WebSite | WebPage | BreadcrumbList | ImageObject | SearchAction | EntryPoint | ListItem | BlogPosting | Blog | SoftwareApplication | CollectionPage;
 
 export interface SchemaOrgGraphItem {
@@ -39,8 +41,6 @@ export interface BlogPostSummary {
 	imageUrl?: string;
 	excerpt?: string;
 }
-
-import { SITE_URL } from '@/lib/constants';
 
 export const PERSON_SCHEMA_ID = `${SITE_URL}/#/schema/person/danielphilipjohnson`;
 export const ORGANIZATION_SCHEMA_ID = `${SITE_URL}/#/schema/organization/danielphilipjohnson`;
