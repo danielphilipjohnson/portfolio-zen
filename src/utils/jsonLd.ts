@@ -40,7 +40,8 @@ export interface BlogPostSummary {
 	excerpt?: string;
 }
 
-export const SITE_URL = 'https://www.danielphilipjohnson.com';
+import { SITE_URL } from '@/lib/constants';
+
 export const PERSON_SCHEMA_ID = `${SITE_URL}/#/schema/person/danielphilipjohnson`;
 export const ORGANIZATION_SCHEMA_ID = `${SITE_URL}/#/schema/organization/danielphilipjohnson`;
 export const WEBSITE_SCHEMA_ID = `${SITE_URL}/#website`;
