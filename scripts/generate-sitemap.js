@@ -23,7 +23,16 @@ async function generateSitemap() {
 		'blog',
 		'zen',
 		'mcp',
-		'engineering'
+		'engineering',
+		'engineering/frontend-architecture',
+		'mcp/deep-dive',
+		'zen/calm-software-builds-trust',
+		'zen/clarity-scales-across-teams',
+		'zen/cultivate-systems-dont-rush-code',
+		'zen/design-for-the-long-term',
+		'zen/less-code-more-intention',
+		'zen/prune-systems-with-care',
+		'zen/understand-before-you-build',
 	];
 
 	for (const page of staticPages) {
