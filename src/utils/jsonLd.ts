@@ -14,7 +14,7 @@ import type {
 	CollectionPage,
 } from 'schema-dts';
 
-import { SITE_URL } from '@/lib/constants';
+import { OG_IMAGE, SITE_URL } from '@/lib/constants';
 
 type SchemaOrgObject = Person | Organization | WebSite | WebPage | BreadcrumbList | ImageObject | SearchAction | EntryPoint | ListItem | BlogPosting | Blog | SoftwareApplication | CollectionPage;
 
@@ -190,7 +190,7 @@ export function getHomePageJsonLd(): { "@context": "https://schema.org"; "@graph
 		"inLanguage": "en-GB",
 		"primaryImageOfPage": {
 			"@type": "ImageObject",
-			"url": `${SITE_URL}/images/og/home-og.jpg`
+			"url": OG_IMAGE.HOME
 		}
 	};
 
@@ -228,7 +228,7 @@ export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph"
 		"inLanguage": "en-GB",
 		"primaryImageOfPage": {
 			"@type": "ImageObject",
-			"url": `${SITE_URL}/images/og/home-og.jpg`
+			"url": OG_IMAGE.HOME
 		}
 	};
 
@@ -244,7 +244,7 @@ export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph"
 		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
 		"image": {
 			"@type": "ImageObject",
-			"url": `${SITE_URL}/images/og/home-og.jpg`
+			"url": OG_IMAGE.HOME
 		},
 		"inLanguage": "en-GB"
 	};
