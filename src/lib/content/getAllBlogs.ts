@@ -26,10 +26,12 @@ export async function getAllBlogs() {
 					imageAlt: data.imageAlt,
 					excerpt: data.excerpt,
 					tags: data.tags,
-					categories: (data.categories || []).map((category: string) => ({
-						name: category,
-						slug: category.toLowerCase().replace(/\s+/g, '-'),
-					})),
+					categories: data.category
+						? [{
+							name: data.category,
+							slug: data.category.toLowerCase().replace(/\s+/g, '-'),
+						}]
+						: [],
 				};
 			})
 		);
