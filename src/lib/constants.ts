@@ -14,6 +14,7 @@ export const ROUTE = {
   BLOG: '/blog',
   ZEN: '/zen',
   MCP: '/mcp',
+  TAO: '/tao',
   PROJECTS: '/projects',
 } as const;
 

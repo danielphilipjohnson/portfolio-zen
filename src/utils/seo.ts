@@ -16,7 +16,8 @@ export type SeoPagePath =
 	| '/zen/understand-before-you-build'
 	| '/zen/calm-software-builds-trust'
 	| '/zen/design-for-the-long-term'
-	| '/zen/clarity-scales-across-teams';
+	| '/zen/clarity-scales-across-teams'
+	| '/tao';
 
 export interface SEOData {
 	title: string;
@@ -287,6 +288,27 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'article',
 				url: `${SITE_URL}/zen/design-for-the-long-term`,
+			},
+		},
+		'/tao': {
+			title: 'Tao of Software Engineering | Daniel Johnson',
+			description: 'Guiding principles for building software with clarity, intention, and resilience. Simplicity, modularity, and long-term thinking in software architecture.',
+			keywords: [
+				'software engineering principles',
+				'engineering tao',
+				'software architecture philosophy',
+				'engineering principles',
+				'coding principles',
+				'software craftsmanship',
+				'system design principles',
+				'engineering clarity',
+			],
+			openGraph: {
+				title: 'Tao of Software Engineering',
+				description: 'Guiding principles for building software with clarity, intention, and resilience.',
+				images: [{ url: OG_PATH.ENGINEERING }],
+				type: 'website',
+				url: `${SITE_URL}/tao`,
 			},
 		},
 		'/zen/clarity-scales-across-teams': {
