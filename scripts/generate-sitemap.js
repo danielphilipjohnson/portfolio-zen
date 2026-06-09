@@ -22,6 +22,7 @@ async function generateSitemap() {
 		'projects',
 		'blog',
 		'zen',
+		'tao',
 		'mcp',
 		'engineering',
 		'engineering/frontend-architecture',
