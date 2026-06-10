@@ -2,11 +2,11 @@ import { AboutProps } from "@/types/about";
 
 export const defaultAboutProps: AboutProps = {
 	title: "About Me",
-	summary: "Hi, I’m Daniel – a full-stack frontend engineer blending architecture, design systems, and product thinking to scale high-performance applications.",
+	summary: "Senior Frontend Engineer with 5+ years of experience delivering scalable, production-grade applications in regulated industries, including mortgage lending, fintech, and SaaS.",
 	details: [
-		"With over 5 years of experience—from fintech and e-commerce to internal tools—I specialize in modern React ecosystems (RSCs, TypeScript, Tailwind) and bring backend fluency with Node.js and Fastify.",
-		"I build interfaces that scale with intention, ship with confidence, and empower teams with better tooling, documentation, and systems.",
-		"Whether it’s designing dynamic forms for financial workflows, leading security audits, or architecting AI-powered chat systems, I bring clarity, speed, and a collaborative mindset to every project."
+		"Expert in React, TypeScript, and Next.js (including Server Components), with strong capabilities in state management, performance optimisation, and design systems.",
+		"Proven track record building clean, accessible UIs, secure frontend architectures, and high-quality developer tooling in cross-functional teams.",
+		"Passionate about great UX, robust engineering practices, and DX-focused workflows that help teams ship faster and safer."
 	],
 	philosophyTitle: "My Engineering Philosophy",
 	philosophyPoints: [

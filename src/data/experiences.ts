@@ -3,72 +3,88 @@ import { ExperienceItem } from "@/types/experience";
 export const defaultExperiences: ExperienceItem[] = [
   {
     id: "exp-loan",
-    role: "Frontend Engineer",
+    role: "Senior Front End Engineer",
     company: "Loan.co.uk",
-    period: "Sep 2024 – Present",
+    period: "August 2024–Present",
     location: "Remote",
-    technologies: ["TypeScript", "PHP", "node", "Symfony", "Next.js", "Tailwind CSS", "React", "Storybook"],
+    technologies: ["TypeScript", "Next.js", "React Server Components", "Zustand", "Storybook", "WCAG 2.1 AA", "Zod", "Tailwind CSS"],
     description:
-      "Led the end-to-end modernization of the consumer-facing platform, owning frontend architecture from initial system design through to production delivery. Contributed across discovery, scoping, design system strategy, documentation, and cross-team delivery.",
+      "Modernised a legacy Create React App into a Next.js App Router + React Server Components architecture, and engineered a deterministic Zustand-based task engine for complex mortgage journeys.",
     highlights: [
-      "Architected a scalable frontend system using Next.js and Storybook, aligning design, engineering, and business needs.",
-      "Delivered production-ready UI from flow diagrams and component maps, ensuring consistency across dynamic mortgage journeys.",
-      "Created onboarding guides, architecture diagrams, and coding standards to support scaling the frontend team and accelerating developer ramp-up.",
-      "Drove cross-functional planning, collaborating with product and backend teams to scope and prioritize features.",
-      "Elevated velocity and maintainability by introducing reusable design patterns, lean component logic, and system-first documentation."
+      "Modernised a legacy Create React App into a Next.js App Router + React Server Components architecture, introducing server/client boundaries, caching rules, and rendering patterns that dramatically improved performance and established a scalable foundation for future features.",
+      "Engineered the dashboard task engine using a deterministic Zustand-based state architecture, unifying multi-source task data (uploads, fact-find, credit checks, document reads, debt consolidation) into a predictable flow that improved clarity, correctness, and reliability for advisors and customers.",
+      "Collaborated with design on a full dashboard and customer-app redesign, advising on technical feasibility, performance implications, and UX trade-offs to ensure proposed solutions were intuitive, fast, and realistic to implement.",
+      "Built a unified frontend platform including a token-driven design system (Storybook, WCAG 2.1 AA), feature-flagging system, Zod-powered form engines, analytics middleware, and typed API clients reducing UI inconsistency by 75% and increasing developer velocity across teams.",
+      "Drove a multi-quarter performance initiative, implementing parallel data fetching, server-first rendering, cache boundaries, bundle analysis, and strict code-splitting which cut app load time by 45%.",
+      "Spearheaded frontend security and compliance, reducing 400+ CVEs to 12, enforcing dependency governance, and integrating audit logging into React/Next.js interaction flows.",
+      "Designed and shipped an AI-powered chat interface with real-time streaming, optimistic updates, and state-machine-driven UI flows delivering a fast, reliable customer support experience.",
+      "Improved engineering culture by defining coding standards, frontend conventions, architectural guidelines, and documentation practices that enhanced consistency and long-term maintainability."
     ]
   },
   {
     id: "exp-idhl",
-    role: "Frontend Developer",
+    role: "Front End Engineer Bigcommerce",
     company: "IDHL",
-    period: "Jul 2023 – Aug 2024",
+    period: "July 2023–August 2024",
     location: "Remote · Hayle, UK",
     technologies: [
-      "BigCommerce", "Stencil.js", "React", "Next.js", "TypeScript", "Tailwind CSS"
+      "BigCommerce", "React", "Next.js", "TypeScript", "GraphQL", "Tailwind CSS", "Storybook"
     ],
     description:
-      "Led the development of custom BigCommerce storefronts and Next.js-powered PWAs, balancing high-quality code with client-focused leadership. Championed estimation accuracy, scalable architecture, and mentorship across project teams.",
+      "Defined React and Next.js architectural foundations for enterprise commerce platforms and engineered high-performance PWAs using React Server Components.",
     highlights: [
-      "Delivered projects on time and within budget by owning scope, estimates, and quality assurance",
-      "Acted as the primary technical lead for client queries, unblockers, and escalation points across multiple projects",
-      "Wrote clear technical specs, broke down work for junior and mid-level devs, and ensured delivery aligned with business goals",
-      "Architected and implemented custom BigCommerce extensions to meet complex client needs",
-      "Contributed to evolving internal development standards and driving team-wide adoption of best practices"
+      "Defined the React and Next.js architectural foundations for two enterprise commerce platforms, introducing durable component patterns, rendering rules, and performance constraints that increased team velocity and improved project margins by 15%.",
+      "Engineered a Next.js-powered PWA using React Server Components, modular components, and structured hydration boundaries, and documented the patterns in Storybook to unify UI behaviours across teams.",
+      "Created shared React data-fetching primitives (GraphQL wrappers, typed hooks, caching strategies) that reduced integration overhead by 55% and eliminated duplicated logic across teams.",
+      "Engineered performance and caching improvements across the storefront, including GraphQL caching and edge-oriented rendering for the checkout, delivering faster TTFB, smoother buyer journeys, and more stable performance at scale.",
+      "Collaborated with product designers to shape high-conversion storefront and checkout experiences, advising on feasibility, performance trade-offs, and component-level UX improvements."
     ]
   },
-
   {
     id: "exp-hiyield",
-    role: "Full Stack Engineer",
-    company: "Hiyield",
-    period: "Jul 2021 – Jul 2023",
+    role: "Fullstack developer",
+    company: "hiyield",
+    period: "July 2021– July 2023",
     location: "St. Austell, UK",
     technologies: [
-      "Vue 3", "Nuxt 3", "Prismic", "Storyblok", "Tailwind CSS",
-      "Node.js", "Django REST", "PostgreSQL", "Docker", "GCP", "Stripe"
+      "React", "Next.js", "GraphQL", "Prismic CMS", "Storybook", "TypeScript", "Google Cloud", "Firebase", "Stripe"
     ],
     description:
-      "Built and deployed web apps across marketing and e-commerce domains, integrating CMS, APIs, and secure payment workflows.",
+      "Designed and delivered headless eCommerce architectures and engineered Google Cloud data pipelines for real-time dashboards.",
     highlights: [
-      "Led integrations with Firebase, Stripe, Mailchimp, and Google Cloud Functions",
-      "Delivered robust headless e-commerce solutions using BigCommerce",
-      "Mentored junior devs and implemented modern DevOps practices"
+      "Designed and delivered a headless eCommerce architecture using React/Next.js, GraphQL, and Prismic CMS, supported by a shared Storybook component library that improved scalability and reduced page load times by 35%.",
+      "Rebuilt a plugin-heavy WordPress platform into a React + TypeScript JAMstack application with Firebase auth, serverless APIs, and Stripe integration, replacing brittle legacy code with a fast, secure, and maintainable modern foundation.",
+      "Engineered Google Cloud pipelines (Pub/Sub → Compute → Elasticsearch) that processed 2M+ records per quarter, enabling real-time dashboards and powering low-latency search experiences across React-based customer interfaces.",
+      "Built a React customer portal that unified account management, bookings, collection requests, and storage tracking, fully integrated with warehouse and logistics systems to deliver accurate, real-time updates to customers.",
+      "Collaborated with designers to refine user flows and component patterns, ensuring new features across eCommerce and logistics products were intuitive, performant, and consistent with evolving design system standards."
     ]
   },
   {
     id: "exp-codecareer",
-    role: "React Developer",
-    company: "CodeCareer.io",
-    period: "Oct 2020 – Apr 2021",
+    role: "Founding Front End Engineer",
+    company: "codecareer.io",
+    period: "2020–2021",
     location: "Remote",
-    technologies: ["React.js", "Tailwind CSS", "MongoDB", "Express.js", "Python"],
+    technologies: ["React", "Python", "MongoDB", "Tailwind CSS"],
     description:
-      "Maintained and optimized a job board platform by building custom hooks, automations, and performance enhancements.",
+      "As a founding developer, built a React-based job board platform from the ground up and implemented Python automation for multi-source data fetching.",
     highlights: [
-      "Implemented CRUD UI for job listings with clean, modular components",
-      "Automated data fetching and normalization with Python scripts",
-      "Reduced frontend rendering bottlenecks by optimizing the critical rendering path"
+      "As a founding developer, built the React-based frontend for a job board platform from the ground up including search interface, job filters, pagination, and real-time data display supporting 3,000+ daily listings and reducing page load time to under 1.2s on average.",
+      "Designed Python automation to pull job data from 5+ APIs, storing parsed entries in MongoDB reducing API costs by 50% and improving listing freshness and frontend accuracy."
+    ]
+  },
+  {
+    id: "exp-freelance",
+    role: "React Developer (Freelance)",
+    company: "Self-Employed",
+    period: "February 2019 – August 2020",
+    location: "Remote",
+    technologies: ["React", "Python", "MongoDB"],
+    description:
+      "Developed custom React frontends and automated data collection workflows for various clients.",
+    highlights: [
+      "As a founding developer, built the React-based frontend for a job board platform from the ground up including search interface, job filters, pagination, and real-time data display supporting 3,000+ daily listings and reducing page load time to under 1.2s on average.",
+      "Designed Python automation to pull job data from 5+ APIs, storing parsed entries in MongoDB reducing API costs by 50% and improving listing freshness and frontend accuracy."
     ]
   }
 ];
