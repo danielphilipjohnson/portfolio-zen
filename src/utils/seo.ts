@@ -20,6 +20,7 @@ export type SeoPagePath =
 	| '/blog/tag/web-performance'
 	| '/blog/tag/frontend-architecture'
 	| '/blog/tag/engineering-principles'
+	| '/blog/tag/fintech'
 	| '/tao';
 
 export interface SEOData {
@@ -85,6 +86,27 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.BLOG }],
 				type: 'website',
 				url: `${SITE_URL}/blog`,
+			},
+		},
+		'/blog/tag/fintech': {
+			title: 'Fintech | Daniel Johnson',
+			description: 'Fintech frontend engineering: customer application journeys, internal dashboards, web performance, data freshness, caching strategies, and architecture trade-offs in regulated financial products.',
+			keywords: [
+				'fintech frontend',
+				'fintech engineering',
+				'frontend architecture fintech',
+				'customer application journeys',
+				'financial dashboards',
+				'data freshness',
+				'compliance aware ux',
+				'fintech performance',
+			],
+			openGraph: {
+				title: 'Fintech',
+				description: 'Frontend engineering for financial products where trust, accuracy, and timing are foundational.',
+				images: [{ url: OG_PATH.ENGINEERING }],
+				type: 'website',
+				url: `${SITE_URL}/blog/tag/fintech`,
 			},
 		},
 		'/blog/tag/engineering-principles': {
