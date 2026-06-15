@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getAllBlogs } from "@/lib/content/getAllBlogs";
 import { parse, isValid, format } from "date-fns";
 
+// ! consider its use
 const FRONTEND_ARCHITECTURE_TAG = "Frontend Architecture";
 
 const topics = [
