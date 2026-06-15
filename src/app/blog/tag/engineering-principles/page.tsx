@@ -3,12 +3,12 @@ import { getPageSEO } from "@/utils/seo";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = getPageSEO('/blog/tag/frontend-architecture');
+  const seoData = getPageSEO('/blog/tag/engineering-principles');
 
   if (!seoData || !seoData.title) {
     return {
-      title: 'Frontend Architecture | Daniel Johnson',
-      description: 'Frontend system design, React architecture, and architectural patterns for production applications.',
+      title: 'Engineering Principles | Daniel Johnson',
+      description: 'Engineering principles for frontend performance, system design, and production software architecture.',
     };
   }
 
@@ -24,9 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
       url: seoData.openGraph.url,
     } : undefined,
     alternates: {
-      canonical: `${SITE_URL}/blog/tag/frontend-architecture`,
+      canonical: `${SITE_URL}/blog/tag/engineering-principles`,
     },
   };
 }
 
-export { default } from "@/components/pages/FrontendArchitectureTagPage";
+export { default } from "@/components/pages/EngineeringPrinciplesTagPage";

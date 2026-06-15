@@ -3,12 +3,12 @@ import { getPageSEO } from "@/utils/seo";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = getPageSEO('/blog/tag/frontend-architecture');
+  const seoData = getPageSEO('/blog/tag/web-performance');
 
   if (!seoData || !seoData.title) {
     return {
-      title: 'Frontend Architecture | Daniel Johnson',
-      description: 'Frontend system design, React architecture, and architectural patterns for production applications.',
+      title: 'Web Performance | Daniel Johnson',
+      description: 'Frontend performance engineering: elimination, efficiency, and scheduling.',
     };
   }
 
@@ -24,9 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
       url: seoData.openGraph.url,
     } : undefined,
     alternates: {
-      canonical: `${SITE_URL}/blog/tag/frontend-architecture`,
+      canonical: `${SITE_URL}/blog/tag/web-performance`,
     },
   };
 }
 
-export { default } from "@/components/pages/FrontendArchitectureTagPage";
+export { default } from "@/components/pages/WebPerformancePage";

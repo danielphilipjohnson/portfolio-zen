@@ -3,12 +3,12 @@ import { getPageSEO } from "@/utils/seo";
 import { Metadata } from "next";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = getPageSEO('/blog/tag/frontend-architecture');
+  const seoData = getPageSEO('/blog/tag/fintech');
 
   if (!seoData || !seoData.title) {
     return {
-      title: 'Frontend Architecture | Daniel Johnson',
-      description: 'Frontend system design, React architecture, and architectural patterns for production applications.',
+      title: 'Fintech | Daniel Johnson',
+      description: 'Fintech frontend engineering: architecture, performance, and reliability in financial products.',
     };
   }
 
@@ -24,9 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
       url: seoData.openGraph.url,
     } : undefined,
     alternates: {
-      canonical: `${SITE_URL}/blog/tag/frontend-architecture`,
+      canonical: `${SITE_URL}/blog/tag/fintech`,
     },
   };
 }
 
-export { default } from "@/components/pages/FrontendArchitectureTagPage";
+export { default } from "@/components/pages/FintechTagPage";
