@@ -25,9 +25,7 @@ export const BlogSidebar = ({ post }: Readonly<BlogSidebarProps>) => {
 
           <div className="flex flex-wrap gap-2">
             {post.tags.map((tag, index) => {
-              const href = tag.toLowerCase().trim() === 'frontend architecture'
-                ? '/engineering/frontend-architecture'
-                : `/blog/tag/${tag.toLowerCase().replace(/ /g, '-')}`;
+              const href = `/blog/tag/${tag.toLowerCase().replace(/ /g, '-')}`;
               return (
                 <a
                   key={index}

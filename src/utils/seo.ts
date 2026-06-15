@@ -17,6 +17,9 @@ export type SeoPagePath =
 	| '/zen/calm-software-builds-trust'
 	| '/zen/design-for-the-long-term'
 	| '/zen/clarity-scales-across-teams'
+	| '/blog/tag/web-performance'
+	| '/blog/tag/frontend-architecture'
+	| '/blog/tag/engineering-principles'
 	| '/tao';
 
 export interface SEOData {
@@ -82,6 +85,68 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.BLOG }],
 				type: 'website',
 				url: `${SITE_URL}/blog`,
+			},
+		},
+		'/blog/tag/engineering-principles': {
+			title: 'Engineering Principles | Daniel Johnson',
+			description: 'Engineering principles for production software: performance architecture, system design trade-offs, and engineering judgement.',
+			keywords: [
+				'engineering principles',
+				'engineering judgement',
+				'system design',
+				'trade-off thinking',
+				'production thinking',
+				'software architecture principles',
+			],
+			openGraph: {
+				title: 'Engineering Principles',
+				description: 'Heuristics and principles for engineering judgement in production systems.',
+				images: [{ url: OG_PATH.ENGINEERING }],
+				type: 'website',
+				url: `${SITE_URL}/blog/tag/engineering-principles`,
+			},
+		},
+		'/blog/tag/frontend-architecture': {
+			title: 'Frontend Architecture | Daniel Johnson',
+			description: 'Frontend system design, React architecture, performance architecture, state management, and architectural patterns for production frontend applications.',
+			keywords: [
+				'frontend architecture',
+				'frontend system design',
+				'react architecture',
+				'component design',
+				'state management',
+				'frontend performance architecture',
+				'design systems',
+				'frontend complexity',
+				'technical debt frontend',
+				'frontend architecture decisions',
+			],
+			openGraph: {
+				title: 'Frontend Architecture',
+				description: 'Engineering judgement for frontend systems at scale.',
+				images: [{ url: OG_PATH.ENGINEERING }],
+				type: 'website',
+				url: `${SITE_URL}/blog/tag/frontend-architecture`,
+			},
+		},
+		'/blog/tag/web-performance': {
+			title: 'Web Performance | Daniel Johnson',
+			description: 'Frontend performance engineering: elimination, efficiency, and scheduling. Articles on making systems faster and understanding user-facing work.',
+			keywords: [
+				'web performance',
+				'frontend performance',
+				'performance architecture',
+				'elimination efficiency scheduling',
+				'core web vitals',
+				'bundle optimization',
+				'rendering performance',
+			],
+			openGraph: {
+				title: 'Web Performance',
+				description: 'Elimination, efficiency, and scheduling — a model for frontend performance architecture.',
+				images: [{ url: OG_PATH.BLOG }],
+				type: 'website',
+				url: `${SITE_URL}/blog/tag/web-performance`,
 			},
 		},
 		'/contact': {
