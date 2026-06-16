@@ -9,14 +9,8 @@ author:
 category: "Frontend Architecture"
 readingTime: 10 min read
 tags:
-  - "React"
-  - "Symfony"
   - "Frontend Performance"
   - "Frontend Architecture"
-  - "Latency"
-  - "Hybrid Applications"
-  - "Twig"
-  - "User Experience"
   - "Web Performance"
 imageUrl: "/images/blogs/covers/react-symfony-frontend-boundary-bridge.webp"
 excerpt: "A frontend architecture case study on reducing latency between React routes and Symfony/Twig pages by preserving workflow continuity and reducing hard navigation costs."
@@ -26,7 +20,9 @@ import { CodeBlock } from "@/components/ui/CodeBlock";
 import Quote from "@/components/ui/Quote";
 
 
-> This is a frontend architecture case study from a hybrid React and Symfony application. The core problem was not simply slow pages. The problem was that users moved between client-rendered React routes and server-rendered Symfony/Twig routes as part of the same workflow, causing hard navigations, repeated page reloads, and unnecessary context switching.
+<Quote>
+This is a frontend architecture case study from a hybrid React and Symfony application. The core problem was not simply slow pages. The problem was that users moved between client-rendered React routes and server-rendered Symfony/Twig routes as part of the same workflow, causing hard navigations, repeated page reloads, and unnecessary context switching.
+</Quote>
 
 
 ## TL;DR
@@ -249,23 +245,28 @@ That changed the shape of the problem.
 
 The first question was:
 
-> How do we make navigation less interruptive across React and Twig?
+<Quote>
+How do we make navigation less interruptive across React and Twig?
+</Quote>
 
 The next question became:
 
-> How do we make data survive in the way users actually work?
+<Quote>
+How do we make data survive in the way users actually work?
+</Quote>
 
 That led into the next layer of the performance work: caching.
 
 Not caching as a vague optimisation trick. Not caching as “store some data and hope it stays correct.” But caching as a state system with different responsibilities at different layers.
 
-```text
-Memory
-    ↓
-IndexedDB
-    ↓
-Symfony API
-```
+<CodeBlock>{`
+  Memory
+      ↓
+  IndexedDB
+      ↓
+  Symfony API
+  `}
+</CodeBlock>
 
 Memory could make repeated interactions feel instant, but it disappeared on refresh. IndexedDB could survive refreshes, but introduced questions about freshness and invalidation. The Symfony API remained the source of truth, but it could not be the first stop for every repeated interaction if the dashboard was going to feel responsive.
 
@@ -281,8 +282,12 @@ And once you start looking at performance through that lens, the question change
 
 Not only:
 
-> Is this page fast?
+<Quote>
+Is this page fast?
+</Quote>
 
 But:
 
-> What is this workflow forcing the user to rebuild?
+<Quote>
+What is this workflow forcing the user to rebuild?
+</Quote>

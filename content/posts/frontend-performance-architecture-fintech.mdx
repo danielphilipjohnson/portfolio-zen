@@ -19,6 +19,7 @@ excerpt: "Performance isn't just a checklist of optimizations. It's a mental mod
 ---
 
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import Quote from "@/components/ui/Quote";
 
 ## TL;DR
 
@@ -69,7 +70,9 @@ You need a model of the work the system is performing, the cost of that work, an
 
 The shift from checklist thinking to architectural thinking starts with a different question:
 
-> What work is the system making the user wait for?
+<Quote>
+What work is the system making the user wait for?
+</Quote>
 
 Once you ask that question, performance stops being a scavenger hunt for missed optimisations. It becomes a way of understanding how the system behaves under real use.
 
@@ -144,7 +147,9 @@ A checklist might tell you to memoise expensive components or lazy-load content 
 
 The better question is:
 
-> Why is this work happening at all?
+<Quote>
+Why is this work happening at all?
+</Quote>
 
 Instead of asking how to make a render faster, ask whether the component needs to render right now.
 
