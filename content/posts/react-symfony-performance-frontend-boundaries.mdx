@@ -1,0 +1,288 @@
+---
+title: "React and Symfony Performance: Reducing Latency at Frontend Boundaries"
+publishDate: "16/06/2026"
+modifiedDate: "16/06/2026"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Senior Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "Frontend Architecture"
+readingTime: 10 min read
+tags:
+  - "React"
+  - "Symfony"
+  - "Frontend Performance"
+  - "Frontend Architecture"
+  - "Latency"
+  - "Hybrid Applications"
+  - "Twig"
+  - "User Experience"
+  - "Web Performance"
+imageUrl: "/images/blogs/covers/react-symfony-frontend-boundary-bridge.webp"
+excerpt: "A frontend architecture case study on reducing latency between React routes and Symfony/Twig pages by preserving workflow continuity and reducing hard navigation costs."
+---
+
+import { CodeBlock } from "@/components/ui/CodeBlock";
+import Quote from "@/components/ui/Quote";
+
+
+> This is a frontend architecture case study from a hybrid React and Symfony application. The core problem was not simply slow pages. The problem was that users moved between client-rendered React routes and server-rendered Symfony/Twig routes as part of the same workflow, causing hard navigations, repeated page reloads, and unnecessary context switching.
+
+
+## TL;DR
+
+This was not a story about React being fast and Symfony being slow.
+
+The real performance problem lived at the boundary between them. Users moved through one continuous workflow, but the application crossed between two different navigation models: soft client-side React transitions and hard Symfony/Twig page reloads.
+
+Each approach made sense on its own. The cost appeared when users crossed that seam repeatedly.
+
+A full rewrite would have been cleaner architecturally, but it was not the right trade-off. Instead, we focused on reducing interruption where it mattered most: the high-friction workflow between React dashboards and Twig-rendered pages.
+
+The larger lesson was that frontend performance is not only about making individual pages faster. It is about preserving continuity.
+
+Sometimes the slowest part of a system is not the API, the query, or the framework.
+
+It is the moment where the user has to rebuild their place in the workflow.
+
+## **The Problem Wasn’t Page Speed. It Was Workflow Interruption.**
+
+Most performance conversations eventually end up in the same place: timings, charts, traces, and milliseconds. Those things matter because they give us evidence and stop us from relying purely on instinct, but they do not always explain why a system feels slow to the people using it every day.
+
+In our case, some pages in the application felt almost instant, while others felt noticeably heavier. At first, it was tempting to look for the usual causes: a slow query, an overloaded endpoint, too much JavaScript, or a backend route doing more work than it needed to. Those were all reasonable things to investigate, but they did not fully explain what users were experiencing.
+
+The real issue was sitting between technologies. More specifically, it was sitting between React routes and Symfony/Twig routes. Each technology made sense in its own context, and neither was inherently the problem. The cost appeared when users moved between them repeatedly as part of the same workflow. What looked like a technical boundary in the architecture became an interruption in the user’s day.
+
+## The Architecture We Inherited
+
+Like many long-lived systems, our application had not been built in one clean architectural moment. It had grown gradually over time, with different teams solving different problems under different constraints. Some parts of the platform had moved towards React because they needed richer interactions, client-side state, and faster movement between views. Other areas remained in Symfony and Twig because they were stable, useful, and still doing their job.
+
+A React route behaved roughly like this:
+
+<CodeBlock>{`
+React Route
+    ↓
+Client-side Router
+    ↓
+Soft Navigation
+    ↓
+View Updates In Place
+`}</CodeBlock>
+
+The React parts of the application were suited to workflow-heavy screens: dashboards, application reviews, configuration flows, and places where users needed to move quickly without feeling like the page was restarting every time they clicked.
+
+The Twig routes followed a different model:
+
+<CodeBlock>{`
+Twig Route
+    ↓
+Hard Refresh
+    ↓
+Server Request
+    ↓
+HTML Response
+    ↓
+JavaScript Boot
+    ↓
+Hydration / Initialisation
+`}</CodeBlock>
+
+Those pages were not wrong. Some were older, some were simpler, and some were business-critical enough that rewriting them would have introduced more risk than value. The important point is that users did not experience these as two separate systems. They experienced one product, and their workflow often moved across both.
+
+A typical journey might start in a React dashboard, move into a Twig-rendered detail page, submit a form, land on another Twig page, and then return to the React dashboard to continue reviewing the next item. From an architecture perspective, that is just a boundary between two rendering models. From a user’s perspective, it feels like the product changes behaviour halfway through the task.
+
+## The Rewrite Temptation
+
+The obvious answer was to say, “rewrite everything in React.” That would have given us one stack, one router, one navigation model, and fewer seams between parts of the product. It is a tempting answer because it feels clean, especially from an engineering perspective.
+
+The problem is that clean architectural answers often become much less useful once they meet the actual constraints of a business. A full rewrite would have meant months of work, regression risk across important workflows, coordination across teams, and the opportunity cost of delaying work that users and product teams already cared about. The business was not asking for a React migration. Users were not asking for architectural consistency as an abstract principle. They were asking, indirectly, for the workflow to feel less painful.
+
+That distinction changed how we approached the problem. The issue was not simply that some pages used Twig. The issue was that users were being interrupted while moving through repetitive operational work. So instead of asking how we could migrate everything to React, we started asking where the workflow was losing momentum.
+
+That was a more useful question because it moved the conversation away from architectural purity and towards the actual experience of using the system.
+
+## Hard Navigation Versus Soft Navigation
+
+The difference between the two experiences came down to navigation behaviour.
+
+A soft navigation happens inside an application that is already running. The browser document stays alive, the client-side router updates the view, existing JavaScript remains loaded, and some client-side state can survive the transition. Cached data may still be available, scroll position can be preserved, and the interaction feels continuous because the page does not appear to fully restart.
+
+A hard navigation behaves differently. The browser requests a new document, tears down the existing page, parses the new HTML, loads or revalidates assets, runs scripts again, and reinitialises any interactive behaviour on the page. This model is not inherently bad. The web has worked this way for a long time, and many applications still use it successfully. The issue in our case was not the existence of hard navigation. It was the contrast between hard and soft navigation inside the same workflow.
+
+When users moved within the React part of the application, navigation felt continuous. When they crossed into Twig, the browser performed a full refresh. Even if the Twig page was not objectively slow, it felt slower because the previous interaction had trained the user to expect continuity. The product established one rhythm and then broke it a few clicks later.
+
+## The Inconsistency Penalty
+
+One of the more useful observations was that users did not respond only to absolute speed. They responded to consistency.
+
+A page load that takes 800ms may feel acceptable if every page behaves that way. The user understands the rhythm: click, wait briefly, page loads, continue. But when a user has just been moving through a React workflow where views update almost instantly, that same 800ms hard refresh feels much worse. It is not only the wait that matters. It is the sudden change in interaction model.
+
+The application goes from feeling like it is responding to feeling like it is restarting. That creates a small moment of doubt for the user: did the click register, is the page still loading, have I lost where I was, and am I still in the same workflow? None of those questions are dramatic on their own, but they become costly when the same workflow is repeated dozens or hundreds of times a day.
+
+This was the inconsistency penalty. The system was not just slow in isolated places. It was uneven, and that unevenness made the slow parts feel worse than the timings alone suggested.
+
+## Latency as Context Switching
+
+The cost became clearer when we stopped looking only at individual pages and started looking at the workflow as a whole.
+
+Our users were not opening one application, reviewing it, and leaving. They were moving through many records in sequence. They would open a dashboard, inspect an item, return to the dashboard, open the next item, review it, return again, and keep going. That meant every boundary crossing carried a repeated cost.
+
+<CodeBlock>{`
+Dashboard
+    ↓
+Application Detail
+    ↓
+Back To Dashboard
+    ↓
+Next Application
+    ↓
+Application Detail
+    ↓
+Back To Dashboard
+`}</CodeBlock>
+
+If every movement between those screens requires a hard refresh, the user is repeatedly forced to pause and reorient. The technical delay might only be a second or two, but the human delay is larger because the person using the system has to rebuild their position in the task.
+
+This is where milliseconds stop telling the full story. Users do not experience performance as a trace. They experience whether the system lets them keep moving. In a high-volume workflow, latency becomes context switching. The browser may be waiting for a response, but the user is also waiting to regain confidence in where they are and what they were doing.
+
+That was the part we cared about most. The problem was not simply that page transitions had a cost. The problem was that the architecture imposed that cost at exactly the point where users needed rhythm and continuity.
+
+## Why This Was Mostly a Frontend Problem
+
+It would have been convenient if the backend had been the obvious bottleneck. Then the work would have been easier to describe: optimise the endpoint, reduce query cost, improve caching, or add an index.
+
+But the backend was not the whole story. Server response time still mattered during hard navigations, but even acceptable backend timings did not remove the frontend cost of tearing down the page, reloading assets, booting JavaScript, and rebuilding interaction state.
+
+The boundary between React and Twig was where the user felt the interruption. React and Twig were not just implementation details; they shaped how movement through the product felt. React gave users continuity. Twig gave them a fresh document. Moving between the two repeatedly made the product feel uneven.
+
+That made this a frontend architecture problem, but not in the narrow sense of framework preference. It was a problem of interaction continuity across rendering models.
+
+## The Bridge We Chose
+
+Because a full rewrite was not realistic, we looked for a bridge rather than a destination. That led us towards Turbo, or more specifically, the pattern Turbo uses: preserving server-rendered pages while improving the navigation behaviour between them.
+
+The goal was not to pretend Twig was React. The goal was to reduce the cost of moving through Twig-heavy parts of the workflow.
+
+Traditional Twig navigation looked like this:
+
+<CodeBlock>{`
+User Clicks Link
+    ↓
+Browser Requests New Page
+    ↓
+Symfony Renders Twig Template
+    ↓
+Browser Replaces Document
+    ↓
+JavaScript Starts Again
+`}</CodeBlock>
+
+With Turbo-style navigation, the flow changes:
+
+<CodeBlock>{`
+User Clicks Link
+    ↓
+Turbo Intercepts Navigation
+    ↓
+Fetches HTML
+    ↓
+Swaps Page Content
+    ↓
+Keeps Browser Document Alive
+`}</CodeBlock>
+
+The page is still rendered by Symfony and Twig. The backend architecture does not need to be replaced, the templates still exist, and the server still owns the HTML. The difference is that the browser does not need to throw everything away on every navigation. From the user’s perspective, the transition feels less like a restart.
+
+That was the useful part. We were not trying to win an argument about frameworks. We were trying to make the most common workflow less interruptive.
+
+## The Integration Cost
+
+This was not magic, and it was not free.
+
+Adding Turbo-style behaviour to older server-rendered pages changes assumptions that may have existed for years. Some scripts expect `DOMContentLoaded` to fire on every page load. Some components assume they are initialised once and then discarded when the browser destroys the document. Some analytics events are tied to full page loads. Some cleanup logic only works because a hard navigation wipes everything clean.
+
+When the document stays alive, those assumptions become visible. Code that was harmless under full page reloads can behave differently when navigation becomes persistent. Event listeners can be attached more than once, old state can linger, and page-specific scripts may need clearer lifecycle boundaries.
+
+That meant the work had to be scoped carefully. We did not apply Turbo-style navigation everywhere at once. We started with the Twig pages that were most frequently accessed from React workflows, because those were the crossings where the interruption mattered most. That gave us a safer path: identify the high-friction boundary, improve navigation in a limited area, fix the lifecycle issues that appeared, measure whether the workflow felt better, and expand only where it made sense.
+
+Hybrid applications usually have uneven terrain. Some pages are worth modernising properly. Some are worth leaving alone. Some only need enough improvement to stop breaking the user’s rhythm.
+
+Not every old page deserves a rewrite. Some just need to stop interrupting the workflow.
+
+## What Changed
+
+The biggest improvement was not that every page became instant. They did not, and pretending otherwise would overstate the result.
+
+The improvement was that the workflow became less jagged. Moving through the system felt more continuous. Users were interrupted less often by full browser reloads, and the application stopped feeling like two separate products stitched together.
+
+That kind of improvement can look small when viewed through isolated page metrics, but it matters in operational software. When users perform the same workflow many times a day, a modest reduction in repeated friction can be more valuable than a large improvement on a rarely visited page.
+
+This is where frontend performance becomes less about isolated timings and more about task flow. A page can be technically fast and still feel disruptive. Another page can be slightly slower in raw timing but feel better because it preserves continuity. The user does not experience the architecture as a set of implementation choices. They experience whether the system lets them keep moving.
+
+## The Larger Lesson
+
+The deeper pattern was not really React versus Twig. It was seam cost.
+
+Mature systems collect seams. A seam might exist between React and Twig, between a monolith and a microservice, between old and new APIs, between two teams’ ownership boundaries, or between a synchronous and asynchronous process. The technologies on either side of the seam may be perfectly reasonable. The cost appears when a user workflow crosses that seam repeatedly.
+
+That is where architecture becomes visible: not in the diagram, but in the interruption.
+
+The useful question is not always which technology the organisation should standardise on. Sometimes the better question is where users cross boundaries and what each crossing costs them. That question keeps the work grounded. It avoids turning every architectural imperfection into a migration project, but it also avoids ignoring real user pain just because each individual system is technically defensible.
+
+## What This Exposed Next
+
+Reducing the cost of crossing the React and Twig boundary made the workflow feel less jagged.
+
+The application did not suddenly become instant, and that was never the point. The real improvement was that users were interrupted less often by full-page reloads. Moving through the system started to feel more continuous, and the product stopped behaving quite so much like two separate applications stitched together.
+
+But performance work has a habit of revealing the next constraint.
+
+Once navigation became less disruptive, another source of latency became easier to see. The dashboard still had to reconstruct too much of its state from the network.
+
+Users were not always looking at new information. They were cycling through applications, returning to records they had opened minutes earlier, checking details, comparing information, and continuing the same operational task. From their perspective, the system had already shown them that data.
+
+It should have had some memory of it.
+
+In practice, parts of the dashboard still behaved as though every visit was the first visit. Returning to a previous screen could still mean asking the Symfony API for data the user had already seen, rebuilding client state, and only then allowing the workflow to continue.
+
+That changed the shape of the problem.
+
+The first question was:
+
+> How do we make navigation less interruptive across React and Twig?
+
+The next question became:
+
+> How do we make data survive in the way users actually work?
+
+That led into the next layer of the performance work: caching.
+
+Not caching as a vague optimisation trick. Not caching as “store some data and hope it stays correct.” But caching as a state system with different responsibilities at different layers.
+
+```text
+Memory
+    ↓
+IndexedDB
+    ↓
+Symfony API
+```
+
+Memory could make repeated interactions feel instant, but it disappeared on refresh. IndexedDB could survive refreshes, but introduced questions about freshness and invalidation. The Symfony API remained the source of truth, but it could not be the first stop for every repeated interaction if the dashboard was going to feel responsive.
+
+The React/Twig work reduced the cost of moving between pages.
+
+The caching work would reduce the cost of returning to data the user had already touched.
+
+Those were not separate performance problems. They were two versions of the same architectural pressure: preserving continuity across a workflow.
+
+Sometimes the seam is between rendering models. Sometimes it is between client memory and server truth. Either way, users experience the seam as interruption.
+
+And once you start looking at performance through that lens, the question changes.
+
+Not only:
+
+> Is this page fast?
+
+But:
+
+> What is this workflow forcing the user to rebuild?

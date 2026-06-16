@@ -18,6 +18,8 @@ imageUrl: "/images/blogs/covers/fintech-performance-architecture.webp"
 excerpt: "Performance isn't just a checklist of optimizations. It's a mental model of elimination, efficiency, and scheduling—a way of understanding what work the system is making the user wait for, and why."
 ---
 
+import { CodeBlock } from "@/components/ui/CodeBlock";
+
 ## TL;DR
 
 Frontend performance is not just about applying a checklist of optimisations. In fintech, it is about understanding what work the system is making users wait for, especially during high-friction journeys like applications, affordability checks, document uploads, payments, and internal case handling.
@@ -83,11 +85,11 @@ The job is to understand the difference.
 
 Most meaningful frontend performance work comes down to three decisions:
 
-```plaintext
+<CodeBlock>{`
 Can we stop doing this work?
 Can we make this work cheaper?
 Can we move this work out of the user's way?
-```
+`}</CodeBlock>
 
 That sounds simple, but it changes how you reason about performance techniques.
 
@@ -107,12 +109,12 @@ The model I keep coming back to is simple.
 
 Most performance architecture is about elimination, efficiency, or scheduling.
 
-```plaintext
+<CodeBlock>{`
 Performance Architecture
     ├── Elimination: Stop doing unnecessary work
     ├── Efficiency: Make necessary work cheaper
     └── Scheduling: Move work out of the user's way
-```
+`}</CodeBlock>
 
 This model does not replace performance checklists. It gives them somewhere to live.
 
@@ -379,11 +381,11 @@ Together, they create a system that makes the user wait.
 
 That is why the three-part model matters beyond the technical layer. It gives teams a shared language that cuts across ownership boundaries:
 
-```plaintext
+<CodeBlock>{`
 Can we avoid this work?        → Elimination
 Can we make this work cheaper? → Efficiency
 Can we move this work?         → Scheduling
-```
+`}</CodeBlock>
 
 These questions are more useful than arguing over whether the problem belongs to frontend, backend, infrastructure, or product, because the answer is usually messier than that.
 
