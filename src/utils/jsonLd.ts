@@ -432,7 +432,64 @@ export interface ProjectSummary {
 }
 
 
-export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@context": "https://schema.org"; "@graph": SchemaOrgGraphItem[] } {
+export function getSingleProjectJsonLd(project: ProjectSummary): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+	const projectUrl = `${SITE_URL}/projects/${project.slug}/`;
+
+	const projectPageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${projectUrl}#webpage`,
+		"url": projectUrl,
+		"name": project.title,
+		"description": project.excerpt || '',
+		"isPartOf": { "@type": "WebSite", "@id": WEBSITE_SCHEMA_ID },
+		"inLanguage": "en-GB",
+		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
+		"about": { "@type": "Person", "@id": PERSON_SCHEMA_ID }
+	};
+
+	const softwareApplicationSchema: SoftwareApplication = {
+		"@type": "SoftwareApplication",
+		"@id": `${projectUrl}#project`,
+		"name": project.title,
+		"url": projectUrl,
+		"description": project.excerpt,
+		"applicationCategory": project.applicationCategory || 'WebApplication',
+		"operatingSystem": 'All',
+		"author": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
+		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
+		...(project.imageUrl && {
+			"image": {
+				"@type": "ImageObject",
+				"url": project.imageUrl.startsWith('http') ? project.imageUrl : `${SITE_URL}${project.imageUrl}`
+			} as ImageObject
+		})
+	};
+
+	const breadcrumbSchema: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "Projects", "item": `${SITE_URL}/projects/` },
+			{ "@type": "ListItem", "position": 3, "name": project.title, "item": projectUrl }
+		]
+	};
+
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
+		projectPageSchema,
+		softwareApplicationSchema,
+		breadcrumbSchema
+	];
+
+	return {
+		...baseJsonLd,
+		"@graph": graph
+	};
+}
+
+
+export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
   const baseJsonLd = getBaseSiteJsonLd();
 
   const projectsListingPageSchema: WebPage = {
@@ -483,8 +540,8 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
 		]
 	};
 
-	const graph: SchemaOrgGraphItem[] = [
-		...(baseJsonLd["@graph"] as SchemaOrgGraphItem[]),
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
 		projectsListingPageSchema,
 		collectionPageSchema,
 		projectsBreadcrumb,
@@ -495,3 +552,4 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
 		"@graph": graph
 	};
 }
+
