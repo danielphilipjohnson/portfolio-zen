@@ -38,6 +38,7 @@ async function generateSitemap() {
 		'zen/less-code-more-intention',
 		'zen/prune-systems-with-care',
 		'zen/understand-before-you-build',
+		'social',
 	];
 
 	for (const page of staticPages) {

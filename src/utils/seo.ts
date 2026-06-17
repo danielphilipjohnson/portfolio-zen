@@ -21,7 +21,8 @@ export type SeoPagePath =
 	| '/blog/tag/frontend-architecture'
 	| '/blog/tag/engineering-principles'
 	| '/blog/tag/fintech'
-	| '/tao';
+	| '/tao'
+	| '/social';
 
 export interface SEOData {
 	title: string;
@@ -396,6 +397,18 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.ENGINEERING }],
 				type: 'website',
 				url: `${SITE_URL}/tao`,
+			},
+		},
+		'/social': {
+			title: 'Daniel Philip Johnson | Links',
+			description: 'Connect with Daniel Philip Johnson - Full-stack Developer. GitHub, LinkedIn, Bluesky, Instagram and more.',
+			keywords: ['Daniel Johnson links', 'developer social links', 'GitHub Daniel Johnson', 'LinkedIn Daniel Johnson', 'fullstack developer contact'],
+			openGraph: {
+				title: 'Daniel Philip Johnson | Links',
+				description: 'Connect with Daniel Philip Johnson - Full-stack Developer.',
+				images: [{ url: OG_PATH.HOME }],
+				type: 'profile',
+				url: `${SITE_URL}/social`,
 			},
 		},
 		'/zen/clarity-scales-across-teams': {
