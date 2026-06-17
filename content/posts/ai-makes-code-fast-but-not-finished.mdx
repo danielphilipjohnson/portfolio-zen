@@ -19,6 +19,7 @@ excerpt: "AI tools sprint through the first 80% of a feature, but that last 20%�
 ---
 
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import Quote from "@/components/ui/Quote";
 
 ### TL;DR: AI Makes Code Fast—But Not Finished
 
@@ -40,7 +41,9 @@ Then AI waltzes in and gets us to that seductive 80%. Suddenly, the lights flick
 
 Missing auth logic? “We’ll bolt it on later.” No error handling? “Future-us problem.” Hardcoded data? “Temporary!” But here’s the thing: AI doesn’t leave a flag in the sand. It doesn’t say “this is just a scaffold.” It doesn’t warn you that the plumbing stops behind the drywall. It looks done.
 
-> **Prototypes were incomplete by design. AI makes them look complete without the safety, structure, or scrutiny they need to be real.**
+<Quote>
+**Prototypes were incomplete by design. AI makes them look complete without the safety, structure, or scrutiny they need to be real.**
+</Quote>
 
 Because beneath that flimsy, AI-generated 10% veneer of “polish”?
 
@@ -55,7 +58,9 @@ But hey, it *runs* (mostly). It *demos* (if you don’t click the wrong thing). 
 
 So, we move in. We build on top of it. And by the time everyone figures out what a rickety pile of crap we’ve actually inherited, we’ve already churned out five more just like it, all teetering on the same shaky ground.
 
-> **The 70% prototype was a checkpoint. The 80% AI version is a trap.** **And the faster we go, the faster they expect—until it all comes crashing down.**
+<Quote>
+**The 70% prototype was a checkpoint. The 80% AI version is a trap.** **And the faster we go, the faster they expect—until it all comes crashing down.**
+</Quote>
 
 ## Prototyping Was a Phase—Now It’s the Product
 
@@ -69,15 +74,19 @@ AI gets us to that tantalizing 80%. And that, right there, is where the alarm be
 
 Because that last 20%? That’s not just spit-and-polish. That’s the performance tuning that stops it from cratering under load. That’s the edge case handling that prevents your users from hitting a digital brick wall. That’s the security pass that (hopefully) keeps you off the front page of Hacker News. That’s where **real engineering** happens. But with AI eagerly volunteering to fill in the blanks, that crucial, painstaking work just… quietly evaporates.
 
-Why bother refactoring, why sweat the details, when the next prompt can churn out something else that’s vaguely “good enough”? It’s a slippery slope, paved with the best intentions and the siren song of speed.
+Why bother refactoring, why sweat the details, when the next prompt can churn out something else that’s vaguely “good enough?” It’s a slippery slope, paved with the best intentions and the siren song of speed.
 
-> **“AI in the wrong hands won’t just cause bad code—it’ll cause systems that nobody knows how to fix.”**
+<Quote>
+**“AI in the wrong hands won’t just cause bad code—it’ll cause systems that nobody knows how to fix.”**
+</Quote>
 
 Let’s face it: stakeholders, bless their hearts, aren’t usually clamoring for robustness under the hood. They want features they can see. Demos that dazzle. Things that *look* like relentless forward momentum. And AI? It delivers that superficial shine, and it delivers it *fast*.
 
 So, when some poor, battle-weary engineer pipes up, voicing those nagging concerns about ballooning tech debt, the glaring lack of tests, or that AI-generated chunk of code that just *feels* profoundly sketchy and wrong… what’s the all-too-common refrain?
 
-> **“It’s working, isn’t it?”**
+<Quote>
+**“It’s working, isn’t it?”**
+</Quote>
 
 What they don’t see—what AI, by its very nature, often helps *obscure*—are the gremlins already multiplying just beneath that shiny surface:
 
@@ -93,8 +102,10 @@ Let’s talk about the old-school kind of tech debt. At least it was honest. You
 
 You’d sigh in a code review and say:
 
-> “Yeah, that’s rough. We’ll come back to it.”  
-> And you meant it—mostly. You knew where the monsters lived.
+<Quote>
+“Yeah, that’s rough. We’ll come back to it.”  
+And you meant it—mostly. You knew where the monsters lived.
+</Quote>
 
 But AI-generated code? Different beast. It *looks* clean. It *sounds* right. It glides through PRs. Tidy structure. Sensible naming. No “WTFs per minute.” It feels safe.
 
@@ -102,7 +113,9 @@ Until it isn’t.
 
 The debt’s still there—just polished, buried, camouflaged.
 
-> **This is the new nightmare: invisible fragility.**
+<Quote>
+**This is the new nightmare: invisible fragility.**
+</Quote>
 
 What does that look like?
 
@@ -149,7 +162,9 @@ So, the next time you hit a snag? Well, that AI did a pretty good job last time,
 
 It becomes:
 
-> **“AI wrote it, so let’s just let AI write the next part, too.”**
+<Quote>
+**“AI wrote it, so let’s just let AI write the next part, too.”**
+</Quote>
 
 Before you can say “technical debt,” the human role morphs from *actual engineering* into something more akin to being a glorified switchboard operator—plugging AI-generated black boxes together with digital duct tape and a silent prayer that the whole damn Rube Goldberg contraption holds.
 
@@ -183,7 +198,9 @@ And no one knows how to trace the failure back to its origin.
 
 It’s a fundamental shift in what we even mean by “unfinished work”:
 
-> **Technical debt used to mean “We’ll grit our teeth and fix this mess later.”** **Now it means “We’re not even sure what the hell this thing *is*, let alone how to fix it.”**
+<Quote>
+**Technical debt used to mean “We’ll grit our teeth and fix this mess later.”** **Now it means “We’re not even sure what the hell this thing *is*, let alone how to fix it.”**
+</Quote>
 
 The more you lean on AI to “just write it for me,” the more profoundly you disconnect from the very system you’re supposed to be building, stewarding, and ultimately, understanding. And when that system inevitably shits the bed—and trust me, it’s not *if*, but *when*—nobody knows where to even begin picking up the pieces. The panic sets in. Fingers get pointed. The codebase stares back, a silent, inscrutable monolith of AI-generated indifference.
 
@@ -248,17 +265,21 @@ Prototypes are fine.
 We’ve all done them.  
 But if you’re going to use AI to build something fast?
 
-> **Label it for what it is.  
-> Flag the flaws.  
-> Make the limitations loud and visible.**
+<Quote>
+**Label it for what it is.  
+Flag the flaws.  
+Make the limitations loud and visible.**
+</Quote>
 
 Don’t let a demo become a deadline.  
 Don’t let “good enough” become “let’s ship it.”
 
 Because here’s the real risk:
 
-> **We don’t just use AI to write code.  
-> We start using it as a reason to stop thinking.**
+<Quote>
+**We don’t just use AI to write code.  
+We start using it as a reason to stop thinking.**
+</Quote>
 
 “Let’s have AI do it.”  
 “Let’s see what it generates.”  
@@ -268,9 +289,11 @@ That’s the slope. And at the bottom of that slope? Engineers who don’t under
 
 Especially not in an era where **AI-native systems** are going to outpace our ability to inspect every line.
 
-> **We need to be more careful, not less.  
-> More intentional, not more reactive.  
-> More honest about prototypes, and more disciplined about what we trust.**
+<Quote>
+**We need to be more careful, not less.  
+More intentional, not more reactive.  
+More honest about prototypes, and more disciplined about what we trust.**
+</Quote>
 
 AI is powerful. But the moment we stop treating it as a *tool*, and start treating it as an *autopilot*, we give up the one thing that matters most in engineering: **responsibility.**
 
@@ -297,3 +320,4 @@ The chasm between a flashy working prototype and a truly reliable, maintainable 
 So, **reclaim that final, grueling, indispensable 20%.** That’s where the bar isn’t just set; it’s defended. That’s where our professionalism lives.
 
 And in the end, we—the humans still in the loop, the ones with skin in the game—still get to decide. Do we hold that bar high, with pride? Or do we let it slip, inch by agonizing inch, into the mud?
+

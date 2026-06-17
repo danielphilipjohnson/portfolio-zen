@@ -20,6 +20,8 @@ imageUrl: "/images/blogs/covers/hydration-orchestator.avif"
 excerpt: "Hydration isn’t just about attaching event listeners. It’s a fragile handover between past and present, where fast paint, interactivity, and continuity collide—and where most bugs aren’t mistakes, but broken assumptions."
 ---
 
+import Quote from "@/components/ui/Quote";
+
 ## TL;DR
 
 * **Hydration is not just “attaching event listeners”** it’s a fragile handover where client-side logic must take control of a DOM that already exists and may already be changing.
@@ -39,7 +41,9 @@ excerpt: "Hydration isn’t just about attaching event listeners. It’s a fragi
 
 Let’s start with the narrowest definition possible:
 
-> Hydration attaches event listeners to server-rendered HTML.
+<Quote>
+Hydration attaches event listeners to server-rendered HTML.
+</Quote>
 
 That’s it.
 
@@ -70,7 +74,9 @@ This is why hydration is best understood not as a feature, but as a **handover**
 
 And that assumption turns out to be far more fragile than it sounds.
 
-> Hydration only works if both sides independently arrive at the same meaning and the system offers no safe recovery when they don’t.
+<Quote>
+Hydration only works if both sides independently arrive at the same meaning and the system offers no safe recovery when they don’t.
+</Quote>
 
 ---
 
@@ -300,7 +306,9 @@ Between them is delay the time it takes for JavaScript to download, execute, and
 
 Hydration effectively asks a single question:
 
-> “Can we agree that this DOM represents the same state I would have produced locally?”
+<Quote>
+“Can we agree that this DOM represents the same state I would have produced locally?”
+</Quote>
 
 If the answer is yes, the client attaches behaviour and continues as if nothing happened.
 
@@ -350,7 +358,9 @@ These don’t fail hydration because they’re “bad practices.” They fail it
 
 This is why frameworks emit warnings like:
 
-> “Text content does not match server-rendered HTML”
+<Quote>
+“Text content does not match server-rendered HTML”
+</Quote>
 
 They aren’t really complaining about text.
 
