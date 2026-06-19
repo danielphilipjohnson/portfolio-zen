@@ -1,0 +1,86 @@
+---
+title: "Restoring Full UI State on Rollback, Not Just Data"
+publishDate: "19/06/2026"
+tags:
+  - "frontend"
+  - "architecture"
+  - "ux"
+  - "optimistic updates"
+  - "state management"
+excerpt: "Optimistic rollback must restore both the data model AND the user's interaction context — focus, scroll, selection — or the user pays the recovery cost."
+---
+
+A common mistake with optimistic updates is treating rollback as a simple data reversal:
+
+> The mutation failed, so put the old data back and let the view update.
+
+That sounds reasonable, but it hides a deeper problem. The domain model and the interaction model do not have the same lifecycle.
+
+Data is durable. It can be serialized, cached, invalidated, retried, and reconciled.
+
+UI interaction state is different. Cursor position, focus, scroll offset, text selection, expanded panels, drag position, and active DOM nodes are ephemeral. They belong to a specific moment in the interface. Sometimes they belong to a specific DOM node instance that may no longer exist by the time the rollback happens.
+
+This matters because an optimistic update can change the structure of the UI. A failed reorder may remount list items. A failed delete may reinsert a row. A failed edit may replace an input. A failed creation may remove a temporary item. In each case, restoring the data does not automatically restore the user's interaction context.
+
+The mistake is assuming:
+
+```
+Data rollback
+↓
+View re-renders correctly
+↓
+User continues naturally
+```
+
+But the real flow is closer to:
+
+```
+Data rollback
+↓
+DOM may change
+↓
+Focus may be lost
+↓
+Scroll may shift
+↓
+Selection may disappear
+↓
+User has to recover manually
+```
+
+At a senior level, this is a UX bug.
+
+At a principal level, it is an architecture boundary.
+
+The rollback path needs to know what kind of interaction it is recovering from. That does not mean every mutation needs defensive focus logic. In fact, that is exactly what you want to avoid.
+
+A poor solution is to sync focus from derived data using an effect:
+
+```tsx
+useEffect(() => {
+  inputRef.current?.focus();
+}, [someDataField]);
+```
+
+This couples browser focus to ordinary state changes. The effect does not know whether the change came from rollback, success, background refetch, optimistic update, or user input. It fires too broadly, fights native browser behaviour, and can introduce jank into the success path.
+
+A better model is to separate the two concerns:
+
+```
+Domain rollback
+Restores the data model.
+
+Interaction rollback
+Restores the user's working context only when recovery is needed.
+```
+
+That means the common success path stays clean. No defensive focus restoration. No constant scroll correction. No effects trying to outguess the browser.
+
+Only the rollback path pays the recovery cost.
+
+This distinction becomes more important as interfaces become more interactive. In simple cases, reverting the cache may be enough. But in complex dashboards, tables, kanban boards, forms, and financial workflows, rollback needs to restore the user's place in the interaction, not merely the previous JSON shape.
+
+The principle is simple:
+
+> Roll back the data model for correctness.
+> Roll back the interaction model for continuity.
