@@ -14,6 +14,7 @@ const ZenFooter = () => {
 		resources: [
 			{ label: 'Blog', href: '/blog' },
 			{ label: 'Engineering', href: '/engineering' },
+			{ label: 'Notes', href: '/notes' },
 			{ label: 'Zen', href: '/zen' },
 			{ label: 'Tao', href: '/tao' },
 			{ label: 'MCP', href: '/mcp' },

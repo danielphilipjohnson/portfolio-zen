@@ -1,6 +1,6 @@
 import path from 'path';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { createWriteStream } from 'fs';
+import fs from 'fs';
 import { getAllBlogs } from './blogs/getAllBlogs.js';
 import { getAllProjects } from './projects/getAllProjects.js';
 
@@ -11,7 +11,7 @@ async function generateSitemap() {
 
 	// Write sitemap.xml to public/
 	const sitemapPath = path.resolve('public', 'sitemap.xml');
-	const writeStream = createWriteStream(sitemapPath);
+	const writeStream = fs.createWriteStream(sitemapPath);
 	sitemap.pipe(writeStream);
 
 	// Static pages
@@ -39,10 +39,23 @@ async function generateSitemap() {
 		'zen/prune-systems-with-care',
 		'zen/understand-before-you-build',
 		'social',
+		'now',
+		'notes',
 	];
 
 	for (const page of staticPages) {
 		sitemap.write({ url: `/${page}`, changefreq: 'monthly', priority: 0.8 });
+	}
+
+	// Note pages from MDX
+	try {
+		const noteFiles = fs.readdirSync(path.resolve('content/notes'));
+		noteFiles.forEach((file) => {
+			const slug = file.replace(/\.mdx$/, '');
+			sitemap.write({ url: `/notes/${slug}`, changefreq: 'monthly', priority: 0.6 });
+		});
+	} catch {
+		// notes directory might not exist
 	}
 
 	// Blog posts from MDX

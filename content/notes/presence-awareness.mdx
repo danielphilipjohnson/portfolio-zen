@@ -1,0 +1,35 @@
+---
+title: "Presence Awareness"
+publishDate: "19/06/2026"
+tags:
+  - "concurrency"
+  - "collaboration"
+  - "systems"
+excerpt: "Presence shows who is here and what they are doing — but it is a courtesy layer, not a data-integrity mechanism."
+---
+
+Presence is a real-time, best-effort notification layer that someone else is viewing or actively editing a record. It is informational only — and should never be the mechanism that decides whether a write is accepted.
+
+### What it Carries
+
+- **“Alice is currently viewing this application”** (session indicator)
+- **“Alice is editing the risk rating field”** (field-level touch indicator)
+- **“This application changed 2 minutes ago — you may want to refresh”** (stale data warning)
+
+### What it does NOT do
+
+- **Does not persist anything** to the database
+- **Does not carry a version number** or get checked against one
+- **Is not retried if dropped**, is not guaranteed to arrive in order, and is not acknowledged
+- **Is never the gate** that decides accept/reject on a save
+
+### Why it's safe to be unreliable
+
+Nothing breaks if a presence message is late, lost, or out of order. In the worst-case scenario, Bob's "Alice is editing" indicator is a few seconds stale. This is purely cosmetic and has no data integrity consequences.
+
+### Key Principle
+
+Presence is a courtesy layer sitting on top of correctness, not a part of it. The actual safety mechanism is the server-side version check on the `PATCH` endpoint (synchronous, HTTP request/response, version-gated). If you ever find yourself needing the WebSocket or SSE message to arrive in order to prevent a bad write, that is a clear signal that correctness logic has leaked into the wrong transport.
+
+> **“Presence is helpful. OCC is still required.”**  
+> Sockets tell you something happened; the version check on save is what actually stops a stale write from landing.
