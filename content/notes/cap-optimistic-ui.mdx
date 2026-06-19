@@ -1,0 +1,293 @@
+---
+title: "The CAP-Adjacent Trade-off Behind Optimistic UI"
+publishDate: "19/06/2026"
+tags:
+  - "frontend"
+  - "architecture"
+  - "optimistic updates"
+  - "CAP theorem"
+  - "distributed systems"
+excerpt: "Optimistic UI chooses availability of the interface over immediate consistency with the server. The load-bearing assumption: the server is canonical, the client is a draft."
+---
+
+The load-bearing assumption behind optimistic frontend architecture is this:
+
+> The server is canonical.
+> The client is a draft.
+
+That one assumption explains almost everything else.
+
+Optimistic UI works because the client is allowed to move ahead of the server. It can update the interface immediately, preserve user flow, queue changes locally, and reconcile later. But that only stays safe if the client understands its own state as provisional.
+
+The mistake is treating optimistic state as final state.
+
+It is not final. It is a local draft of what the user intends the world to become.
+
+## The Core Tension
+
+Optimistic concurrency on the frontend is not CAP in the strict database-theorem sense, but it is CAP-shaped.
+
+The client is operating in a distributed system where the network is unreliable, latency is real, and temporary partitions are normal. A laptop goes offline. A mobile device moves between networks. A request times out. A tab stays open for hours with stale state.
+
+In that environment, the frontend has to choose what kind of experience it wants to provide.
+
+It can block until the server confirms every action.
+
+Or it can let the user continue and reconcile later.
+
+Optimistic UI chooses the second path.
+
+```
+User intent
+↓
+Immediate local update
+↓
+Async server sync
+↓
+Reconciliation or rollback
+```
+
+That choice prioritises availability of the interface over immediate consistency with the server.
+
+## Why This Feels AP-Adjacent
+
+In a pessimistic model, the frontend waits for the server before showing success.
+
+```
+User action
+↓
+Server round trip
+↓
+Server accepts
+↓
+UI updates
+```
+
+This gives stronger immediate consistency, but the cost is obvious: the UI blocks. If the network is slow, the interface feels slow. If the server is unavailable, the user cannot continue.
+
+That is the frontend equivalent of choosing consistency over availability.
+
+Optimistic UI inverts the model.
+
+```
+User action
+↓
+Client updates immediately
+↓
+Server catches up later
+```
+
+The client behaves less like a passive renderer and more like a temporary replica. It accepts local writes, stores pending intent, and treats the server as an asynchronous authority rather than a synchronous gatekeeper.
+
+That makes the experience resilient, fast, and usable under poor network conditions.
+
+But it also creates a new responsibility: the client now has to manage the gap between what the user sees and what the server has actually accepted.
+
+## The Server Is Canonical
+
+This is the assumption that keeps the model sane.
+
+The client can draft state, but it does not own final truth.
+
+The server remains responsible for:
+
+```
+Validation
+Permissions
+Business rules
+Uniqueness constraints
+Financial correctness
+Inventory correctness
+Cross-user consistency
+Durable persistence
+```
+
+The client can say:
+
+```
+This is what the user intends.
+```
+
+The server decides:
+
+```
+This is what the system accepts.
+```
+
+That distinction matters.
+
+A frontend can optimistically show that a profile name changed, a card moved, or a preference toggled. But it should be much more careful with actions involving money, limited inventory, irreversible operations, or anything with regulatory or audit implications.
+
+The higher the cost of being wrong, the less the client should pretend the operation has completed.
+
+## The Client Is a Draft
+
+Thinking of the client as a draft changes how you design optimistic state.
+
+A draft can be useful before it is accepted.
+
+A draft can be edited.
+
+A draft can be rejected.
+
+A draft can conflict with someone else's draft.
+
+A draft can be merged.
+
+That gives you a better mental model than "frontend state equals backend state".
+
+Frontend state is often a composition of several layers:
+
+```
+Last confirmed server state
+↓
+Local optimistic patches
+↓
+Pending mutations
+↓
+Rollback snapshots
+↓
+Reconciliation result
+```
+
+The user sees a coherent interface, but underneath it the client is tracking uncertainty.
+
+That uncertainty is not a bug. It is the cost of making the interface feel immediate.
+
+## What You Gain
+
+Optimistic UI gives you a better interaction model.
+
+The user does not have to wait for every network round trip. Typing, editing, toggling, dragging, reordering, and lightweight actions can feel instant.
+
+This is especially valuable in interfaces where the user is doing many small actions in sequence.
+
+```
+Dashboards
+Kanban boards
+Settings pages
+Inline editing
+Document tools
+Workflow-heavy internal systems
+```
+
+In these environments, blocking on every server confirmation turns the product into wet cement.
+
+Optimistic UI keeps the interaction fluid.
+
+## What You Pay
+
+The cost is complexity.
+
+Once the client can move ahead of the server, you need answers to harder questions.
+
+```
+What happens if the request fails?
+What happens if two optimistic updates race?
+What happens if the server accepts the write but returns a different canonical value?
+What happens if the user goes offline?
+What happens if another actor changed the same data first?
+What happens if rollback changes focus, scroll, or selection?
+```
+
+This is where optimistic UI becomes architecture rather than decoration.
+
+It is not enough to update the cache and hope for the best. You need a reconciliation model.
+
+## Conflict Resolution Strategies
+
+Different systems resolve the client/server gap in different ways.
+
+The simplest model is last-write-wins.
+
+```
+Newest write wins
+Older write disappears
+```
+
+This is fast and simple, but it can silently lose data. It may be acceptable for caches, session state, presence, analytics, or temporary preferences. It is dangerous for important domain data.
+
+A stronger model is optimistic concurrency control with versions.
+
+```
+Client sends version it edited
+Server checks current version
+Write succeeds or conflict is returned
+```
+
+This protects correctness while preserving non-blocking reads and local interaction.
+
+More advanced systems may use event sourcing, operational transform, or CRDTs.
+
+These models are useful when the client is not just submitting a final value, but producing a stream of changes that may need to merge with changes from other clients.
+
+```
+Event sourcing
+Replay intent.
+
+Operational transform
+Transform concurrent edits into a shared order.
+
+CRDTs
+Design data structures that converge automatically.
+```
+
+These approaches are more complex, but they make sense when collaboration, offline editing, or distributed writes are core product requirements.
+
+## The Important Design Question
+
+The real question is not:
+
+```
+Should we use optimistic UI?
+```
+
+The better question is:
+
+```
+How provisional is this state allowed to be?
+```
+
+Some state can safely be optimistic.
+
+Some state can be optimistic but must be clearly pending.
+
+Some state should not be optimistic at all.
+
+A like button can lie briefly.
+
+A reordered card can be repaired.
+
+A profile field can be retried.
+
+A bank transfer should not pretend to be complete before the server accepts it.
+
+That is the practical boundary.
+
+## The Principle
+
+Optimistic UI is safe when the interface respects the difference between intent and truth.
+
+The client owns intent.
+
+The server owns acceptance.
+
+```
+Client state = draft
+Server state = canonical
+Reconciliation = the contract between them
+```
+
+That is the load-bearing assumption.
+
+Once you lose it, optimistic UI becomes false certainty. The interface tells the user something has happened when the system has not actually accepted it.
+
+But when you preserve that distinction, optimistic UI becomes a powerful architecture pattern.
+
+It lets the product feel fast without pretending the network disappeared.
+
+It lets the user keep working without pretending conflicts cannot happen.
+
+And it gives the frontend a more honest role:
+
+> not the source of truth, but the place where user intent becomes visible before the system catches up.
