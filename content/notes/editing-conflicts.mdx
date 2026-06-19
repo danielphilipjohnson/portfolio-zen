@@ -32,3 +32,7 @@ Let everyone edit freely, but check before saving. On save, verify nothing chang
 - **Common implementation:** Include a version number or timestamp on the resource; increment on every write. The update query includes `WHERE version = :old_version` — if zero rows match, someone else changed it first.
 - **Good for:** Document editing (Google Docs, Notion), API resources, most web applications.
 - **Bad for:** Extremely high-frequency writes to the same record — retry overhead becomes significant.
+- **Relation to Presence:** Real-time presence indicators (like WebSockets showing "Alice is editing") are a helpful courtesy, but they do not guarantee safety. Correctness must still be enforced by OCC version checks on the server-side update endpoint.
+
+> **“Presence is helpful. OCC is still required.”**  
+> Sockets tell you something happened; the version check on save is what actually stops a stale write from landing. (See [Presence Awareness](/notes/presence-awareness)).
