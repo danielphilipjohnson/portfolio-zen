@@ -1,0 +1,167 @@
+---
+title: "Pessimistic Locking, Optimistic Concurrency, and Last-Write-Wins"
+publishDate: "19/06/2026"
+tags:
+  - "concurrency"
+  - "distributed systems"
+  - "architecture"
+  - "databases"
+  - "systems"
+excerpt: "Concurrency control is about one question: what should the system assume when two actors might change the same thing? Pessimistic, optimistic, and last-write-wins offer three different answers."
+---
+
+Concurrency control is really about one question:
+
+> What should the system assume when two actors might change the same thing?
+
+Different systems answer that question differently.
+
+Some assume conflict is likely and prevent it before it happens. Some assume conflict is rare and check later. Some do not really resolve conflict at all and simply accept the latest write.
+
+Those choices lead to three common models: pessimistic locking, optimistic concurrency control, and last-write-wins.
+
+## Pessimistic Locking
+
+Pessimistic locking assumes conflict will happen, so the system prevents it upfront.
+
+Before data is read or modified, a lock is acquired. Other transactions that want to touch the same data have to wait until the lock is released.
+
+The mental model is simple:
+
+```
+Lock first
+↓
+Do the work safely
+↓
+Release the lock
+```
+
+This is useful when conflict is likely, expensive, or dangerous.
+
+Examples include financial ledgers, payment flows, finite inventory, booking systems, or anything where two users cannot be allowed to successfully claim the same resource at the same time.
+
+The trade-off is throughput. Locks create waiting. Waiting creates latency. In more complex systems, locks can also create deadlocks, where two transactions are each waiting for the other to release something.
+
+Pessimistic locking gives you safety, but it does so by making concurrency more restrictive.
+
+## Optimistic Concurrency Control
+
+Optimistic concurrency control assumes conflict probably will not happen.
+
+Instead of locking the data during the read phase, each transaction tracks a version, timestamp, revision number, or similar concurrency token. When the transaction tries to commit, the system checks whether the data has changed since it was read.
+
+The flow looks like this:
+
+```
+Read data without locking
+↓
+Do the work
+↓
+Check version at commit
+↓
+Commit or retry
+```
+
+If the version still matches, the write succeeds.
+
+If someone else modified the data first, the write is rejected, aborted, or retried.
+
+This works well in read-heavy systems or low-contention workflows where most users are not trying to modify the exact same data at the exact same time.
+
+Examples include CMS content editing, user profile updates, settings pages, and many collaborative workflows.
+
+The benefit is higher throughput because reads do not block each other. The cost is that failed transactions may waste work and need to retry. You also need explicit version tracking, and the application needs a sensible strategy for handling conflicts.
+
+Optimistic concurrency is often a good default when data integrity matters but conflicts are expected to be uncommon.
+
+## Last-Write-Wins
+
+Last-write-wins takes the simplest possible approach:
+
+```
+Newest write wins
+Older write disappears
+```
+
+There is no lock.
+There is no version check.
+There is no retry.
+There is often no conflict detection at all.
+
+The system accepts whichever write arrives last, based on timestamp, ordering, replication state, or whatever the storage layer considers "latest".
+
+This gives very low latency and very high availability, but the trade-off is silent data loss. Earlier writes can be overwritten without anyone knowing there was a conflict.
+
+That makes last-write-wins dangerous for important domain data.
+
+It can be reasonable for caches, session state, presence indicators, analytics snapshots, metrics, temporary UI state, or systems where recency matters more than historical correctness.
+
+It is a poor fit for payments, inventory, legal records, financial transactions, or user-generated content where accidental overwrites would be harmful.
+
+## Quick Comparison
+
+| Aspect | Pessimistic Locking | Optimistic Concurrency Control | Last-Write-Wins |
+| --- | --- | --- | --- |
+| Core assumption | Conflict is likely | Conflict is rare | Conflict does not need resolving |
+| Strategy | Prevent conflict with locks | Detect conflict at commit | Overwrite with latest value |
+| Blocking | Yes | No during read phase | No |
+| Throughput | Lower | Higher | Highest |
+| Latency | Higher due to waiting | Low unless retry is needed | Lowest |
+| Data safety | Strong | Strong if conflicts are handled | Weak |
+| Failure mode | Waiting, deadlocks, lock contention | Aborts, retries, conflict handling | Silent overwrite |
+| Best fit | Banking, inventory, booking | CMS, profiles, documents | Caches, metrics, session state |
+
+## When to Choose Each One
+
+Use pessimistic locking when correctness matters more than throughput and you cannot afford conflicting writes.
+
+```
+Finite resource
+High contention
+Expensive conflict
+Cannot safely retry
+```
+
+Use optimistic concurrency control when conflicts are uncommon but data integrity still matters.
+
+```
+Mostly reads
+Occasional writes
+Versioned records
+Safe retry or conflict UI
+```
+
+Use last-write-wins when availability, speed, or simplicity matters more than preserving every intermediate write.
+
+```
+Temporary state
+Cache entries
+Metrics snapshots
+Session data
+Recency is acceptable as truth
+```
+
+## The Practical Middle Ground: MVCC
+
+Many real databases use multi-version concurrency control, or MVCC, as a practical middle ground.
+
+MVCC allows readers to see a consistent snapshot of the data without blocking writers. Instead of one version of a row constantly being locked and overwritten, the database can keep multiple versions internally.
+
+This gives systems non-blocking reads while still providing stronger consistency guarantees than simple last-write-wins.
+
+In practice, MVCC is one reason modern databases can support high read concurrency without forcing every transaction into a pessimistic locking model.
+
+The broader lesson is that concurrency control is not just a database detail. It is a product and architecture decision.
+
+You are choosing what the system values most:
+
+```
+Safety
+Throughput
+Latency
+Availability
+User experience
+Conflict visibility
+```
+
+There is no universally correct answer. There is only the model that matches the cost of being wrong.
