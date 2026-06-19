@@ -1,0 +1,34 @@
+---
+title: "Ways to Handle Editing Conflicts"
+publishDate: "19/06/2026"
+tags:
+  - "concurrency"
+  - "collaboration"
+  - "systems"
+excerpt: "Three strategies for managing concurrent edits: pessimistic locking, last-write-wins, and optimistic concurrency control."
+---
+
+### Pessimistic Locking
+
+Stop the conflict before it can happen. One person acquires a lock, makes their changes, and everyone else waits until the lock is released.
+
+- **Trade-off:** Simple to reason about, but kills throughput when contention is high. The lock becomes a bottleneck.
+- **Good for:** High-conflict resources where merge complexity is severe (e.g., editing a binary file, Terraform state).
+- **Bad for:** Most collaborative editing — people are blocked waiting for a resource they may only touch briefly.
+
+### Last-Write-Wins
+
+Let everyone save freely. If two people change the same thing, the newest save silently replaces the older one.
+
+- **Trade-off:** Maximum throughput, zero coordination overhead. But you lose data silently with no notification.
+- **Good for:** Conflict-free data (e.g., each user writes to their own fields), metrics, logs, eventual-consistency scenarios.
+- **Bad for:** Any situation where data integrity matters and concurrent edits produce meaningful conflicts.
+
+### Optimistic Concurrency Control (OCC)
+
+Let everyone edit freely, but check before saving. On save, verify nothing changed since you read. If it did, reject the save and force the user to reconcile.
+
+- **Trade-off:** Best of both worlds for moderate contention — no blocking during reads, but safe writes. Requires conflict-resolution logic on the client.
+- **Common implementation:** Include a version number or timestamp on the resource; increment on every write. The update query includes `WHERE version = :old_version` — if zero rows match, someone else changed it first.
+- **Good for:** Document editing (Google Docs, Notion), API resources, most web applications.
+- **Bad for:** Extremely high-frequency writes to the same record — retry overhead becomes significant.

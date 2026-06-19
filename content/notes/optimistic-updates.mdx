@@ -1,0 +1,64 @@
+---
+title: "Optimistic Updates"
+publishDate: "19/06/2026"
+tags:
+  - "concurrency"
+  - "collaboration"
+  - "systems"
+excerpt: "Optimistic updates show results immediately before the server confirms — a latency-hiding technique, not a safety mechanism."
+---
+## Optimistic updates
+
+An optimistic update is when the UI shows the result immediately, before the server has confirmed it.
+
+The user clicks “like”, and the heart fills in right away. The user drags a card, and the card moves right away. The app acts as if the request will succeed, then checks with the server after.
+
+If the server agrees, nothing much has to happen. The UI already looks right.
+
+If the server disagrees, the app has to roll back the change or show the user what went wrong.
+
+Optimistic updates are mostly a latency-hiding technique. They make the app feel faster because the user does not have to wait for the network before seeing feedback.
+
+They work best when the action is low-risk and easy to undo.
+
+Good examples:
+
+* Liking a post
+* Following someone
+* Reordering cards in a list
+* Typing into a local draft
+* Changing a cart quantity, as long as price and stock are still confirmed by the server
+
+They are more dangerous when the UI shows something that has real consequences before it is actually accepted.
+
+Bad examples:
+
+* Showing a money transfer as complete before the server confirms it
+* Letting someone approve a workflow step before permission is checked
+* Showing a final checkout price before inventory, discounts, tax, and payment are confirmed
+
+The important distinction is between **visual optimism** and **interactive optimism**.
+
+Visual optimism means the UI can show the expected result immediately.
+
+Interactive optimism means the user can keep acting on that result as if it is already final.
+
+Those are not the same thing.
+
+For example, after someone clicks “transfer £500”, the UI might immediately show a pending transfer. But the button should be disabled so the user cannot submit it twice. The app can feel responsive without pretending the money has definitely moved.
+
+Rollback can fix local state. It cannot always undo consequences.
+
+That is why optimistic updates need a clear failure path. Before making something optimistic, ask:
+
+* What happens if the server rejects this?
+* Can we safely roll it back?
+* Could the user act twice?
+* Could we briefly show data they are not allowed to see?
+* Could this optimistic state leak into logs, screenshots, analytics, or another system?
+
+A good optimistic update does not say “the server does not matter.”
+
+It says: “show the likely result now, but keep the server as the source of truth.”
+
+**Optimistic updates make the UI feel fast. They do not make the write safe.**

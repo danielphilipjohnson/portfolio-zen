@@ -1,0 +1,28 @@
+---
+title: "The Frontend Complexity Trap"
+publishDate: "01/06/2026"
+tags:
+  - "frontend"
+  - "architecture"
+excerpt: "Why frontend codebases get complex faster than backend ones, and what to do about it."
+---
+
+Frontend codebases get complex faster than backend ones. Here's why:
+
+### Reasons
+
+1. **State is everywhere** — UI state, server state, URL state, local storage, animation state, form state
+2. **No single source of truth** — the DOM, the JavaScript heap, the network, IndexedDB, and the URL all hold state simultaneously
+3. **Visual feedback loops** — a small styling change can have unexpected visual side effects
+4. **Framework churn** — every 18 months there's a new paradigm
+5. **Mixed concerns** — layout, logic, styling, accessibility, and animation all coexist in the same component
+
+### Mitigations
+
+- **Explicit data flow** — unidirectional, traceable, debuggable
+- **Minimal state** — derive what you can, store only what you must
+- **Component boundaries** — clear responsibility per component, well-defined props
+- **Style isolation** — CSS-in-JS or utility classes, not cascading selectors
+- **Documented conventions** — the team agrees on *one way* to do things
+
+Complexity is inevitable. *Accidental* complexity is what we should fight.

@@ -1,0 +1,29 @@
+---
+title: "Presence Awareness"
+publishDate: "19/06/2026"
+tags:
+  - "concurrency"
+  - "collaboration"
+  - "systems"
+excerpt: "Presence shows who is here and what they are doing — but it is a courtesy layer, not a data-integrity mechanism."
+---
+
+Presence is the little "someone else is here" layer, usually powered by WebSockets or Server-Sent Events.
+
+It can show things like:
+
+- Alice is viewing this record
+- Alice is editing the risk rating field
+- This record changed a few minutes ago
+
+That is useful, but it is only a courtesy. It helps people notice what is happening, but it does not protect the data.
+
+Presence messages can be late, missed, duplicated, or arrive out of order. That is okay because nothing important depends on them. The worst case is that the UI shows a slightly stale "Alice is editing" indicator for a moment.
+
+The important rule is: **presence should never decide whether a save is allowed.**
+
+That decision still belongs on the server, when the user saves. The server checks the version the user started with against the current version. If the versions match, the save can go through. If they do not match, the save is blocked and the user has to review what changed.
+
+WebSockets and SSE can tell you that something happened. They should not be the thing that keeps your data safe.
+
+**Presence is helpful. Optimistic concurrency control is still required.**
