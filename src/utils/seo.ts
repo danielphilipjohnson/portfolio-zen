@@ -22,7 +22,9 @@ export type SeoPagePath =
 	| '/blog/tag/engineering-principles'
 	| '/blog/tag/fintech'
 	| '/tao'
-	| '/social';
+	| '/social'
+	| '/now'
+	| '/notes';
 
 export interface SEOData {
 	title: string;
@@ -409,6 +411,30 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.HOME }],
 				type: 'profile',
 				url: `${SITE_URL}/social`,
+			},
+		},
+		'/now': {
+			title: 'Now | Daniel Philip Johnson',
+			description: 'What Daniel Philip Johnson is currently focused on — professional priorities, projects, reading, and routines.',
+			keywords: ['now page', 'developer now', 'what I am doing now', 'Daniel Johnson current focus', 'nownownow'],
+			openGraph: {
+				title: 'Now | Daniel Philip Johnson',
+				description: 'What I&apos;m currently focused on — professional priorities, projects, reading, and routines.',
+				images: [{ url: OG_PATH.HOME }],
+				type: 'profile',
+				url: `${SITE_URL}/now`,
+			},
+		},
+		'/notes': {
+			title: 'Notes | Daniel Philip Johnson',
+			description: 'Short, informal pieces on frontend architecture, engineering craft, and systems thinking.',
+			keywords: ['engineering notes', 'frontend architecture notes', 'systems thinking', 'technical notes', 'developer notes'],
+			openGraph: {
+				title: 'Notes | Daniel Philip Johnson',
+				description: 'Short, informal notes on frontend architecture, engineering craft, and systems thinking.',
+				images: [{ url: OG_PATH.HOME }],
+				type: 'website',
+				url: `${SITE_URL}/notes`,
 			},
 		},
 		'/zen/clarity-scales-across-teams': {
