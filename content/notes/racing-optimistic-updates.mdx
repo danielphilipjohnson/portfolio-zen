@@ -1,0 +1,130 @@
+---
+title: "Two Racing Optimistic Updates from the Same Client"
+publishDate: "19/06/2026"
+tags:
+  - "frontend"
+  - "architecture"
+  - "optimistic updates"
+  - "state management"
+  - "race conditions"
+excerpt: "When two mutations race from the same client, resolving by response arrival order instead of user intent order produces the classic optimistic update bug."
+---
+
+A subtle optimistic update bug appears when two mutations race from the same client.
+
+Imagine a user toggles a setting off, then quickly toggles it back on before the first server response returns.
+
+The timeline looks like this:
+
+```
+Request A: toggle off
+Request B: toggle on
+
+Response B arrives first
+Response A arrives second
+```
+
+A naive reconciler may treat the latest response as the source of truth. If response A arrives last, it can incorrectly overwrite the newer optimistic state created by request B.
+
+That creates the classic bug:
+
+```
+User's latest intent: on
+Final UI state: off
+```
+
+The problem is not the optimistic update itself. The problem is resolving by response arrival order instead of user intent order.
+
+The server responses are arriving in network order. But the UI needs to preserve intent order.
+
+The fix is to attach a monotonic version counter to the mutation target.
+
+```tsx
+type SettingState = {
+  settingValue: boolean;
+  version: number;        // bumped on every optimistic dispatch
+  pendingVersion: number; // latest version sent to the server
+};
+```
+
+Each optimistic mutation increments the target's version.
+
+```
+Initial state
+settingValue: true
+version: 0
+
+User toggles off
+version becomes 1
+request is sent with version: 1
+
+User toggles on
+version becomes 2
+request is sent with version: 2
+```
+
+Now every response must describe which version it is resolving.
+
+When response `version: 1` arrives, the reconciler checks it against the current target version.
+
+```
+response.version === state.version
+1 === 2
+false
+```
+
+That response is stale. It should be discarded completely.
+
+Do not apply its data.
+Do not roll back.
+Do not update pending state.
+Do not show an error that belongs to an outdated intent.
+
+A newer user action has already superseded it.
+
+When response `version: 2` arrives, it matches the current target version.
+
+```
+response.version === state.version
+2 === 2
+true
+```
+
+That response is still relevant. The reconciler can now apply it.
+
+On success, it confirms or reconciles the optimistic state.
+
+On failure, it rolls back to the snapshot that existed before version 2 was applied.
+
+The important distinction is that this is not just a request sequence number.
+
+A request sequence number tells you the order in which requests were dispatched. That is useful, but it does not fully answer the question the reconciler needs to ask.
+
+The reconciler does not merely care:
+
+```
+Did this response come back in the order I expected?
+```
+
+It cares:
+
+```
+Is this response still relevant to the current state of this target?
+```
+
+Only the target's own version can answer that.
+
+The version belongs to the mutable thing being changed, not the network request itself. That matters because rollback and reconciliation are target-specific. A stale response for one setting should not invalidate another setting. A stale response for one row should not block updates elsewhere in the table.
+
+This also keeps the rule clean:
+
+```
+If response.version is older than target.version, ignore it.
+If response.version matches target.version, reconcile it.
+```
+
+That gives the client a simple invariant:
+
+> The newest user intent wins unless the server rejects that exact intent.
+
+This is the difference between optimistic UI that feels fast and optimistic UI that occasionally gaslights the user.
