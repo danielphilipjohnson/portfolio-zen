@@ -12,6 +12,7 @@ import GridItem from '@/components/ui/GridItem';
 import { BlogPost } from '@/types/blog-post';
 import { BlogPage } from '@/components/layouts/BlogPageLayout';
 import { getSingleBlogPostJsonLd } from '@/utils/jsonLd';
+import { getRelatedPosts } from '@/lib/content/getRelatedPosts';
 import { format, parse } from 'date-fns';
 import StructuredData from '../StructuredData';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -118,12 +119,15 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 	// Generate table of contents from content
 	const tableOfContents = extractTableOfContents(content);
 
+	const relatedPosts = await getRelatedPosts(slug, data.tags ?? []);
+
 	const postData = {
 		...data,
 		imageUrl: data.imageUrl,
 		imageAlt: data.title,
 		excerpt: data.excerpt,
-		tableOfContents, // Add the generated table of contents
+		tableOfContents,
+		relatedPosts,
 	} as BlogPost;
 
 	const parsedDate = parse(data.publishDate, 'dd/MM/yyyy', new Date());
