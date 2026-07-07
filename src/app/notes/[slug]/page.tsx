@@ -1,3 +1,4 @@
+import { SITE_URL } from '@/lib/constants';
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
@@ -29,6 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 		return {
 			title: `${data.title} | Notes`,
 			description: data.excerpt || `Note about ${data.title}`,
+			alternates: {
+				canonical: `${SITE_URL}/notes/${slug}`,
+			},
 		};
 	} catch {
 		return {
