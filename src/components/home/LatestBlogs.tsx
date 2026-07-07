@@ -1,24 +1,10 @@
 import Container from '@/components/ui/Container';
 import Text from '@/components/ui/Text';
-import { getAllBlogs } from '@/lib/content/getAllBlogs';
+import { getLatestPosts } from '@/lib/content/getLatestPosts';
 import Link from 'next/link';
-import { format, isValid, parse } from 'date-fns';
 
 const LatestBlogs = async () => {
-	const blogs = await getAllBlogs();
-
-	const latestPosts = blogs
-		.map(post => {
-			const parsedDate = parse(post.publishDate, 'dd/MM/yyyy', new Date());
-			const isDateValid = isValid(parsedDate);
-			return {
-				...post,
-				parsedDate: isDateValid ? parsedDate : new Date(0),
-				displayDate: isDateValid ? format(parsedDate, 'dd MMM yyyy') : post.publishDate,
-			};
-		})
-		.sort((a, b) => b.parsedDate.getTime() - a.parsedDate.getTime())
-		.slice(0, 2);
+	const latestPosts = await getLatestPosts(3);
 
 	return (
 		<section className="py-16 bg-[var(--color-stone-50)]" aria-label="Latest blog posts">
