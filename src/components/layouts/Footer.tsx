@@ -8,7 +8,7 @@ const ZenFooter = () => {
 		navigation: [
 			{ label: 'Home', href: '/' },
 			{ label: 'About', href: '/about' },
-			{ label: 'Work', href: '/work' },
+			{ label: 'Work', href: '/projects' },
 			//{ label: 'Contact', href: '/contact' },
 		],
 		resources: [

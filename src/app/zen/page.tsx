@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/constants";
 import { getPageSEO } from "@/utils/seo";
 import { Metadata } from "next";
 
@@ -23,6 +24,9 @@ export async function generateMetadata(): Promise<Metadata> {
 			type: seoData.openGraph.type as 'website' | 'profile',
 			url: seoData.openGraph.url,
 		} : undefined,
+		alternates: {
+			canonical: `${SITE_URL}/zen`,
+		},
 	};
 }
 

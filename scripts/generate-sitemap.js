@@ -2,49 +2,44 @@ import path from 'path';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import fs from 'fs';
 import { getAllBlogs } from './blogs/getAllBlogs.js';
-import { getAllProjects } from './projects/getAllProjects.js';
 
 const BASE_URL = 'https://danielphilipjohnson.com';
 
 async function generateSitemap() {
 	const sitemap = new SitemapStream({ hostname: BASE_URL });
 
-	// Write sitemap.xml to public/
 	const sitemapPath = path.resolve('public', 'sitemap.xml');
-	const writeStream = fs.createWriteStream(sitemapPath);
-	sitemap.pipe(writeStream);
 
-	// Static pages
 	const staticPages = [
-		'',
-		'about',
-		'contact',
-		'projects',
-		'blog',
-		'zen',
-		'tao',
-		'mcp',
-		'engineering',
-		'engineering/frontend-architecture',
-		'mcp/deep-dive',
-		'blog/tag/web-performance',
-		'blog/tag/frontend-architecture',
-		'blog/tag/engineering-principles',
-		'blog/tag/fintech',
-		'zen/calm-software-builds-trust',
-		'zen/clarity-scales-across-teams',
-		'zen/cultivate-systems-dont-rush-code',
-		'zen/design-for-the-long-term',
-		'zen/less-code-more-intention',
-		'zen/prune-systems-with-care',
-		'zen/understand-before-you-build',
-		'social',
-		'now',
-		'notes',
+		{ url: '', priority: 1.0, changefreq: 'weekly' },
+		{ url: '/about', priority: 0.9, changefreq: 'monthly' },
+		{ url: '/contact', priority: 0.6, changefreq: 'monthly' },
+		{ url: '/projects', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/blog', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/zen', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/tao', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/mcp', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/engineering', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/engineering/frontend-architecture', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/mcp/deep-dive', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/blog/tag/web-performance', priority: 0.5, changefreq: 'monthly' },
+		{ url: '/blog/tag/frontend-architecture', priority: 0.5, changefreq: 'monthly' },
+		{ url: '/blog/tag/engineering-principles', priority: 0.5, changefreq: 'monthly' },
+		{ url: '/blog/tag/fintech', priority: 0.5, changefreq: 'monthly' },
+		{ url: '/zen/calm-software-builds-trust', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/clarity-scales-across-teams', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/cultivate-systems-dont-rush-code', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/design-for-the-long-term', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/less-code-more-intention', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/prune-systems-with-care', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/zen/understand-before-you-build', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/social', priority: 0.5, changefreq: 'monthly' },
+		{ url: '/now', priority: 0.6, changefreq: 'monthly' },
+		{ url: '/notes', priority: 0.9, changefreq: 'weekly' },
 	];
 
 	for (const page of staticPages) {
-		sitemap.write({ url: `/${page}`, changefreq: 'monthly', priority: 0.8 });
+		sitemap.write({ url: page.url, changefreq: page.changefreq, priority: page.priority });
 	}
 
 	// Note pages from MDX
@@ -52,7 +47,7 @@ async function generateSitemap() {
 		const noteFiles = fs.readdirSync(path.resolve('content/notes'));
 		noteFiles.forEach((file) => {
 			const slug = file.replace(/\.mdx$/, '');
-			sitemap.write({ url: `/notes/${slug}`, changefreq: 'monthly', priority: 0.6 });
+			sitemap.write({ url: `/notes/${slug}`, changefreq: 'weekly', priority: 0.7 });
 		});
 	} catch {
 		// notes directory might not exist
@@ -65,26 +60,25 @@ async function generateSitemap() {
 		sitemap.write({
 			url: `/blog/${post.slug}`,
 			changefreq: 'weekly',
-			priority: 0.7
+			priority: 0.8
 		});
 	});
-
-	// Project posts from MDX
-	const projectPosts = await getAllProjects();
-
-	projectPosts.forEach((post) => {
-		sitemap.write({
-			url: `/projects/${post.slug}`,
-			changefreq: 'weekly',
-			priority: 0.7
-		});
-	});
-
 
 	sitemap.end();
 
-	await streamToPromise(sitemap);
-	console.log('✅ sitemap.xml generated with', staticPages.length + blogPosts.length + projectPosts.length, 'entries');
+	let xml = await streamToPromise(sitemap);
+	xml = xml.toString();
+
+	// Strip unused XML namespaces
+	xml = xml
+		.replace(/\s+xmlns:news="[^"]*"/g, '')
+		.replace(/\s+xmlns:xhtml="[^"]*"/g, '')
+		.replace(/\s+xmlns:image="[^"]*"/g, '')
+		.replace(/\s+xmlns:video="[^"]*"/g, '');
+
+	fs.writeFileSync(sitemapPath, xml);
+
+	console.log('✅ sitemap.xml generated with', staticPages.length + blogPosts.length, 'entries');
 }
 
 generateSitemap().catch(console.error);

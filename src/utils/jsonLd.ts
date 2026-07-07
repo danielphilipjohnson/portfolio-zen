@@ -135,7 +135,7 @@ export function getAboutPageJsonLd(): { "@context": "https://schema.org"; "@grap
 	const aboutPageSchema: WebPage = {
 		"@type": "WebPage",
 		"@id": `${SITE_URL}/about/#webpage`,
-		"url": `${SITE_URL}/about/`,
+		"url": `${SITE_URL}/about`,
 		"name": "About | Daniel Philip Johnson",
 		"description": "Learn more about Daniel Philip Johnson, a full-stack developer focused on React, Next.js, and modern web platforms.",
 		"isPartOf": {
@@ -153,7 +153,7 @@ export function getAboutPageJsonLd(): { "@context": "https://schema.org"; "@grap
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "About", "item": `${SITE_URL}/about/` }
+			{ "@type": "ListItem", "position": 2, "name": "About", "item": `${SITE_URL}/about` }
 		]
 	};
 
@@ -218,7 +218,7 @@ export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph"
 	const mcpPageSchema: WebPage = {
 		"@type": "WebPage",
 		"@id": `${SITE_URL}/mcp/#webpage`,
-		"url": `${SITE_URL}/mcp/`,
+		"url": `${SITE_URL}/mcp`,
 		"name": "MCP Deep Dive | Daniel Johnson",
 		"description": "A practical deep dive into Model Context Protocol (MCP): architecture, security model, integrations, and real-world usage.",
 		"isPartOf": {
@@ -235,10 +235,10 @@ export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph"
 	const mcpArticleSchema: BlogPosting = {
 		"@type": "BlogPosting",
 		"@id": `${SITE_URL}/mcp/#article`,
-		"mainEntityOfPage": `${SITE_URL}/mcp/`,
+		"mainEntityOfPage": `${SITE_URL}/mcp`,
 		"headline": "MCP Deep Dive",
 		"name": "MCP Deep Dive",
-		"url": `${SITE_URL}/mcp/`,
+		"url": `${SITE_URL}/mcp`,
 		"description": "A practical deep dive into Model Context Protocol (MCP): architecture, threat model, use cases, and expert concepts.",
 		"author": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
 		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
@@ -253,7 +253,7 @@ export function getMcpPageJsonLd(): { "@context": "https://schema.org"; "@graph"
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "MCP", "item": `${SITE_URL}/mcp/` }
+			{ "@type": "ListItem", "position": 2, "name": "MCP", "item": `${SITE_URL}/mcp` }
 		]
 	};
 
@@ -269,7 +269,7 @@ export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context"
 	const blogListingPageSchema: WebPage = {
 		"@type": "WebPage",
 		"@id": `${SITE_URL}/blog/#webpage`,
-		"url": `${SITE_URL}/blog/`,
+		"url": `${SITE_URL}/blog`,
 		"name": "Blog | Daniel Philip Johnson",
 		"description": "Latest articles on web development, Next.js, React by Daniel Philip Johnson.",
 		"isPartOf": { "@type": "WebSite", "@id": WEBSITE_SCHEMA_ID },
@@ -279,11 +279,11 @@ export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context"
 
 	const blogPostSummaries: BlogPosting[] = posts.map((post): BlogPosting => ({ 
 		"@type": "BlogPosting",
-		"@id": `${SITE_URL}/blog/${post.slug}/#article`,
-		"mainEntityOfPage": `${SITE_URL}/blog/${post.slug}/`,
+		"@id": `${SITE_URL}/blog/${post.slug}#article`,
+		"mainEntityOfPage": `${SITE_URL}/blog/${post.slug}`,
 		"headline": post.title,
 		"name": post.title,
-		"url": `${SITE_URL}/blog/${post.slug}/`,
+		"url": `${SITE_URL}/blog/${post.slug}`,
 		"datePublished": post.publishDate,
 		"author": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
 		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
@@ -304,7 +304,7 @@ export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context"
 		"description": "A collection of articles and insights on modern web development.",
 		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
 		"blogPost": blogPostSummaries,
-		"url": `${SITE_URL}/blog/`,
+		"url": `${SITE_URL}/blog`,
 		"inLanguage": "en-GB",
 	};
 
@@ -312,7 +312,7 @@ export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context"
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog/` }
+			{ "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog` }
 		]
 	};
 
@@ -326,7 +326,7 @@ export function getBlogListingPageJsonLd(posts: BlogPostSummary[]): { "@context"
 
 export function getSingleBlogPostJsonLd(post: BlogPostDetail): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
 	const baseJsonLd = getBaseSiteJsonLd();
-	const blogUrl = `${SITE_URL}/blog/${post.slug}/`;
+	const blogUrl = `${SITE_URL}/blog/${post.slug}`;
 
 	const blogPageSchema: WebPage = {
 		"@type": "WebPage",
@@ -364,7 +364,7 @@ export function getSingleBlogPostJsonLd(post: BlogPostDetail): { "@context": "ht
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog/` },
+			{ "@type": "ListItem", "position": 2, "name": "Blog", "item": `${SITE_URL}/blog` },
 			{ "@type": "ListItem", "position": 3, "name": post.title, "item": blogUrl }
 		]
 	};
@@ -388,7 +388,7 @@ export function getContactPageJsonLd(): { "@context": "https://schema.org"; "@gr
 	const contactPageSchema: WebPage = {
 		"@type": "WebPage",
 		"@id": `${SITE_URL}/contact/#webpage`,
-		"url": `${SITE_URL}/contact/`,
+		"url": `${SITE_URL}/contact`,
 		"name": "Contact | Daniel Philip Johnson",
 		"description": "Get in touch with Daniel Philip Johnson for collaboration, freelance inquiries, or general questions.",
 		"isPartOf": {
@@ -406,7 +406,7 @@ export function getContactPageJsonLd(): { "@context": "https://schema.org"; "@gr
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "Contact", "item": `${SITE_URL}/contact/` }
+			{ "@type": "ListItem", "position": 2, "name": "Contact", "item": `${SITE_URL}/contact` }
 		]
 	};
 
@@ -438,7 +438,7 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
   const projectsListingPageSchema: WebPage = {
     "@type": "WebPage",
 		"@id": `${SITE_URL}/projects/#webpage`,
-		"url": `${SITE_URL}/projects/`,
+		"url": `${SITE_URL}/projects`,
 		"name": "Projects | Daniel Philip Johnson",
 		"description": "Explore a collection of projects by Daniel Philip Johnson, showcasing skills in web development, Next.js, React, and more.",
 		"isPartOf": { "@type": "WebSite", "@id": WEBSITE_SCHEMA_ID },
@@ -448,9 +448,9 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
 
 	const projectSummariesSchema: SoftwareApplication[] = projects.map((project): SoftwareApplication => ({
 		"@type": "SoftwareApplication",
-		"@id": `${SITE_URL}/projects/${project.slug}/#project`,
+		"@id": `${SITE_URL}/projects/${project.slug}#project`,
 		"name": project.title,
-		"url": `${SITE_URL}/projects/${project.slug}/`,
+		"url": `${SITE_URL}/projects/${project.slug}`,
 		"description": project.excerpt,
 		...(project.imageUrl && {
 			"image": {
@@ -479,7 +479,7 @@ export function getProjectsListingPageJsonLd(projects: ProjectSummary[]): { "@co
 		"@type": "BreadcrumbList",
 		"itemListElement": [
 			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
-			{ "@type": "ListItem", "position": 2, "name": "Projects", "item": `${SITE_URL}/projects/` }
+			{ "@type": "ListItem", "position": 2, "name": "Projects", "item": `${SITE_URL}/projects` }
 		]
 	};
 
