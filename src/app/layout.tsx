@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://danielphilipjohnson.com"),
   title: "Daniel Philip Johnson | Full-stack Developer",
   description: "Full-stack developer specializing in React, Next.js, and modern web technologies.",
 };
