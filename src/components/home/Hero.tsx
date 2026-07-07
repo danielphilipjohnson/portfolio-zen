@@ -43,7 +43,7 @@ const Hero = () => {
 								weight="light"
 								className="text-[color:var(--color-stone-800)]"
 							>
-								Frontend Engineer @ <span className="text-[color:var(--color-moss-600)]">Loan.co.uk</span>
+								Senior Frontend Engineer @ <span className="text-[color:var(--color-moss-600)]">Loan.co.uk</span>
 							</Text>
 						</div>
 
@@ -53,7 +53,7 @@ const Hero = () => {
 							weight="extralight"
 							className="mb-6 tracking-wide text-[color:var(--color-moss-700)]"
 						>
-							I scale frontend systems that feel intuitive, perform fast, and ship with confidence.
+							Frontend architecture for complex, high-trust products.
 						</Text>
 
 						<Text
@@ -61,7 +61,7 @@ const Hero = () => {
 							weight="light"
 							className="max-w-lg text-[color:var(--color-stone-800)]"
 						>
-							With 5+ years in fintech and e-commerce, I bridge design systems, developer experience, and backend fluency — turning complex product flows into performant, accessible, and maintainable interfaces.
+							I help teams turn frontend complexity into clear, maintainable systems — improving performance, reliability, developer experience, and delivery confidence across fintech and e-commerce.
 						</Text>
 
 
