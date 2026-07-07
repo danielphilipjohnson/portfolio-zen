@@ -15,10 +15,7 @@ const About = () => {
 	} = defaultAboutProps;
 
 	return (
-		<section 
-			className="relative py-16 overflow-hidden md:py-24 "
-			aria-label="About section"
-		>
+		<>
 			<div className="absolute bottom-0 right-0 w-1/3 rounded-tl-full h-1/3 bg-moss-50 opacity-70"></div>
 			<div className="absolute w-64 h-64 border rounded-full -left-16 -top-16 border-stone-200 opacity-20"></div>
 
@@ -28,7 +25,7 @@ const About = () => {
 						<div className="relative mb-8">
 							<div className="absolute w-8 h-px -left-4 top-1/2 bg-clay-400"></div>
 							<Text
-							as="h2"
+								as="h2"
 								variant="h2"
 								weight="light"
 								className="text-stone-800"
@@ -96,7 +93,7 @@ const About = () => {
 					</div>
 				</div>
 			</Container>
-		</section>
+		</>
 	);
 };
 
