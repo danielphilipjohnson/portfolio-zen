@@ -24,7 +24,8 @@ export type SeoPagePath =
 	| '/tao'
 	| '/social'
 	| '/now'
-	| '/notes';
+	| '/notes'
+	| '/resume';
 
 export interface SEOData {
 	title: string;
@@ -423,6 +424,18 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.HOME }],
 				type: 'profile',
 				url: `${SITE_URL}/now`,
+			},
+		},
+		'/resume': {
+			title: 'Resume | Daniel Philip Johnson',
+			description: 'Senior Frontend Engineer with 5+ years of experience in fintech, mortgage lending, e-commerce, and SaaS. React, TypeScript, Next.js specialist.',
+			keywords: ['resume', 'frontend engineer', 'React developer', 'TypeScript', 'Next.js', 'Daniel Johnson CV'],
+			openGraph: {
+				title: 'Resume | Daniel Philip Johnson',
+				description: 'Senior Frontend Engineer — frontend architecture, developer experience, fintech, and technical leadership.',
+				images: [{ url: OG_PATH.HOME }],
+				type: 'profile',
+				url: `${SITE_URL}/resume`,
 			},
 		},
 		'/notes': {
