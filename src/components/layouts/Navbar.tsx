@@ -10,6 +10,7 @@ const ZenNavbar = () => {
 	const navLinks = [
 		{ id: 'about', label: 'About', href: '/about' },
 		{ id: 'work', label: 'Work', href: '/projects' },
+		{ id: 'engineering', label: 'Engineering', href: '/engineering' },
 		{ id: 'blog', label: 'Blog', href: '/blog' },
 	];
 

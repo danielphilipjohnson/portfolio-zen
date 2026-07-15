@@ -20,7 +20,7 @@ async function generateSitemap() {
 		{ url: '/tao', priority: 0.9, changefreq: 'weekly' },
 		{ url: '/mcp', priority: 0.9, changefreq: 'weekly' },
 		{ url: '/engineering', priority: 0.9, changefreq: 'weekly' },
-		{ url: '/engineering/frontend-architecture', priority: 0.8, changefreq: 'monthly' },
+		{ url: '/engineering/frontend-architecture', priority: 0.9, changefreq: 'weekly' },
 		{ url: '/mcp/deep-dive', priority: 0.8, changefreq: 'monthly' },
 		{ url: '/blog/tag/web-performance', priority: 0.5, changefreq: 'monthly' },
 		{ url: '/blog/tag/frontend-architecture', priority: 0.5, changefreq: 'monthly' },

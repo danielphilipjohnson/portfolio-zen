@@ -382,6 +382,75 @@ export function getSingleBlogPostJsonLd(post: BlogPostDetail): { "@context": "ht
 	};
 }
 // ! here
+export interface FrontendArchitecturePost {
+	slug: string;
+	title: string;
+	publishDate?: string;
+	excerpt?: string;
+}
+
+export function getFrontendArchitectureJsonLd(posts: FrontendArchitecturePost[]): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
+	const baseJsonLd = getBaseSiteJsonLd();
+	const pageUrl = `${SITE_URL}/engineering/frontend-architecture`;
+
+	const pageSchema: WebPage = {
+		"@type": "WebPage",
+		"@id": `${pageUrl}#webpage`,
+		"url": pageUrl,
+		"name": "Frontend Architecture | Daniel Johnson",
+		"description": "Patterns, principles, and systems thinking for building frontend applications that scale across teams, devices, and years.",
+		"isPartOf": { "@type": "WebSite", "@id": WEBSITE_SCHEMA_ID },
+		"inLanguage": "en-GB",
+		"about": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
+	};
+
+	const breadcrumbSchema: BreadcrumbList = {
+		"@type": "BreadcrumbList",
+		"itemListElement": [
+			{ "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL },
+			{ "@type": "ListItem", "position": 2, "name": "Engineering", "item": `${SITE_URL}/engineering` },
+			{ "@type": "ListItem", "position": 3, "name": "Frontend Architecture", "item": pageUrl },
+		],
+	};
+
+	const relatedArticleSchemas: BlogPosting[] = posts.map((post) => ({
+		"@type": "BlogPosting",
+		"@id": `${SITE_URL}/blog/${post.slug}#article`,
+		"mainEntityOfPage": `${SITE_URL}/blog/${post.slug}`,
+		"headline": post.title,
+		"name": post.title,
+		"url": `${SITE_URL}/blog/${post.slug}`,
+		"author": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
+		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
+		...(post.publishDate && { "datePublished": post.publishDate }),
+		...(post.excerpt && { "description": post.excerpt }),
+	}));
+
+	const collectionSchema: CollectionPage = {
+		"@type": "CollectionPage",
+		"@id": `${pageUrl}#collection`,
+		"mainEntityOfPage": { "@type": "WebPage", "@id": `${pageUrl}#webpage` },
+		"name": "Frontend Architecture",
+		"description": "A collection of articles on frontend architecture patterns, design systems, component design, and platform thinking.",
+		"hasPart": relatedArticleSchemas,
+		"publisher": { "@type": "Organization", "@id": ORGANIZATION_SCHEMA_ID },
+		"creator": { "@type": "Person", "@id": PERSON_SCHEMA_ID },
+		"inLanguage": "en-GB",
+	};
+
+	const graph: SchemaOrgObject[] = [
+		...baseJsonLd["@graph"],
+		pageSchema,
+		breadcrumbSchema,
+		collectionSchema,
+	];
+
+	return {
+		...baseJsonLd,
+		"@graph": graph,
+	};
+}
+
 export function getContactPageJsonLd(): { "@context": "https://schema.org"; "@graph": SchemaOrgObject[] } {
 	const baseJsonLd = getBaseSiteJsonLd();
 
