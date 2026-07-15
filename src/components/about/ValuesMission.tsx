@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Container from '../ui/Container';
 import Text from '@/components/ui/Text';
 
@@ -32,7 +33,7 @@ const ZenValuesMission = () => {
 									>
 										GitHub
 									</a>. I want to help you build apps, websites and programs that express
-									your ideas.
+									your ideas. <Link href="/zen" className="underline hover:no-underline text-water-600">Learn more about my engineering philosophy.</Link>
 								</Text>
 							</div>
 						</div>

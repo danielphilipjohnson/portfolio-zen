@@ -1,19 +1,27 @@
+import Link from "next/link";
 import Text from "@/components/ui/Text";
 import { PhilosophyPoint } from '@/types/about';
 
 interface PhilosophyPointsProps {
   title: string;
   points: PhilosophyPoint[];
+  linkToZen?: boolean;
 }
 
-const PhilosophyPoints = ({ title, points }: PhilosophyPointsProps) => {
+const PhilosophyPoints = ({ title, points, linkToZen = false }: PhilosophyPointsProps) => {
   return (
     <div>
       <Text
         variant="h5"
         className="mb-5 text-stone-800"
       >
-        {title}
+        {linkToZen ? (
+          <Link href="/zen" className="hover:underline">
+            {title}
+          </Link>
+        ) : (
+          title
+        )}
       </Text>
 
       <div className="space-y-5">

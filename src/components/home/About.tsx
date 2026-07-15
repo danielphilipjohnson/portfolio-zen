@@ -57,6 +57,7 @@ const About = () => {
 						<PhilosophyPoints 
 							title={philosophyTitle}
 							points={philosophyPoints}
+						linkToZen={true}
 						/>
 					</div>
 
