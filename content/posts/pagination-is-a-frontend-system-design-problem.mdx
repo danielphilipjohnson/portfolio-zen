@@ -1,0 +1,379 @@
+---
+title: "Pagination Is a Frontend System Design Problem"
+publishDate: "14/07/2026"
+modifiedDate: "14/07/2026"
+author:
+  name: "Daniel Philip Johnson"
+  role: "Senior Frontend Engineer"
+  avatar: "/images/profile.webp"
+category: "Frontend Architecture"
+readingTime: "20 min read"
+tags:
+  - "Pagination"
+  - "Frontend Architecture"
+  - "System Design"
+  - "Caching"
+  - "Performance"
+  - "API Design"
+  - "Data Fetching"
+imageUrl: "/images/blogs/covers/pagination-frontend-system-design.avif"
+excerpt: "Pagination is not about retrieving records—it's about maintaining a consistent view of a changing world. The database query is the last 10% of the problem; the first 90% is everything that happens after data crosses the wire."
+---
+
+import { CodeBlock } from "@/components/ui/CodeBlock";
+
+## Pagination Is a Frontend System Design Problem
+
+You open your favourite social media app. You start scrolling through your feed. Everything feels normal. You stop halfway down because something catches your attention—a post you want to read, a video you want to watch. You leave the app for a moment. When you come back, the world has moved on. New posts have arrived. You continue scrolling. Then something feels wrong. A post you already saw appears again. Another post you expected to see is missing. You refresh the page, but the problem disappears. The API returned 200 OK. The database is healthy. There are no errors in the logs.
+
+So why did the interface lie?
+
+Because pagination is not about retrieving records. It is about maintaining a consistent view of a changing world. The moment data can change while a user is interacting with it, pagination stops being a simple "load the next 20 items" problem. It becomes a system design decision that shapes your entire frontend architecture.
+
+## The Backend-First Fallacy
+
+Pagination is often introduced as a backend concern. The database has too many rows, so we split the results into smaller chunks. The backend chooses a query. The frontend renders the data. Simple.
+
+Except the pagination strategy does not stay inside the database. The moment those records reach the user interface, the choice begins influencing everything that happens after the data crosses the wire. It determines what navigation patterns are possible, how data is stored in the client cache, how optimistic updates behave, how real-time changes are merged, and whether users can trust what they are seeing.
+
+The database query is the last 10% of the problem. The first 90% is everything that happens after the data crosses the wire.
+
+## UI Possibilities: The Strategy Determines the Experience
+
+The pagination strategy is not an implementation detail you pick after designing the UI. It is a UX primitive that determines what interaction patterns are even possible.
+
+### Offset: "I Know Where I Am"
+
+Offset pagination maps naturally to numbered navigation. The mental model is spatial and predictable:
+```
+Page 1 → Page 2 → Page 3 → Page 47
+
+```
+
+The user understands their position. They know how much data exists and how far they need to go. This works well for admin dashboards, compliance reports, and CMS tables where a support agent might genuinely want to jump to page 47. The URL is self-describing:
+
+<CodeBlock>
+{
+`/admin/users?page=4&sort=email_asc`
+}
+</CodeBlock>
+<br/>
+
+This is not just a link. It is a complete representation of the user's view state. Any engineer can open this URL and see exactly what the user saw. It can be shared, bookmarked, or referenced in a support ticket. With React Server Components, the server renders the correct page with no client-side state management. The back button works because the URL is the state.
+
+### Cursor: "Show Me What Comes Next"
+
+Cursor pagination creates a different experience entirely. The mental model becomes:
+```
+Load more → Load more → Load more
+
+```
+
+The user is not navigating pages. They are continuing a journey through a stream of data. This works naturally for social feeds, activity streams, notifications, and chat history. The user does not care that they are on page 37. They care about what comes next.
+
+But this creates a different relationship with the URL. A cursor is opaque:
+
+<CodeBlock>
+{
+`/feed?cursor=eyJjcmVhdGVkQXQiOiIyMDI2LTA3LTEzVDEwOjAwOjAxWiJ9`
+}
+</CodeBlock>
+<br/>
+
+This is a bookmark, not a position. It means "everything after this specific record"—not "page 4 of the feed sorted by newest first." These are semantically different things, and users do not distinguish between them until something breaks. Cursors can expire. They are not shareable in the same way. SSR requires decode, validation, and fallback logic that offset pagination does not need.
+
+The pagination strategy has already influenced the UI before a single component is written.
+
+## The Two Mental Models
+
+There are only two fundamental mechanisms, and they encode different assumptions about time, position, and change.
+
+Offset pagination treats position as a number. Page four means "skip the first 150 rows and give me the next 25." The mental model is static: the user is at a known coordinate in a grid that does not move.
+
+<CodeBlock language="sql">
+{
+`SELECT * FROM transactions
+ORDER BY created_at DESC
+LIMIT 25 OFFSET 150;`
+}
+</CodeBlock>
+<br/>
+
+Cursor pagination treats position as a boundary. It says, "I have seen everything up to this specific record. Show me what comes next." The mental model is dynamic: the user is continuing a journey through a stream.
+
+<CodeBlock language="sql">
+{
+`SELECT * FROM transactions
+WHERE (created_at, id) < ('2026-07-13T10:00:01Z', 'txn_abc123')
+ORDER BY created_at DESC, id DESC
+LIMIT 25;`
+}
+</CodeBlock>
+<br/>
+
+The difference is not syntactic. It is architectural. Offset assumes the dataset stays still while the user moves through it. Cursor assumes the dataset is changing and encodes a stable boundary that does not shift when new rows arrive above it.
+
+This distinction determines everything that happens after the data crosses the wire.
+
+## How Pagination Breaks Your Cache
+
+When data arrives in the browser, it lives in a client-side cache that must answer hard questions: What have we already loaded? Which requests are identical? Where should new data be inserted?
+
+Offset pagination flattens the cache into independent pages. Each page is a separate cache entry keyed by its number.
+
+<CodeBlock>
+{
+`['transactions', { page: 3, limit: 25 }] -> [A, B, C]
+['transactions', { page: 4, limit: 25 }] -> [D, E, F]`
+}
+</CodeBlock>
+<br/>
+
+This feels clean until a new transaction arrives at the top. Page 3 is still in cache. Page 4 is still in cache. Both returned 200 OK. But together, they are now wrong. The new item has pushed C from page 3 to page 4, so the user sees it twice. F has been pushed to page 5, so it vanishes entirely. The cache has drifted from reality, and there is no error to surface.
+
+The only safe recovery is to invalidate the entire cache and refetch from the beginning. The user loses scroll position and sees loading spinners. This is the invalidation spiral—a single mutation forces a full cache rebuild, and the user pays the cost.
+
+Cursor pagination stores the cache as a linked list. There is one cache entry for the entire stream, and its pages array encodes the relationship between segments.
+
+<CodeBlock language="javascript">
+{
+`['transactions'] -> {
+    pages: [
+      { data: [A, B, C], nextCursor: 'abc123' },
+      { data: [D, E, F], nextCursor: 'xyz789' },
+    ]
+}`
+}
+</CodeBlock>
+<br/>
+
+Because the cursor is a boundary, not a position, a new item at the top does not shift the boundary between page one and page two. The cursor abc123 still points to the same record in the database. This means you can prepend a new item to the first page surgically, without touching the rest of the chain.
+
+<CodeBlock language="javascript">
+{
+`queryClient.setQueryData(['transactions'], (old) => {
+  if (!old) return old;
+  return {
+    ...old,
+    pages: [
+      {
+        data: [newTransaction, ...old.pages[0].data],
+        pagination: old.pages[0].pagination,
+      },
+      ...old.pages.slice(1),
+    ],
+  };
+});`
+}
+</CodeBlock>
+<br/>
+
+The user sees the new transaction instantly. Their scroll position is preserved. Pages two through N remain valid. The difference is not a performance optimization; it is a correctness guarantee enabled by the pagination model.
+
+## Optimistic Updates and the Moment of Truth
+
+The pagination strategy is tested most severely not when the user scrolls, but when they act.
+
+Imagine a user creates a new post. The interface wants to show it immediately—before the server responds. With offset pagination, this is nearly impossible. The new item affects the position of everything below it. You cannot prepend to page one without pushing an item off the end, which means page two is now wrong, which means page three is now wrong, and so on recursively. The only safe move is to drop the entire cache and refetch. The time-to-interactive after mutation is the round-trip time multiplied by the number of pages the user had loaded.
+
+With cursor pagination, the insertion point is unambiguous: page zero, position zero. The boundary between page zero and page one does not move because the cursor still points to the same record. The user's position in the dataset remains meaningful. The server response only confirms what is already on screen.
+
+This is why cursor-based systems work well for continuously changing streams. The newest data can arrive without rewriting the user's entire journey.
+
+## The Live Data Problem
+
+New data arriving while the user is reading is where most implementations fail in production.
+
+Consider a chat application. The user has scrolled up and is reading message 97, halfway through a conversation. A new message arrives via WebSocket. If you prepend it blindly to the cache, three things break simultaneously. First, the DOM height of the first page increases, which shifts the viewport down and destroys the user's reading position. Second, the first page may exceed its limit, which corrupts the cursor boundary and makes the entire cache inconsistent. Third, the user did not ask for new content—they were reading history—and the interruption violates their mental model.
+
+The solution is not a cache update. It is a user experience design problem with a system architecture solution.
+
+In production chat applications, the correct pattern is the New Items Buffer. Incoming messages are held in a separate buffer array. A sticky banner appears at the top of the viewport: "5 new messages." The user's scroll position is untouched. The cache boundary is preserved. Only when the user explicitly clicks the banner or scrolls to the top do the buffered messages get prepended to the first page of the infinite query. This gives the user agency, preserves correctness, and prevents the silent scroll jump that makes interfaces feel broken.
+
+The naive prepend works in a demo and fails in production because it ignores a simple truth: live data is not a cache update problem. It is a question of what the user experience should be when the world changes while they are looking at it.
+
+## The Four Frontend Patterns
+
+Every pagination UI in production falls into one of four patterns. The mechanism determines which are possible.
+
+### Pattern 1: Numbered Pagination
+
+**Mechanism:** Offset
+**Use for:** Admin dashboards, CMS, reporting
+
+This is the pattern most developers start with. The URL is the source of truth. The cache key is predictable. The component is stateless over the data—it only knows what page it is on and how many pages exist.
+
+<CodeBlock language="javascript">
+{
+`function UserAdminPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const page = Number(searchParams.get('page') ?? '1');
+
+  const { data } = useQuery({
+    queryKey: ['users', { page, limit: 25 }],
+    queryFn: () => fetchUsers({ page, limit: 25 }),
+  });
+
+  return (
+    <>
+      <DataTable data={data.items} />
+      <Pagination
+        currentPage={page}
+        totalPages={Math.ceil(data.totalCount / 25)}
+        onPageChange={(p) => setSearchParams({ page: String(p) })}
+      />
+    </>
+  );
+`
+}
+</CodeBlock>
+<br/>
+
+**When to use:** Users need to jump to page 47. Total count matters. The dataset is small, stable, or historical.
+
+### Pattern 2: Load More Button
+
+**Mechanism:** Cursor
+**Use for:** Notifications, activity logs, simple lists
+
+The user explicitly requests the next page by clicking a button. It is less aggressive than infinite scroll and gives the user control over when to fetch more data.
+
+<CodeBlock language="javascript">
+{
+`function NotificationList() {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['notifications'],
+    queryFn: ({ pageParam }) => fetchNotifications({ cursor: pageParam }),
+    getNextPageParam: (last) => last.nextCursor ?? undefined,
+  });
+
+  const items = data?.pages.flatMap((p) => p.data) ?? [];
+
+  return (
+    <div>
+      {items.map((n) => <NotificationCard key={n.id} notification={n} />)}
+      {hasNextPage && (
+        <button onClick={() => fetchNextPage()}>Load more</button>
+      )}
+    </div>
+  );
+`
+}
+</CodeBlock>
+<br/>
+
+**When to use:** Controlled exploration. The user wants explicit control over data usage and pace.
+
+### Pattern 3: Infinite Scroll
+
+**Mechanism:** Cursor + IntersectionObserver
+**Use for:** Social feeds, content discovery, transaction streams
+
+The user scrolls, a sentinel element enters the viewport, and the next page is fetched automatically.
+
+<CodeBlock language="javascript">
+{
+`function SocialFeed() {
+  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
+    queryKey: ['feed'],
+    queryFn: ({ pageParam }) => fetchFeed({ cursor: pageParam }),
+    getNextPageParam: (last) => last.nextCursor ?? undefined,
+  });
+
+  const items = data?.pages.flatMap((p) => p.data) ?? [];
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  useIntersectionObserver(sentinelRef, {
+    onChange: (inView) => {
+      if (inView && hasNextPage) fetchNextPage();
+    },
+    rootMargin: '200px',
+  });
+
+  return (
+    <div>
+      {items.map((item) => <FeedItem key={item.id} item={item} />)}
+      <div ref={sentinelRef} style={{ height: '1px' }} />
+    </div>
+  );
+`
+}
+</CodeBlock>
+<br/>
+
+**When to use:** Continuous streams where the user expects seamless flow.
+
+### Pattern 4: Virtualized Infinite Lists
+
+**Mechanism:** Cursor + IntersectionObserver + Virtualization
+**Use for:** Large datasets, chat history, log viewers
+
+The user may have loaded 50,000 items, but the browser only renders the 20 visible rows. The rest are virtual—their DOM nodes are created and destroyed as the user scrolls.
+
+<CodeBlock language="javascript">
+{`function VirtualizedFeed() {
+  const parentRef = useRef<HTMLDivElement>(null);
+  const { data, fetchNextPage } = useInfiniteQuery({ /* ... */ });
+  const items = data?.pages.flatMap((p) => p.data) ?? [];
+
+  const virtualizer = useVirtualizer({
+    count: items.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 72,
+  });
+
+  return (
+    <div ref={parentRef} style={{ height: '100vh', overflow: 'auto' }}>
+      <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+        {virtualizer.getVirtualItems().map((v) => (
+          <div
+            key={v.key}
+            style={{
+              position: 'absolute',
+              transform: "translateY(" + v.start + "px)",
+              height: v.size,
+            }}
+          >
+            <FeedItem item={items[v.index]} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}`}
+</CodeBlock>
+<br/>
+
+**When to use:** DOM memory is a bottleneck. Only visible rows are rendered.
+
+## The Cursor as API Contract
+
+There is a boundary between frontend and backend that separates junior engineers from senior ones. The frontend must not know what is inside the cursor.
+
+If the backend encodes createdAt and id into a base64 string, the frontend should store it, pass it back, and never inspect it. The cursor is a bookmark, not a coordinate. It is a session cookie: the browser does not know what is in it, and the server owns the meaning.
+
+This matters because sort keys change. Today you order by createdAt. Next quarter the product team wants priority, then createdAt, then shardId for multi-region routing. If the cursor is opaque, this is a backend-only change. The API contract—"send me nextCursor, I will give you the next page"—never breaks. If the frontend was decoding the cursor to extract timestamps, or worse, constructing cursors from local state, you have turned an internal implementation detail into a public API surface. Every client needs an update. Mobile apps need store releases. You have engineered a breaking change out of a simple backend refactor.
+
+The backend must guarantee three things: stable ordering that includes a unique tie-breaker in every ORDER BY clause; deterministic pagination so that rows with identical sort keys are resolved consistently; and internal versioning so that old cursor formats remain decodable during deprecation windows. The frontend guarantees nothing about the cursor except that it will be returned verbatim.
+
+## Choosing the Right Strategy
+
+The decision is not about which library to use. It is about matching the system's requirements to the mechanism that makes them possible.
+
+**Use offset pagination when** the user needs to know where they are. Admin dashboards, compliance reports, and CMS tables all share a common trait: the user genuinely wants to jump to page 47, and "Page 3 of 200" is a meaningful piece of context. The dataset should be small, stable, or historical. If the data does not change during the user's session, the correctness problems largely disappear, and the benefits of shareable URLs and CDN caching outweigh the risks.
+
+**Use cursor pagination when** the user is moving through a stream. Social feeds, activity logs, notifications, and financial ledgers all share a different trait: the user does not care that they are on page 37. They care about what comes next. The dataset is large, or it changes frequently, or correctness matters more than page numbers. Cursor pagination is the only strategy that provides stable iteration under write pressure.
+
+**Use bidirectional cursor pagination when** the user navigates both forward and backward in time. Chat history and audit logs require before and after cursors so the interface can load older messages when scrolling up and newer messages when returning to the present, all while preserving the user's reading position.
+
+If you find yourself needing both experiences on the same data—an admin table view and a public feed view—expose cursor pagination at the API level and compute page numbers on the client. The hybrid approach is more complex, but it is the pragmatic choice when different user roles need different interaction models.
+
+## The Principal Engineer Takeaway
+
+Pagination is not a database feature exposed to the frontend. It is a contract between the database, the API, the cache, and the user experience.
+
+The strategy you choose determines whether your application feels reliable when the world changes underneath it. It determines whether a user can trust what they see, whether your cache stays consistent under mutations, whether your optimistic updates feel instant or broken, and whether your interface scales from one thousand rows to one billion.
+
+A developer who knows `LIMIT 25 OFFSET 100` can implement pagination. A developer who understands why that choice affects UI behavior, cache consistency, and data correctness is thinking about frontend system design.
+
+And that is why pagination belongs in the frontend architecture conversation—not as an afterthought, but as a first-class design decision that shapes everything else.
