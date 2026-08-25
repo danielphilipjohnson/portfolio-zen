@@ -157,7 +157,13 @@ const ZenFooter = () => {
 						© {currentYear} Daniel Philip johnson. All rights reserved.
 					</div>
 
-					<div className="flex space-x-6">
+					<div className="flex items-center space-x-6">
+						<a
+							href="/privacy"
+							className="text-xs transition-colors hover:underline text-[var(--color-stone-700)]"
+						>
+							Privacy
+						</a>
 						<BackToTop />
 					</div>
 				</div>

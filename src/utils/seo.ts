@@ -24,7 +24,8 @@ export type SeoPagePath =
 	| '/tao'
 	| '/social'
 	| '/now'
-	| '/notes';
+	| '/notes'
+	| '/privacy';
 
 export interface SEOData {
 	title: string;
@@ -435,6 +436,18 @@ export function getPageSEO(pathname: string): SEOData {
 				images: [{ url: OG_PATH.HOME }],
 				type: 'website',
 				url: `${SITE_URL}/notes`,
+			},
+		},
+		'/privacy': {
+			title: 'Privacy Policy | Daniel Philip Johnson',
+			description: 'How the personal website of Daniel Philip Johnson handles data: no analytics, no tracking cookies, no ads. Cloudflare request logs and email correspondence only.',
+			keywords: ['privacy policy', 'data protection', 'no tracking', 'personal website privacy'],
+			openGraph: {
+				title: 'Privacy Policy | Daniel Philip Johnson',
+				description: 'How this site handles data: no analytics, no tracking cookies, no ads.',
+				images: [{ url: OG_PATH.HOME }],
+				type: 'website',
+				url: `${SITE_URL}/privacy`,
 			},
 		},
 		'/zen/clarity-scales-across-teams': {

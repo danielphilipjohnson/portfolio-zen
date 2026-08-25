@@ -37,6 +37,7 @@ async function generateSitemap() {
 		{ url: '/social', priority: 0.5, changefreq: 'monthly' },
 		{ url: '/now', priority: 0.6, changefreq: 'monthly' },
 		{ url: '/notes', priority: 0.9, changefreq: 'weekly' },
+		{ url: '/privacy', priority: 0.3, changefreq: 'yearly' },
 	];
 
 	for (const page of staticPages) {
@@ -101,7 +102,13 @@ const LLMS_PAGES = [
 	{ path: '/tao', title: 'Tao', description: 'The Tao of Programming' },
 	{ path: '/now', title: 'Now', description: 'What Daniel is currently working on' },
 	{ path: '/social', title: 'Social', description: 'Links and profiles' },
-	{ path: '/contact', title: 'Contact', description: 'How to get in touch' }
+	{ path: '/contact', title: 'Contact', description: 'How to get in touch' },
+	{
+		path: '/privacy',
+		title: 'Privacy Policy',
+		description:
+			'How this site handles data: no analytics, no tracking cookies, no ads'
+	}
 ];
 
 async function generateLlmsTxt() {

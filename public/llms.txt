@@ -17,6 +17,7 @@
 - [Now](https://danielphilipjohnson.com/now): What Daniel is currently working on
 - [Social](https://danielphilipjohnson.com/social): Links and profiles
 - [Contact](https://danielphilipjohnson.com/contact): How to get in touch
+- [Privacy Policy](https://danielphilipjohnson.com/privacy): How this site handles data: no analytics, no tracking cookies, no ads
 
 ## Notes
 
