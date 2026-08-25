@@ -13,6 +13,34 @@ export default function NotFoundPage() {
 				Return to Calm
 			</Link>
 
+			<div className="mt-10 text-sm text-stone-600 space-y-2">
+				<p>
+					Lost? Try the{" "}
+					<Link href="/blog" className="underline hover:text-stone-800">
+						blog index
+					</Link>{" "}
+					or return{" "}
+					<Link href="/" className="underline hover:text-stone-800">
+						home
+					</Link>
+					.
+				</p>
+			</div>
+
+			<div className="mt-6 max-w-md text-xs leading-relaxed text-stone-500">
+				<p>
+					AI agents and crawlers: fetch{" "}
+					<a href="/llms.txt" className="underline hover:text-stone-700">
+						/llms.txt
+					</a>{" "}
+					for a markdown index of this site, or{" "}
+					<a href="/sitemap.xml" className="underline hover:text-stone-700">
+						/sitemap.xml
+					</a>{" "}
+					for the XML sitemap.
+				</p>
+			</div>
+
 			<div className="mt-10 opacity-50 text-sm">
 				<p>404 — Impermanence is part of the path.</p>
 			</div>

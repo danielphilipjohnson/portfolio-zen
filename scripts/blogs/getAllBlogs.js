@@ -16,8 +16,9 @@ export async function getAllBlogs() {
 				const { data } = matter(fileContents);
 
 				const slug = data.slug || filename.replace(/\.mdx?$/, '');
+				const title = data.title || slug;
 
-				return { slug };
+				return { slug, title };
 			})
 		);
 

@@ -1,0 +1,55 @@
+# Daniel Philip Johnson
+
+> Full-stack developer specialising in frontend architecture, web performance and calm, maintainable systems. This file is a markdown index of the site for AI agents.
+
+## Pages
+
+- [Home](https://danielphilipjohnson.com/): Portfolio overview and selected work
+- [About](https://danielphilipjohnson.com/about): Background, experience and approach
+- [Projects](https://danielphilipjohnson.com/projects): Selected projects and case studies
+- [Blog](https://danielphilipjohnson.com/blog): All articles on frontend architecture, web performance and engineering principles
+- [Notes](https://danielphilipjohnson.com/notes): Short engineering notes
+- [Engineering](https://danielphilipjohnson.com/engineering): Engineering guides
+- [MCP](https://danielphilipjohnson.com/mcp): Model Context Protocol explained with analogies
+- [MCP Deep Dive](https://danielphilipjohnson.com/mcp/deep-dive): Deeper look at the Model Context Protocol
+- [Zen](https://danielphilipjohnson.com/zen): Zen principles applied to software craft
+- [Tao](https://danielphilipjohnson.com/tao): The Tao of Programming
+- [Now](https://danielphilipjohnson.com/now): What Daniel is currently working on
+- [Social](https://danielphilipjohnson.com/social): Links and profiles
+- [Contact](https://danielphilipjohnson.com/contact): How to get in touch
+
+## Notes
+
+- [The CAP-Adjacent Trade-off Behind Optimistic UI](https://danielphilipjohnson.com/notes/cap-optimistic-ui) ([markdown](https://danielphilipjohnson.com/notes/cap-optimistic-ui.md))
+- [Pessimistic Locking, Optimistic Concurrency, and Last-Write-Wins](https://danielphilipjohnson.com/notes/concurrency-control) ([markdown](https://danielphilipjohnson.com/notes/concurrency-control.md))
+- [Ways to Handle Editing Conflicts](https://danielphilipjohnson.com/notes/editing-conflicts) ([markdown](https://danielphilipjohnson.com/notes/editing-conflicts.md))
+- [The Frontend Complexity Trap](https://danielphilipjohnson.com/notes/frontend-complexity-trap) ([markdown](https://danielphilipjohnson.com/notes/frontend-complexity-trap.md))
+- [On Leverage](https://danielphilipjohnson.com/notes/on-leverage) ([markdown](https://danielphilipjohnson.com/notes/on-leverage.md))
+- [Optimistic Updates](https://danielphilipjohnson.com/notes/optimistic-updates) ([markdown](https://danielphilipjohnson.com/notes/optimistic-updates.md))
+- [Presence Awareness](https://danielphilipjohnson.com/notes/presence-awareness) ([markdown](https://danielphilipjohnson.com/notes/presence-awareness.md))
+- [Two Racing Optimistic Updates from the Same Client](https://danielphilipjohnson.com/notes/racing-optimistic-updates) ([markdown](https://danielphilipjohnson.com/notes/racing-optimistic-updates.md))
+- [Restoring Full UI State on Rollback, Not Just Data](https://danielphilipjohnson.com/notes/rollback-ui-state) ([markdown](https://danielphilipjohnson.com/notes/rollback-ui-state.md))
+- [Thinking in Systems](https://danielphilipjohnson.com/notes/thinking-in-systems) ([markdown](https://danielphilipjohnson.com/notes/thinking-in-systems.md))
+
+## Blog posts
+
+- [AI Coding and the Rise of Learned Helplessness in Developers](https://danielphilipjohnson.com/blog/ai-coding-and-the-rise-of-learned-helplessness-in-developers) ([markdown](https://danielphilipjohnson.com/blog/ai-coding-and-the-rise-of-learned-helplessness-in-developers.md))
+- [AI Makes Code Fast—But Not Finished](https://danielphilipjohnson.com/blog/ai-makes-code-fast-but-not-finished) ([markdown](https://danielphilipjohnson.com/blog/ai-makes-code-fast-but-not-finished.md))
+- [Demystifying JSX: How Babel Really Transforms React Components](https://danielphilipjohnson.com/blog/demystifying-jsx-how-babel-really-transforms-react-components) ([markdown](https://danielphilipjohnson.com/blog/demystifying-jsx-how-babel-really-transforms-react-components.md))
+- [Don’t Rob Yourself of the Eureka: How AI Is Killing the Joy of Being a Developer](https://danielphilipjohnson.com/blog/dont-rob-yourself-of-the-eureka-how-ai-is-killing-the-joy-of-being-a-developer) ([markdown](https://danielphilipjohnson.com/blog/dont-rob-yourself-of-the-eureka-how-ai-is-killing-the-joy-of-being-a-developer.md))
+- [From Linear to Systems Thinking: Solving Complex Tech Challenges](https://danielphilipjohnson.com/blog/from-linear-to-systems-thinking-solving-complex-tech-challenges) ([markdown](https://danielphilipjohnson.com/blog/from-linear-to-systems-thinking-solving-complex-tech-challenges.md))
+- [Frontend Performance Architecture in Fintech: Elimination, Efficiency, and Scheduling](https://danielphilipjohnson.com/blog/frontend-performance-architecture-fintech) ([markdown](https://danielphilipjohnson.com/blog/frontend-performance-architecture-fintech.md))
+- [Fundamentals of Document Databases](https://danielphilipjohnson.com/blog/fundamentals-of-document-databases) ([markdown](https://danielphilipjohnson.com/blog/fundamentals-of-document-databases.md))
+- [Goals - April 2022](https://danielphilipjohnson.com/blog/goals-april-2022) ([markdown](https://danielphilipjohnson.com/blog/goals-april-2022.md))
+- [Hydration Is a Handover, Not a Feature](https://danielphilipjohnson.com/blog/hydration-handover) ([markdown](https://danielphilipjohnson.com/blog/hydration-handover.md))
+- [Monthly Reflection - April 2021: Stepping Back to Leap Forward](https://danielphilipjohnson.com/blog/monthly-reflection-april-2021) ([markdown](https://danielphilipjohnson.com/blog/monthly-reflection-april-2021.md))
+- [My HireVue Nightmare: A Developer's Critique of AI Interviews, Bias & Black Boxes](https://danielphilipjohnson.com/blog/my-hirevue-nightmare-a-developers-critique-of-ai-interviews-bias-black-boxes) ([markdown](https://danielphilipjohnson.com/blog/my-hirevue-nightmare-a-developers-critique-of-ai-interviews-bias-black-boxes.md))
+- [No Memory, No Maintenance: Why AI Code Becomes a Liability Without Context](https://danielphilipjohnson.com/blog/no-memory-ai-code-maintenance-liability) ([markdown](https://danielphilipjohnson.com/blog/no-memory-ai-code-maintenance-liability.md))
+- [Pagination Is a Frontend System Design Problem](https://danielphilipjohnson.com/blog/pagination-is-a-frontend-system-design-problem) ([markdown](https://danielphilipjohnson.com/blog/pagination-is-a-frontend-system-design-problem.md))
+- [Prompt Injection Isn’t a Prompt Problem](https://danielphilipjohnson.com/blog/prompt-injection-isnt-a-prompt-problem) ([markdown](https://danielphilipjohnson.com/blog/prompt-injection-isnt-a-prompt-problem.md))
+- [React and Symfony Performance: Reducing Latency at Frontend Boundaries](https://danielphilipjohnson.com/blog/react-symfony-performance-frontend-boundaries) ([markdown](https://danielphilipjohnson.com/blog/react-symfony-performance-frontend-boundaries.md))
+- [Reboot. Repeat. Regret: Why Tech Keeps Repeating Itself](https://danielphilipjohnson.com/blog/reboot-repeat-regret) ([markdown](https://danielphilipjohnson.com/blog/reboot-repeat-regret.md))
+- [Secure AI System Design: Preventing Prompt Injection in LLM Applications](https://danielphilipjohnson.com/blog/secure-ai-system-design-llm-prompt-injection) ([markdown](https://danielphilipjohnson.com/blog/secure-ai-system-design-llm-prompt-injection.md))
+- [The Era of AI Won't Reward Better Prompts. It'll Reward Better Judgement.](https://danielphilipjohnson.com/blog/the-era-of-ai-wont-reward-better-prompts-ill-reward-better-judgement) ([markdown](https://danielphilipjohnson.com/blog/the-era-of-ai-wont-reward-better-prompts-ill-reward-better-judgement.md))
+- [Time Slicing Isn’t Magic — It’s the Event Loop (Thanks, Ryan)](https://danielphilipjohnson.com/blog/time-slicing) ([markdown](https://danielphilipjohnson.com/blog/time-slicing.md))
+- [Why 80% of AI Projects Fail & How Staff+ Engineers Can Save Them (HBR Strategy)](https://danielphilipjohnson.com/blog/why-80-of-ai-projects-fail-and-how-staff-engineers-can-save-them-hbr-strategy) ([markdown](https://danielphilipjohnson.com/blog/why-80-of-ai-projects-fail-and-how-staff-engineers-can-save-them-hbr-strategy.md))
